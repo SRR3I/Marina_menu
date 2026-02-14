@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Marina Menu | منيو مطعم مارينا</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0e1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(16, 185, 129, .15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, .15) 0%, transparent 50%);
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        /* تصميم الهيدر - backdrop-filter فقط هنا */
+        .header {
+            background: linear-gradient(135deg, rgba(10, 14, 26, 0.98), rgba(16, 185, 129, .08), rgba(59, 130, 246, .08));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(16, 185, 129, .2);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* تصميم اللوغو - تبسيط الأنيميشن */
+        .logo-container {
+            width: 85px;
+            height: 85px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 14, 26, 0.9), rgba(16, 185, 129, .15), rgba(59, 130, 246, .15));
+            padding: 4px;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 20px rgba(16, 185, 129, .4),
+                    0 0 40px rgba(16, 185, 129, .2),
+                    0 0 60px rgba(59, 130, 246, .1),
+                    inset 0 0 20px rgba(16, 185, 129, .1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 30px rgba(16, 185, 129, .6),
+                    0 0 60px rgba(16, 185, 129, .3),
+                    0 0 80px rgba(59, 130, 246, .2),
+                    inset 0 0 30px rgba(16, 185, 129, .15);
+            }
+        }
+
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(16, 185, 129, .4);
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, .6),
+                inset 0 0 20px rgba(0, 0, 0, .3);
+        }
+
+        /* حلقات ديكورية حول اللوغو - إعادة الدوران */
+        .logo-circle::before,
+        .logo-circle::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            animation: rotate 8s linear infinite;
+        }
+
+        .logo-circle::before {
+            inset: -8px;
+            border: 2px solid transparent;
+            border-top-color: rgba(16, 185, 129, .4);
+            border-right-color: rgba(59, 130, 246, .3);
+        }
+
+        .logo-circle::after {
+            inset: -14px;
+            border: 1px solid transparent;
+            border-bottom-color: rgba(16, 185, 129, .2);
+            border-left-color: rgba(59, 130, 246, .2);
+            animation-direction: reverse;
+            animation-duration: 12s;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* معلومات المطعم */
+        .header-info {
+            flex: 1;
+            text-align: center;
+            margin-left: 85px;
+        }
+        
+        html[dir="ltr"] .header-info {
+            margin-left: 0;
+            margin-right: 85px;
+        }
+
+        .restaurant-name {
+            font-size: clamp(1.4em, 4.5vw, 1.8em);
+            font-weight: 900;
+            margin-bottom: 4px;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 0.75em;
+            color: #a0aec0;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        /* Language Burger Menu */
+        .language-menu {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 101;
+        }
+
+        .burger-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(10, 14, 26, 0.9);
+            border: 1px solid rgba(16, 185, 129, .3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+            font-size: 20px;
+        }
+
+        .burger-icon:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, .5);
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .language-menu.open .burger-icon {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, .6);
+            transform: scale(1.05);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background: rgba(10, 14, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 16px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
+            min-width: 160px;
+        }
+
+        .language-menu.open .language-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .lang-option {
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all .3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #a0aec0;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+
+        .lang-option::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, .1), rgba(59, 130, 246, .1));
+            transform: translateX(-100%);
+            transition: transform .3s ease;
+        }
+
+        .lang-option:hover::before {
+            transform: translateX(0);
+        }
+
+        .lang-option:hover {
+            color: #fff;
+        }
+
+        .lang-option.active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(16, 185, 129, .2), rgba(59, 130, 246, .2));
+        }
+
+        .lang-option span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .lang-icon {
+            font-size: 1.3em;
+            position: relative;
+            z-index: 1;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* Menu Tabs - تنسيق مع الهيدر */
+        .menu-tabs {
+            display: flex;
+            gap: 10px;
+            padding: 15px 15px 10px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            position: sticky;
+            top: 114px;
+            z-index: 99;
+            background: linear-gradient(135deg, rgba(10, 14, 26, 0.98), rgba(16, 185, 129, .08), rgba(59, 130, 246, .08));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(16, 185, 129, .2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
+        }
+
+        .menu-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .menu-tabs::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .menu-tabs::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            border-radius: 10px;
+        }
+
+        .tab-btn {
+            flex-shrink: 0;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+            color: #a0aec0;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all .3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, .2), rgba(59, 130, 246, .2));
+            border-color: rgba(16, 185, 129, .4);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, .3);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(16, 185, 129, .2);
+            color: #fff;
+        }
+
+        .menu-container {
+            padding: 10px 15px 20px;
+            position: relative;
+            z-index: 1
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section - إزالة backdrop-filter واستخدام خلفية rgba ثابتة */
+        .section {
+            background: rgba(20, 24, 40, 0.6);
+            margin-bottom: 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+            transition: all .3s;
+            contain: layout style paint;
+            content-visibility: auto;
+        }
+
+        .section:hover {
+            border-color: rgba(16, 185, 129, .3);
+            box-shadow: 0 12px 40px rgba(16, 185, 129, .2)
+        }
+
+        .section-title {
+            font-size: clamp(1.1em, 3vw, 1.3em);
+            font-weight: 700;
+            background: linear-gradient(135deg, rgba(16, 185, 129, .2), rgba(59, 130, 246, .2));
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: all .3s;
+            position: relative
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, .1), rgba(59, 130, 246, .1));
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .section-title:active::before {
+            opacity: 1
+        }
+
+        .section-title-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1
+        }
+
+        .toggle-icon {
+            transition: transform .3s ease;
+            position: relative;
+            z-index: 1
+        }
+
+        .section-title.active .toggle-icon {
+            transform: rotate(180deg)
+        }
+
+        /* تحسين أداء فتح الأقسام - استخدام height بدلاً من max-height */
+        .section-content {
+            overflow: hidden;
+            height: 0;
+            transition: height .3s ease;
+        }
+
+        .section-content.active {
+            height: auto;
+        }
+
+        /* Menu Item - إزالة backdrop-filter وتبسيط التأثيرات */
+        .menu-item {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            transition: background .2s ease, padding .2s ease;
+            position: relative;
+            display: flex;
+            gap: 15px;
+            cursor: pointer;
+            contain: layout style paint;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #10b981, #3b82f6);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .menu-item:hover::before {
+            opacity: 1
+        }
+
+        .menu-item:hover {
+            background: rgba(16, 185, 129, .05);
+            padding-right: 25px
+        }
+
+        .menu-item:last-child {
+            border-bottom: none
+        }
+
+        .item-image-wrapper {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(16, 185, 129, .1), rgba(59, 130, 246, .1));
+            transition: transform .2s ease;
+            contain: strict;
+        }
+
+        .menu-item:hover .item-image-wrapper {
+            transform: scale(1.05);
+        }
+
+        /* تحسين أداء الصور */
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .2s ease;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .menu-item:hover .item-image {
+            transform: scale(1.1)
+        }
+
+        .item-content {
+            flex: 1;
+            min-width: 0
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 10px
+        }
+
+        .item-name {
+            font-size: 1.15em;
+            font-weight: 600;
+            line-height: 1.5
+        }
+
+        .item-price {
+            font-size: 1.3em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap
+        }
+
+        .item-description {
+            font-size: .9em;
+            color: #a0aec0;
+            line-height: 1.6
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .95);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity .3s;
+            animation: modalFadeIn 0.3s ease forwards;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalFadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal.closing {
+            animation: modalFadeOut 0.3s ease forwards;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: modalContentSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes modalContentSlideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes modalContentSlideOut {
+            from { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to { 
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+        }
+
+        .modal.closing .modal-content {
+            animation: modalContentSlideOut 0.3s ease forwards;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s;
+            z-index: 1002
+        }
+
+        .modal-close:hover {
+            background: rgba(239, 68, 68, .8);
+            transform: rotate(90deg);
+            border-color: rgba(239, 68, 68, 1);
+        }
+
+        .modal-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            margin-bottom: 20px
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.2s ease-out;
+        }
+
+        .modal-image:active {
+            cursor: grabbing
+        }
+
+        .modal-info {
+            background: rgba(20, 24, 40, 0.9);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 16px;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .modal-description {
+            color: #a0aec0;
+            margin-bottom: 15px;
+            line-height: 1.6
+        }
+
+        .modal-price {
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #a0aec0;
+            font-size: .9em;
+            background: rgba(20, 24, 40, 0.6);
+            margin-top: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        .footer p {
+            margin: 8px 0;
+            line-height: 1.6
+        }
+
+        html[dir="ltr"] .language-menu {
+            left: auto;
+            right: 15px
+        }
+
+        html[dir="ltr"] .language-dropdown {
+            left: auto;
+            right: 0;
+        }
+
+        html[dir="ltr"] .menu-item::before {
+            right: auto;
+            left: 0
+        }
+
+        html[dir="ltr"] .menu-item:hover {
+            padding-right: 20px;
+            padding-left: 25px
+        }
+
+        @media (max-width:480px) {
+            .header {
+                padding: 12px 15px;
+            }
+
+            .logo-container {
+                width: 70px;
+                height: 70px;
+            }
+
+            .header-info {
+                margin-left: 70px;
+            }
+            
+            html[dir="ltr"] .header-info {
+                margin-left: 0;
+                margin-right: 70px;
+            }
+
+            .restaurant-name {
+                font-size: clamp(1.2em, 4vw, 1.5em);
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 0.7em;
+            }
+
+            .section-title {
+                padding: 16px 18px
+            }
+
+            .menu-item {
+                padding: 18px
+            }
+
+            .item-image-wrapper {
+                width: 70px;
+                height: 70px
+            }
+
+            .modal-image-container {
+                height: 50vh
+            }
+
+            .tab-btn {
+                padding: 10px 18px;
+                font-size: 0.9em;
+            }
+
+            .burger-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .language-menu {
+                top: 12px;
+                left: 12px;
+            }
+
+            html[dir="ltr"] .language-menu {
+                right: 12px;
+            }
+
+            .menu-tabs {
+                top: 94px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header" id="mainHeader">
+        <div class="language-menu" id="languageMenu">
+            <div class="burger-icon" id="burgerIcon">
+                🌐
+            </div>
+            <div class="language-dropdown">
+                <div class="lang-option active" data-lang="ar">
+                    <span class="lang-icon"></span>
+                    <span>العربية</span>
+                </div>
+                <div class="lang-option" data-lang="en">
+                    <span class="lang-icon"></span>
+                    <span>English</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="logo-container">
+            <div class="logo-circle" id="logoCircle">
+                <img src="img/logo/logo.png" alt="Marina Restaurant" class="logo-image">
+            </div>
+        </div>
+        
+        <div class="header-info">
+            <h1 class="restaurant-name">MARINA MENU</h1>
+            <p class="subtitle" data-tr="subtitle">تجربة طعام فاخرة</p>
+        </div>
+    </div>
+
+    <div class="menu-tabs" id="menuTabs">
+        <button class="tab-btn active" data-tab="food">🍽️ الأطعمة</button>
+        <button class="tab-btn" data-tab="drinks">☕ المشروبات</button>
+        <button class="tab-btn" data-tab="shisha">🍃 الأراكيل</button>
+    </div>
+
+    <div class="menu-container" id="menuContainer">
+        <!-- محتوى المنيو سيتم إضافته عبر JavaScript -->
+    </div>
+
+    <div class="footer">
+        <p data-tr="footer1">جميع أطباقنا تُحضّر طازجة عند الطلب</p>
+        <p data-tr="footer2">جميع الأسعار بالدينار العراقي</p>
+        <p data-tr="footer3">فندق الأنبار الدولي</p>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">×</button>
+            <div class="modal-image-container" id="imageContainer">
+                <img src="" alt="" class="modal-image" id="modalImage" style="cursor: grab;">
+            </div>
+            <div class="modal-info">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-price" id="modalPrice"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let menuData = null;
+
+        fetch('menu-data.json')
+            .then(response => response.json())
+            .then(data => {
+                menuData = data;
+                init();
+            })
+            .catch(error => {
+                console.error('Error loading menu data:', error);
+                alert('خطأ في تحميل بيانات المنيو');
+            });
+
+        let L = 'ar', s = 1, tx = 0, ty = 0, drag = false, sx, sy, td = 0, currentTab = 'food';
+        let lastTap = 0;
+        let modalScrollPosition = 0;
+        
+        const e = e => document.getElementById(e), 
+              mc = e('menuContainer'), 
+              mo = e('imageModal'), 
+              mi = e('modalImage'), 
+              mt = e('modalTitle'), 
+              md = e('modalDescription'), 
+              mp = e('modalPrice'),
+              mtabs = e('menuTabs'),
+              languageMenu = e('languageMenu'),
+              burgerIcon = e('burgerIcon');
+
+        // Language burger menu
+        burgerIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageMenu.classList.toggle('open');
+        });
+
+        // Close language menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!languageMenu.contains(e.target)) {
+                languageMenu.classList.remove('open');
+            }
+        });
+
+        function init() {
+            // Load logo if available
+            if (menuData.logo && menuData.logo.url && menuData.logo.url.trim() !== '') {
+                const logoImage = document.querySelector('.logo-image');
+                logoImage.src = menuData.logo.url;
+                logoImage.alt = menuData.logo.alt;
+            }
+
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    L = option.dataset.lang;
+                    document.querySelectorAll('.lang-option').forEach(x => x.classList.remove('active'));
+                    option.classList.add('active');
+                    document.documentElement.setAttribute('lang', L);
+                    document.documentElement.setAttribute('dir', L === 'ar' ? 'rtl' : 'ltr');
+                    languageMenu.classList.remove('open');
+                    renderTabs();
+                    r();
+                    u();
+                });
+            });
+
+            renderTabs();
+            r();
+            
+            // Handle browser back button
+            window.addEventListener('popstate', handleBackButton);
+            
+            // تحسين scroll performance
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        }
+
+        function renderTabs() {
+            const tabs = menuData.tabs[L];
+            mtabs.innerHTML = tabs.map((tab, idx) => 
+                `<button class="tab-btn ${idx === 0 ? 'active' : ''}" data-tab="${tab.id}">${tab.name}</button>`
+            ).join('');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentTab = btn.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    const targetContent = document.querySelector(`[data-tab-content="${currentTab}"]`);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        function u() { 
+            document.querySelectorAll('[data-tr]').forEach(e => { 
+                e.textContent = menuData.translations[L][e.dataset.tr] 
+            }) 
+        }
+
+        function r() {
+            const tabs = menuData.tabs[L];
+            
+            // استخدام requestAnimationFrame لتحسين الأداء
+            requestAnimationFrame(() => {
+                // استخدام DocumentFragment لتحسين الأداء
+                const fragment = document.createDocumentFragment();
+                
+                tabs.forEach((tab, tabIdx) => {
+                    const tabDiv = document.createElement('div');
+                    tabDiv.className = `tab-content ${tabIdx === 0 ? 'active' : ''}`;
+                    tabDiv.setAttribute('data-tab-content', tab.id);
+                    
+                    const sections = menuData.menu[L].filter(c => c.tab === tab.id);
+                    
+                    sections.forEach((c, i) => {
+                        const sectionDiv = document.createElement('div');
+                        sectionDiv.className = 'section';
+                        
+                        const titleDiv = document.createElement('div');
+                        titleDiv.className = 'section-title';
+                        titleDiv.innerHTML = `
+                            <div class="section-title-text">
+                                <span class="category-icon">${c.icon}</span>${c.title}
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        `;
+                        
+                        const contentDiv = document.createElement('div');
+                        contentDiv.className = 'section-content';
+                        
+                        c.items.forEach((x, j) => {
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'menu-item';
+                            itemDiv.innerHTML = `
+                                ${x.img ? `<div class="item-image-wrapper">
+                                    <img src="${x.img}" alt="${x.name}" class="item-image" loading="lazy" decoding="async">
+                                </div>` : ''}
+                                <div class="item-content">
+                                    <div class="item-header">
+                                        <div class="item-name">${x.name}</div>
+                                        <div class="item-price">${x.price}</div>
+                                    </div>
+                                    ${x.desc ? `<div class="item-description">${x.desc}</div>` : ''}
+                                </div>
+                            `;
+                            itemDiv.addEventListener('click', () => o(c.title, i, j, tab.id), { passive: true });
+                            contentDiv.appendChild(itemDiv);
+                        });
+                        
+                        titleDiv.addEventListener('click', (event) => t(event, titleDiv));
+                        sectionDiv.appendChild(titleDiv);
+                        sectionDiv.appendChild(contentDiv);
+                        tabDiv.appendChild(sectionDiv);
+                    });
+                    
+                    fragment.appendChild(tabDiv);
+                });
+                
+                mc.innerHTML = '';
+                mc.appendChild(fragment);
+            });
+        }
+
+        // تحسين دالة فتح الأقسام باستخدام scrollHeight
+        function t(event, elem) { 
+            event.stopPropagation();
+            const c = elem.nextElementSibling;
+            const isActive = c.classList.contains('active');
+            
+            if (isActive) {
+                c.style.height = '0px';
+                c.classList.remove('active');
+                elem.classList.remove('active');
+            } else {
+                const height = c.scrollHeight;
+                c.style.height = height + 'px';
+                c.classList.add('active'); 
+                elem.classList.add('active');
+                
+                // إزالة الارتفاع بعد انتهاء الأنيميشن للسماح بالتوسع التلقائي
+                setTimeout(() => {
+                    if (c.classList.contains('active')) {
+                        c.style.height = 'auto';
+                    }
+                }, 300);
+            }
+        }
+
+        function o(t, i, j, tabId) { 
+            event.stopPropagation();
+            const items = menuData.menu[L].filter(c => c.tab === tabId);
+            const x = items[i].items[j];
+            
+            // Save scroll position before opening modal
+            modalScrollPosition = window.scrollY;
+            
+            // Add state to history for back button handling
+            history.pushState({ modal: true }, '');
+            
+            mi.onload = () => { 
+                mo.classList.add('active'); 
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.top = `-${modalScrollPosition}px`;
+                document.body.style.width = '100%';
+            }; 
+            mi.src = x.img || ''; 
+            mt.textContent = x.name; 
+            md.textContent = x.desc || ''; 
+            mp.textContent = x.price; 
+            
+            if (!x.img) {
+                mo.classList.add('active'); 
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.top = `-${modalScrollPosition}px`;
+                document.body.style.width = '100%';
+            }
+            
+            z();
+        }
+
+        function c() { 
+            mo.classList.add('closing');
+            setTimeout(() => {
+                mo.classList.remove('active', 'closing'); 
+                
+                // Restore scroll position
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.width = '';
+                window.scrollTo(0, modalScrollPosition);
+                
+                z();
+            }, 300);
+        }
+
+        function handleBackButton(event) {
+            if (mo.classList.contains('active')) {
+                event.preventDefault();
+                c();
+            }
+        }
+
+        function z() { 
+            s = 1; 
+            tx = ty = 0; 
+            v() 
+        }
+
+        function v() { 
+            mi.style.transform = `translate(${tx}px,${ty}px) scale(${s})` 
+        }
+
+        e('modalClose').addEventListener('click', (event) => {
+            event.stopPropagation();
+            history.back();
+        });
+
+        // Handle double-tap to zoom on images
+        mi.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            
+            if (tapLength < 300 && tapLength > 0) {
+                // Double tap detected
+                if (s === 1) {
+                    s = 2.5;
+                } else {
+                    s = 1;
+                    tx = ty = 0;
+                }
+                v();
+            }
+            lastTap = currentTime;
+        });
+
+        mi.addEventListener('mousedown', e => { 
+            if (s <= 1) return; 
+            drag = true; 
+            sx = e.clientX - tx; 
+            sy = e.clientY - ty; 
+            mi.style.cursor = 'grabbing' 
+        });
+
+        mi.addEventListener('touchstart', e => { 
+            if (e.touches.length === 2) { 
+                e.preventDefault(); 
+                const t1 = e.touches[0], t2 = e.touches[1]; 
+                td = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY) 
+            } else if (e.touches.length === 1 && s > 1) { 
+                drag = true; 
+                sx = e.touches[0].clientX - tx; 
+                sy = e.touches[0].clientY - ty 
+            } 
+        }, { passive: false });
+
+        document.addEventListener('mousemove', e => { 
+            if (!drag) return; 
+            e.preventDefault(); 
+            tx = e.clientX - sx; 
+            ty = e.clientY - sy; 
+            v() 
+        });
+
+        document.addEventListener('touchmove', e => { 
+            if (e.touches.length === 2) { 
+                e.preventDefault(); 
+                const t1 = e.touches[0], t2 = e.touches[1], d = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY); 
+                if (td > 0) { 
+                    const delta = d - td; 
+                    s = Math.max(.5, Math.min(3, s + delta * .01)); 
+                    v() 
+                } 
+                td = d 
+            } else if (drag && e.touches.length === 1) { 
+                e.preventDefault(); 
+                tx = e.touches[0].clientX - sx; 
+                ty = e.touches[0].clientY - sy; 
+                v() 
+            } 
+        }, { passive: false });
+
+        document.addEventListener('mouseup', () => { 
+            drag = false; 
+            mi.style.cursor = 'grab' 
+        });
+
+        document.addEventListener('touchend', () => { 
+            drag = false; 
+            td = 0 
+        });
+
+        e('imageContainer').addEventListener('wheel', e => { 
+            e.preventDefault(); 
+            const delta = e.deltaY > 0 ? -.1 : .1; 
+            s = Math.max(.5, Math.min(3, s + delta)); 
+            v() 
+        }, { passive: false });
+
+        document.addEventListener('keydown', e => { 
+            if (!mo.classList.contains('active')) return; 
+            if (e.key === 'Escape') {
+                history.back();
+            }
+        });
+    </script>
+</body>
+</html>
