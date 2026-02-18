@@ -33,7 +33,148 @@
             opacity: 0.9;
         }
 
-        /* تصميم الهيدر - backdrop-filter فقط هنا */
+        /* ============================================================
+           طبقة الديكور الرمضاني — لا تمس أي تنسيق أصلي
+           ============================================================ */
+        .ramadan-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        /* شريط الفوانيس */
+        .lanterns-row {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding: 0 10px;
+        }
+
+        /* خيط الربط الأفقي */
+        .lanterns-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(16,185,129,.2) 10%,
+                rgba(201,168,76,.5) 30%,
+                rgba(16,185,129,.4) 50%,
+                rgba(59,130,246,.4) 70%,
+                rgba(201,168,76,.5) 90%,
+                transparent 100%);
+        }
+
+        /* الفانوس */
+        .r-lantern {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: lanternSwing var(--swing-dur) ease-in-out infinite var(--swing-delay);
+            transform-origin: top center;
+        }
+
+        @keyframes lanternSwing {
+            0%, 100% { transform: rotate(calc(var(--tilt) * -1)); }
+            50%       { transform: rotate(var(--tilt)); }
+        }
+
+        .r-lantern::before {
+            content: '';
+            display: block;
+            width: 1.5px;
+            height: var(--string-h);
+            background: linear-gradient(180deg, rgba(201,168,76,.7), rgba(201,168,76,.1));
+        }
+
+        .lantern-body {
+            width: var(--w);
+            height: var(--h);
+            animation: lanternGlow var(--swing-dur) ease-in-out infinite var(--swing-delay);
+        }
+
+        .lantern-body svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes lanternGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--glow)) drop-shadow(0 0 12px var(--glow2)); }
+            50%       { filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 24px var(--glow2)); }
+        }
+
+        /* الهلال */
+        .r-crescent {
+            position: absolute;
+            top: 128px;
+            left: 14px;
+            font-size: 36px;
+            color: rgba(255, 220, 80, 0.5);
+            text-shadow: 0 0 18px rgba(255,200,50,.4), 0 0 36px rgba(255,200,50,.15);
+            animation: crescentFloat 7s ease-in-out infinite;
+        }
+
+        html[dir="ltr"] .r-crescent { left: auto; right: 14px; }
+
+        @keyframes crescentFloat {
+            0%, 100% { transform: translateY(0) rotate(-8deg); opacity: 0.5; }
+            50%       { transform: translateY(-7px) rotate(2deg); opacity: 0.75; }
+        }
+
+        /* النجوم */
+        .r-star {
+            position: absolute;
+            color: rgba(255, 220, 100, 0.6);
+            animation: starTwinkle var(--dur) ease-in-out infinite var(--delay);
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1) rotate(0deg); }
+            50%       { opacity: 0.5; transform: scale(1.3) rotate(20deg); }
+        }
+
+        /* الهلال الصغير العائم */
+        .r-mini-crescent {
+            position: absolute;
+            color: rgba(255, 215, 70, var(--cop));
+            font-size: var(--csz);
+            text-shadow: 0 0 10px rgba(255,200,50,.5), 0 0 20px rgba(255,200,50,.2);
+            animation: crescentDrift var(--cdur) ease-in-out infinite var(--cdelay);
+        }
+
+        @keyframes crescentDrift {
+            0%, 100% { opacity: 0.2; transform: translateY(0px) rotate(var(--crot)); }
+            50%       { opacity: var(--cop); transform: translateY(-10px) rotate(calc(var(--crot) + 15deg)); }
+        }
+
+        /* بادج رمضان صغير في الهيدر */
+        .ramadan-badge {
+            font-size: 0.7em;
+            color: rgba(255, 205, 70, 0.7);
+            letter-spacing: 2px;
+            margin-top: 4px;
+            display: block;
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { opacity: 0.55; }
+            50%       { opacity: 0.9; }
+        }
+
+        /* ============================================================
+           التنسيق الأصلي — نسخة طبق الأصل
+           ============================================================ */
+
         .header {
             background: linear-gradient(135deg, rgba(10, 14, 26, 0.98), rgba(16, 185, 129, .08), rgba(59, 130, 246, .08));
             backdrop-filter: blur(20px);
@@ -50,7 +191,6 @@
             gap: 20px;
         }
 
-        /* تصميم اللوغو - تبسيط الأنيميشن */
         .logo-container {
             width: 85px;
             height: 85px;
@@ -101,7 +241,6 @@
                 inset 0 0 20px rgba(0, 0, 0, .3);
         }
 
-        /* حلقات ديكورية حول اللوغو - إعادة الدوران */
         .logo-circle::before,
         .logo-circle::after {
             content: '';
@@ -130,7 +269,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* معلومات المطعم */
         .header-info {
             flex: 1;
             text-align: center;
@@ -163,7 +301,6 @@
             opacity: 0.9;
         }
 
-        /* Language Burger Menu */
         .language-menu {
             position: absolute;
             top: 15px;
@@ -235,9 +372,7 @@
             overflow: hidden;
         }
 
-        .lang-option:last-child {
-            border-bottom: none;
-        }
+        .lang-option:last-child { border-bottom: none; }
 
         .lang-option::before {
             content: '';
@@ -248,23 +383,15 @@
             transition: transform .3s ease;
         }
 
-        .lang-option:hover::before {
-            transform: translateX(0);
-        }
-
-        .lang-option:hover {
-            color: #fff;
-        }
+        .lang-option:hover::before { transform: translateX(0); }
+        .lang-option:hover { color: #fff; }
 
         .lang-option.active {
             color: #fff;
             background: linear-gradient(135deg, rgba(16, 185, 129, .2), rgba(59, 130, 246, .2));
         }
 
-        .lang-option span {
-            position: relative;
-            z-index: 1;
-        }
+        .lang-option span { position: relative; z-index: 1; }
 
         .lang-icon {
             font-size: 1.3em;
@@ -274,7 +401,6 @@
             text-align: center;
         }
 
-        /* Menu Tabs - تنسيق مع الهيدر */
         .menu-tabs {
             display: flex;
             gap: 10px;
@@ -292,19 +418,9 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
         }
 
-        .menu-tabs::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .menu-tabs::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .menu-tabs::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #10b981, #3b82f6);
-            border-radius: 10px;
-        }
+        .menu-tabs::-webkit-scrollbar { height: 4px; }
+        .menu-tabs::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
+        .menu-tabs::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #10b981, #3b82f6); border-radius: 10px; }
 
         .tab-btn {
             flex-shrink: 0;
@@ -340,21 +456,14 @@
             z-index: 1
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Section - إزالة backdrop-filter واستخدام خلفية rgba ثابتة */
         .section {
             background: rgba(20, 24, 40, 0.6);
             margin-bottom: 20px;
@@ -395,9 +504,7 @@
             transition: opacity .3s
         }
 
-        .section-title:active::before {
-            opacity: 1
-        }
+        .section-title:active::before { opacity: 1 }
 
         .section-title-text {
             display: flex;
@@ -413,22 +520,16 @@
             z-index: 1
         }
 
-        .section-title.active .toggle-icon {
-            transform: rotate(180deg)
-        }
+        .section-title.active .toggle-icon { transform: rotate(180deg) }
 
-        /* تحسين أداء فتح الأقسام - استخدام height بدلاً من max-height */
         .section-content {
             overflow: hidden;
             height: 0;
             transition: height .3s ease;
         }
 
-        .section-content.active {
-            height: auto;
-        }
+        .section-content.active { height: auto; }
 
-        /* Menu Item - إزالة backdrop-filter وتبسيط التأثيرات */
         .menu-item {
             padding: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, .05);
@@ -452,18 +553,9 @@
             transition: opacity .3s
         }
 
-        .menu-item:hover::before {
-            opacity: 1
-        }
-
-        .menu-item:hover {
-            background: rgba(16, 185, 129, .05);
-            padding-right: 25px
-        }
-
-        .menu-item:last-child {
-            border-bottom: none
-        }
+        .menu-item:hover::before { opacity: 1 }
+        .menu-item:hover { background: rgba(16, 185, 129, .05); padding-right: 25px }
+        .menu-item:last-child { border-bottom: none }
 
         .item-image-wrapper {
             flex-shrink: 0;
@@ -476,11 +568,8 @@
             contain: strict;
         }
 
-        .menu-item:hover .item-image-wrapper {
-            transform: scale(1.05);
-        }
+        .menu-item:hover .item-image-wrapper { transform: scale(1.05); }
 
-        /* تحسين أداء الصور */
         .item-image {
             width: 100%;
             height: 100%;
@@ -492,14 +581,9 @@
             -webkit-backface-visibility: hidden;
         }
 
-        .menu-item:hover .item-image {
-            transform: scale(1.1)
-        }
+        .menu-item:hover .item-image { transform: scale(1.1) }
 
-        .item-content {
-            flex: 1;
-            min-width: 0
-        }
+        .item-content { flex: 1; min-width: 0 }
 
         .item-header {
             display: flex;
@@ -509,11 +593,7 @@
             gap: 10px
         }
 
-        .item-name {
-            font-size: 1.15em;
-            font-weight: 600;
-            line-height: 1.5
-        }
+        .item-name { font-size: 1.15em; font-weight: 600; line-height: 1.5 }
 
         .item-price {
             font-size: 1.3em;
@@ -525,11 +605,7 @@
             white-space: nowrap
         }
 
-        .item-description {
-            font-size: .9em;
-            color: #a0aec0;
-            line-height: 1.6
-        }
+        .item-description { font-size: .9em; color: #a0aec0; line-height: 1.6 }
 
         .modal {
             display: none;
@@ -542,23 +618,11 @@
             animation: modalFadeIn 0.3s ease forwards;
         }
 
-        @keyframes modalFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalFadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-        @keyframes modalFadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal.closing {
-            animation: modalFadeOut 0.3s ease forwards;
-        }
+        .modal.active { display: flex; }
+        .modal.closing { animation: modalFadeOut 0.3s ease forwards; }
 
         .modal-content {
             position: relative;
@@ -573,30 +637,16 @@
         }
 
         @keyframes modalContentSlideIn {
-            from { 
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         @keyframes modalContentSlideOut {
-            from { 
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-            to { 
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(30px) scale(0.95); }
         }
 
-        .modal.closing .modal-content {
-            animation: modalContentSlideOut 0.3s ease forwards;
-        }
+        .modal.closing .modal-content { animation: modalContentSlideOut 0.3s ease forwards; }
 
         .modal-close {
             position: absolute;
@@ -617,11 +667,7 @@
             z-index: 1002
         }
 
-        .modal-close:hover {
-            background: rgba(239, 68, 68, .8);
-            transform: rotate(90deg);
-            border-color: rgba(239, 68, 68, 1);
-        }
+        .modal-close:hover { background: rgba(239, 68, 68, .8); transform: rotate(90deg); border-color: rgba(239, 68, 68, 1); }
 
         .modal-image-container {
             position: relative;
@@ -646,9 +692,7 @@
             transition: transform 0.2s ease-out;
         }
 
-        .modal-image:active {
-            cursor: grabbing
-        }
+        .modal-image:active { cursor: grabbing }
 
         .modal-info {
             background: rgba(20, 24, 40, 0.9);
@@ -670,11 +714,7 @@
             background-clip: text
         }
 
-        .modal-description {
-            color: #a0aec0;
-            margin-bottom: 15px;
-            line-height: 1.6
-        }
+        .modal-description { color: #a0aec0; margin-bottom: 15px; line-height: 1.6 }
 
         .modal-price {
             font-size: 1.8em;
@@ -696,108 +736,45 @@
             border: 1px solid rgba(255, 255, 255, .1)
         }
 
-        .footer p {
-            margin: 8px 0;
-            line-height: 1.6
-        }
+        .footer p { margin: 8px 0; line-height: 1.6 }
 
-        html[dir="ltr"] .language-menu {
-            left: auto;
-            right: 15px
-        }
-
-        html[dir="ltr"] .language-dropdown {
-            left: auto;
-            right: 0;
-        }
-
-        html[dir="ltr"] .menu-item::before {
-            right: auto;
-            left: 0
-        }
-
-        html[dir="ltr"] .menu-item:hover {
-            padding-right: 20px;
-            padding-left: 25px
-        }
+        html[dir="ltr"] .language-menu { left: auto; right: 15px; }
+        html[dir="ltr"] .language-dropdown { left: auto; right: 0; }
+        html[dir="ltr"] .menu-item::before { right: auto; left: 0 }
+        html[dir="ltr"] .menu-item:hover { padding-right: 20px; padding-left: 25px }
 
         @media (max-width:480px) {
-            .header {
-                padding: 12px 15px;
-            }
-
-            .logo-container {
-                width: 70px;
-                height: 70px;
-            }
-
-            .header-info {
-                margin-left: 70px;
-            }
-            
-            html[dir="ltr"] .header-info {
-                margin-left: 0;
-                margin-right: 70px;
-            }
-
-            .restaurant-name {
-                font-size: clamp(1.2em, 4vw, 1.5em);
-                letter-spacing: 2px;
-            }
-
-            .subtitle {
-                font-size: 0.7em;
-            }
-
-            .section-title {
-                padding: 16px 18px
-            }
-
-            .menu-item {
-                padding: 18px
-            }
-
-            .item-image-wrapper {
-                width: 70px;
-                height: 70px
-            }
-
-            .modal-image-container {
-                height: 50vh
-            }
-
-            .tab-btn {
-                padding: 10px 18px;
-                font-size: 0.9em;
-            }
-
-            .burger-icon {
-                width: 36px;
-                height: 36px;
-            }
-
-            .language-menu {
-                top: 12px;
-                left: 12px;
-            }
-
-            html[dir="ltr"] .language-menu {
-                right: 12px;
-            }
-
-            .menu-tabs {
-                top: 94px;
-            }
+            .header { padding: 12px 15px; }
+            .logo-container { width: 70px; height: 70px; }
+            .header-info { margin-left: 70px; }
+            html[dir="ltr"] .header-info { margin-left: 0; margin-right: 70px; }
+            .restaurant-name { font-size: clamp(1.2em, 4vw, 1.5em); letter-spacing: 2px; }
+            .subtitle { font-size: 0.7em; }
+            .section-title { padding: 16px 18px }
+            .menu-item { padding: 18px }
+            .item-image-wrapper { width: 70px; height: 70px }
+            .modal-image-container { height: 50vh }
+            .tab-btn { padding: 10px 18px; font-size: 0.9em; }
+            .burger-icon { width: 36px; height: 36px; }
+            .language-menu { top: 12px; left: 12px; }
+            html[dir="ltr"] .language-menu { right: 12px; }
+            .menu-tabs { top: 94px; }
+            .r-crescent { font-size: 26px; top: 100px; }
         }
     </style>
 </head>
 
 <body>
+
+    <!-- طبقة الديكور الرمضاني فوق كل شي -->
+    <div class="ramadan-layer" id="ramadanLayer">
+        <div class="lanterns-row" id="lanternsRow"></div>
+        <div class="r-crescent">☽</div>
+    </div>
+
     <div class="header" id="mainHeader">
         <div class="language-menu" id="languageMenu">
-            <div class="burger-icon" id="burgerIcon">
-                🌐
-            </div>
+            <div class="burger-icon" id="burgerIcon">🌐</div>
             <div class="language-dropdown">
                 <div class="lang-option active" data-lang="ar">
                     <span class="lang-icon"></span>
@@ -819,6 +796,7 @@
         <div class="header-info">
             <h1 class="restaurant-name">MARINA MENU</h1>
             <p class="subtitle" data-tr="subtitle">تجربة طعام فاخرة</p>
+            <span class="ramadan-badge">☽ رمضان كريم ☾</span>
         </div>
     </div>
 
@@ -829,7 +807,6 @@
     </div>
 
     <div class="menu-container" id="menuContainer">
-        <!-- محتوى المنيو سيتم إضافته عبر JavaScript -->
     </div>
 
     <div class="footer">
@@ -853,361 +830,360 @@
     </div>
 
     <script>
-        let menuData = null;
+    /* ============================================================
+       بناء عناصر رمضان الديكورية
+       ============================================================ */
+    (function() {
+        const layer = document.getElementById('ramadanLayer');
+        const row   = document.getElementById('lanternsRow');
 
-        fetch('menu-data.json')
-            .then(response => response.json())
-            .then(data => {
-                menuData = data;
-                init();
-            })
-            .catch(error => {
-                console.error('Error loading menu data:', error);
-                alert('خطأ في تحميل بيانات المنيو');
-            });
+        // SVG فانوس
+        function makeLanternSVG(bodyColor, glowColor, accentColor) {
+            return `<svg viewBox="0 0 36 68" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+              <defs>
+                <radialGradient id="rg_${bodyColor.replace('#','')}" cx="40%" cy="30%">
+                  <stop offset="0%" stop-color="${accentColor}" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="${bodyColor}" stop-opacity="0.8"/>
+                </radialGradient>
+              </defs>
+              <!-- حلقة التعليق -->
+              <rect x="15" y="0" width="6" height="5" rx="2.5"
+                    fill="${bodyColor}" opacity="0.9"/>
+              <!-- القبة -->
+              <path d="M10,5 Q18,1 26,5 L28,12 L8,12 Z"
+                    fill="url(#rg_${bodyColor.replace('#','')})" opacity="0.9"/>
+              <!-- الجسم -->
+              <path d="M8,12 Q4,28 6,48 Q10,58 18,60 Q26,58 30,48 Q32,28 28,12 Z"
+                    fill="url(#rg_${bodyColor.replace('#','')})" opacity="0.88"/>
+              <!-- نافذة التوهج -->
+              <path d="M13,18 Q11,32 13,46 Q15,54 18,55 Q21,54 23,46 Q25,32 23,18 Z"
+                    fill="${glowColor}" opacity="0.35"/>
+              <!-- خطوط زخرفية -->
+              <line x1="9"  y1="22" x2="27" y2="22" stroke="${accentColor}" stroke-width="0.7" opacity="0.4"/>
+              <line x1="8"  y1="32" x2="28" y2="32" stroke="${accentColor}" stroke-width="0.7" opacity="0.4"/>
+              <line x1="8"  y1="42" x2="28" y2="42" stroke="${accentColor}" stroke-width="0.7" opacity="0.4"/>
+              <!-- ذيل -->
+              <path d="M11,58 Q18,65 25,58 L23,62 Q18,67 13,62 Z"
+                    fill="${bodyColor}" opacity="0.7"/>
+            </svg>`;
+        }
 
-        let L = 'ar', s = 1, tx = 0, ty = 0, drag = false, sx, sy, td = 0, currentTab = 'food';
-        let lastTap = 0;
-        let modalScrollPosition = 0;
-        
-        const e = e => document.getElementById(e), 
-              mc = e('menuContainer'), 
-              mo = e('imageModal'), 
-              mi = e('modalImage'), 
-              mt = e('modalTitle'), 
-              md = e('modalDescription'), 
-              mp = e('modalPrice'),
-              mtabs = e('menuTabs'),
-              languageMenu = e('languageMenu'),
-              burgerIcon = e('burgerIcon');
+        // إعدادات الفوانيس — ألوان التصميم الأصلي (أخضر، أزرق، بنفسجي) + ذهبي خفيف
+        const configs = [
+            { body:'#10b981', glow:'#6ee7b7', accent:'#34d399', sw:'4.2s', sd:'0s',   sh:'30px', w:'30px', h:'56px', tilt:'5deg'  },
+            { body:'#c9a84c', glow:'#fef3c7', accent:'#fcd34d', sw:'5s',   sd:'-1s',  sh:'20px', w:'26px', h:'48px', tilt:'7deg'  },
+            { body:'#3b82f6', glow:'#bfdbfe', accent:'#60a5fa', sw:'3.6s', sd:'-2s',  sh:'36px', w:'32px', h:'60px', tilt:'6deg'  },
+            { body:'#10b981', glow:'#6ee7b7', accent:'#34d399', sw:'4.8s', sd:'-0.5s',sh:'22px', w:'24px', h:'44px', tilt:'4deg'  },
+            { body:'#8b5cf6', glow:'#ddd6fe', accent:'#a78bfa', sw:'5.5s', sd:'-3s',  sh:'28px', w:'28px', h:'52px', tilt:'8deg'  },
+            { body:'#c9a84c', glow:'#fef3c7', accent:'#fcd34d', sw:'4s',   sd:'-1.5s',sh:'16px', w:'26px', h:'48px', tilt:'5deg'  },
+            { body:'#3b82f6', glow:'#bfdbfe', accent:'#60a5fa', sw:'3.8s', sd:'-2.5s',sh:'32px', w:'30px', h:'56px', tilt:'6deg'  },
+        ];
 
-        // Language burger menu
-        burgerIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            languageMenu.classList.toggle('open');
+        configs.forEach(cfg => {
+            const wrap = document.createElement('div');
+            wrap.className = 'r-lantern';
+            wrap.style.cssText = `
+                --swing-dur:${cfg.sw};
+                --swing-delay:${cfg.sd};
+                --string-h:${cfg.sh};
+                --w:${cfg.w};
+                --h:${cfg.h};
+                --glow:${cfg.body};
+                --glow2:${cfg.glow};
+                --tilt:${cfg.tilt};
+            `;
+            const body = document.createElement('div');
+            body.className = 'lantern-body';
+            body.innerHTML = makeLanternSVG(cfg.body, cfg.glow, cfg.accent);
+            wrap.appendChild(body);
+            row.appendChild(wrap);
         });
 
-        // Close language menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!languageMenu.contains(e.target)) {
+        // === النجوم ===
+        const starChars = ['★','✦','✧','✩','⭐'];
+        for (let i = 0; i < 14; i++) {
+            const star = document.createElement('div');
+            star.className = 'r-star';
+            const sz = (5 + Math.random() * 8) + 'px';
+            star.style.cssText = `
+                top:${Math.random() * 93}%;
+                left:${Math.random() * 100}%;
+                font-size:${sz};
+                --dur:${2 + Math.random() * 4}s;
+                --delay:${-Math.random() * 5}s;
+            `;
+            star.textContent = starChars[Math.floor(Math.random() * starChars.length)];
+            layer.appendChild(star);
+        }
+
+        // === هلالات ===
+        for (let i = 0; i < 8; i++) {
+            const cr = document.createElement('div');
+            cr.className = 'r-mini-crescent';
+            const sz = (26 + Math.random() * 22) + 'px';
+            const op = (0.35 + Math.random() * 0.2).toFixed(2);
+            cr.style.cssText = `
+                top:${5 + Math.random() * 88}%;
+                left:${Math.random() * 96}%;
+                --csz:${sz};
+                --cop:${op};
+                --cdur:${4 + Math.random() * 6}s;
+                --cdelay:${-Math.random() * 7}s;
+                --crot:${-20 + Math.random() * 40}deg;
+            `;
+            cr.textContent = '☽';
+            layer.appendChild(cr);
+        }
+    })();
+
+    /* ============================================================
+       كود المنيو الأصلي — نسخة طبق الأصل
+       ============================================================ */
+    let menuData = null;
+
+    fetch('menu-data.json')
+        .then(response => response.json())
+        .then(data => { menuData = data; init(); })
+        .catch(error => { console.error('Error loading menu data:', error); alert('خطأ في تحميل بيانات المنيو'); });
+
+    let L = 'ar', s = 1, tx = 0, ty = 0, drag = false, sx, sy, td = 0, currentTab = 'food';
+    let lastTap = 0;
+    let modalScrollPosition = 0;
+    
+    const e = e => document.getElementById(e), 
+          mc = e('menuContainer'), 
+          mo = e('imageModal'), 
+          mi = e('modalImage'), 
+          mt = e('modalTitle'), 
+          md = e('modalDescription'), 
+          mp = e('modalPrice'),
+          mtabs = e('menuTabs'),
+          languageMenu = e('languageMenu'),
+          burgerIcon = e('burgerIcon');
+
+    burgerIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        languageMenu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!languageMenu.contains(e.target)) languageMenu.classList.remove('open');
+    });
+
+    function init() {
+        if (menuData.logo && menuData.logo.url && menuData.logo.url.trim() !== '') {
+            const logoImage = document.querySelector('.logo-image');
+            logoImage.src = menuData.logo.url;
+            logoImage.alt = menuData.logo.alt;
+        }
+
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', () => {
+                L = option.dataset.lang;
+                document.querySelectorAll('.lang-option').forEach(x => x.classList.remove('active'));
+                option.classList.add('active');
+                document.documentElement.setAttribute('lang', L);
+                document.documentElement.setAttribute('dir', L === 'ar' ? 'rtl' : 'ltr');
                 languageMenu.classList.remove('open');
-            }
+                renderTabs(); r(); u();
+            });
         });
 
-        function init() {
-            // Load logo if available
-            if (menuData.logo && menuData.logo.url && menuData.logo.url.trim() !== '') {
-                const logoImage = document.querySelector('.logo-image');
-                logoImage.src = menuData.logo.url;
-                logoImage.alt = menuData.logo.alt;
+        renderTabs(); r();
+        window.addEventListener('popstate', handleBackButton);
+        
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => { ticking = false; });
+                ticking = true;
             }
+        }, { passive: true });
+    }
 
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    L = option.dataset.lang;
-                    document.querySelectorAll('.lang-option').forEach(x => x.classList.remove('active'));
-                    option.classList.add('active');
-                    document.documentElement.setAttribute('lang', L);
-                    document.documentElement.setAttribute('dir', L === 'ar' ? 'rtl' : 'ltr');
-                    languageMenu.classList.remove('open');
-                    renderTabs();
-                    r();
-                    u();
-                });
+    function renderTabs() {
+        const tabs = menuData.tabs[L];
+        mtabs.innerHTML = tabs.map((tab, idx) => 
+            `<button class="tab-btn ${idx === 0 ? 'active' : ''}" data-tab="${tab.id}">${tab.name}</button>`
+        ).join('');
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentTab = btn.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                const targetContent = document.querySelector(`[data-tab-content="${currentTab}"]`);
+                if (targetContent) targetContent.classList.add('active');
             });
+        });
+    }
 
-            renderTabs();
-            r();
-            
-            // Handle browser back button
-            window.addEventListener('popstate', handleBackButton);
-            
-            // تحسين scroll performance
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }, { passive: true });
-        }
+    function u() { 
+        document.querySelectorAll('[data-tr]').forEach(e => { 
+            if (menuData.translations[L][e.dataset.tr])
+                e.textContent = menuData.translations[L][e.dataset.tr];
+        });
+    }
 
-        function renderTabs() {
-            const tabs = menuData.tabs[L];
-            mtabs.innerHTML = tabs.map((tab, idx) => 
-                `<button class="tab-btn ${idx === 0 ? 'active' : ''}" data-tab="${tab.id}">${tab.name}</button>`
-            ).join('');
-
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    currentTab = btn.dataset.tab;
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    const targetContent = document.querySelector(`[data-tab-content="${currentTab}"]`);
-                    if (targetContent) {
-                        targetContent.classList.add('active');
-                    }
-                });
-            });
-        }
-
-        function u() { 
-            document.querySelectorAll('[data-tr]').forEach(e => { 
-                e.textContent = menuData.translations[L][e.dataset.tr] 
-            }) 
-        }
-
-        function r() {
-            const tabs = menuData.tabs[L];
-            
-            // استخدام requestAnimationFrame لتحسين الأداء
-            requestAnimationFrame(() => {
-                // استخدام DocumentFragment لتحسين الأداء
-                const fragment = document.createDocumentFragment();
-                
-                tabs.forEach((tab, tabIdx) => {
-                    const tabDiv = document.createElement('div');
-                    tabDiv.className = `tab-content ${tabIdx === 0 ? 'active' : ''}`;
-                    tabDiv.setAttribute('data-tab-content', tab.id);
-                    
-                    const sections = menuData.menu[L].filter(c => c.tab === tab.id);
-                    
-                    sections.forEach((c, i) => {
-                        const sectionDiv = document.createElement('div');
-                        sectionDiv.className = 'section';
-                        
-                        const titleDiv = document.createElement('div');
-                        titleDiv.className = 'section-title';
-                        titleDiv.innerHTML = `
-                            <div class="section-title-text">
-                                <span class="category-icon">${c.icon}</span>${c.title}
-                            </div>
-                            <span class="toggle-icon">▼</span>
-                        `;
-                        
-                        const contentDiv = document.createElement('div');
-                        contentDiv.className = 'section-content';
-                        
-                        c.items.forEach((x, j) => {
-                            const itemDiv = document.createElement('div');
-                            itemDiv.className = 'menu-item';
-                            itemDiv.innerHTML = `
-                                ${x.img ? `<div class="item-image-wrapper">
-                                    <img src="${x.img}" alt="${x.name}" class="item-image" loading="lazy" decoding="async">
-                                </div>` : ''}
-                                <div class="item-content">
-                                    <div class="item-header">
-                                        <div class="item-name">${x.name}</div>
-                                        <div class="item-price">${x.price}</div>
-                                    </div>
-                                    ${x.desc ? `<div class="item-description">${x.desc}</div>` : ''}
+    function r() {
+        const tabs = menuData.tabs[L];
+        requestAnimationFrame(() => {
+            const fragment = document.createDocumentFragment();
+            tabs.forEach((tab, tabIdx) => {
+                const tabDiv = document.createElement('div');
+                tabDiv.className = `tab-content ${tabIdx === 0 ? 'active' : ''}`;
+                tabDiv.setAttribute('data-tab-content', tab.id);
+                const sections = menuData.menu[L].filter(c => c.tab === tab.id);
+                sections.forEach((c, i) => {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'section';
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'section-title';
+                    titleDiv.innerHTML = `
+                        <div class="section-title-text">
+                            <span class="category-icon">${c.icon}</span>${c.title}
+                        </div>
+                        <span class="toggle-icon">▼</span>`;
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'section-content';
+                    c.items.forEach((x, j) => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'menu-item';
+                        itemDiv.innerHTML = `
+                            ${x.img ? `<div class="item-image-wrapper"><img src="${x.img}" alt="${x.name}" class="item-image" loading="lazy" decoding="async"></div>` : ''}
+                            <div class="item-content">
+                                <div class="item-header">
+                                    <div class="item-name">${x.name}</div>
+                                    <div class="item-price">${x.price}</div>
                                 </div>
-                            `;
-                            itemDiv.addEventListener('click', () => o(c.title, i, j, tab.id), { passive: true });
-                            contentDiv.appendChild(itemDiv);
-                        });
-                        
-                        titleDiv.addEventListener('click', (event) => t(event, titleDiv));
-                        sectionDiv.appendChild(titleDiv);
-                        sectionDiv.appendChild(contentDiv);
-                        tabDiv.appendChild(sectionDiv);
+                                ${x.desc ? `<div class="item-description">${x.desc}</div>` : ''}
+                            </div>`;
+                        itemDiv.addEventListener('click', () => o(c.title, i, j, tab.id), { passive: true });
+                        contentDiv.appendChild(itemDiv);
                     });
-                    
-                    fragment.appendChild(tabDiv);
+                    titleDiv.addEventListener('click', (event) => t(event, titleDiv));
+                    sectionDiv.appendChild(titleDiv);
+                    sectionDiv.appendChild(contentDiv);
+                    tabDiv.appendChild(sectionDiv);
                 });
-                
-                mc.innerHTML = '';
-                mc.appendChild(fragment);
+                fragment.appendChild(tabDiv);
             });
-        }
+            mc.innerHTML = '';
+            mc.appendChild(fragment);
+        });
+    }
 
-        // تحسين دالة فتح الأقسام باستخدام scrollHeight
-        function t(event, elem) { 
-            event.stopPropagation();
-            const c = elem.nextElementSibling;
-            const isActive = c.classList.contains('active');
-            
-            if (isActive) {
-                c.style.height = '0px';
-                c.classList.remove('active');
-                elem.classList.remove('active');
-            } else {
-                const height = c.scrollHeight;
-                c.style.height = height + 'px';
-                c.classList.add('active'); 
-                elem.classList.add('active');
-                
-                // إزالة الارتفاع بعد انتهاء الأنيميشن للسماح بالتوسع التلقائي
-                setTimeout(() => {
-                    if (c.classList.contains('active')) {
-                        c.style.height = 'auto';
-                    }
-                }, 300);
-            }
+    function t(event, elem) { 
+        event.stopPropagation();
+        const c = elem.nextElementSibling;
+        const isActive = c.classList.contains('active');
+        if (isActive) {
+            c.style.height = '0px'; c.classList.remove('active'); elem.classList.remove('active');
+        } else {
+            const height = c.scrollHeight;
+            c.style.height = height + 'px'; c.classList.add('active'); elem.classList.add('active');
+            setTimeout(() => { if (c.classList.contains('active')) c.style.height = 'auto'; }, 300);
         }
+    }
 
-        function o(t, i, j, tabId) { 
-            event.stopPropagation();
-            const items = menuData.menu[L].filter(c => c.tab === tabId);
-            const x = items[i].items[j];
-            
-            // Save scroll position before opening modal
-            modalScrollPosition = window.scrollY;
-            
-            // Add state to history for back button handling
-            history.pushState({ modal: true }, '');
-            
-            mi.onload = () => { 
-                mo.classList.add('active'); 
-                document.body.style.overflow = 'hidden';
-                document.body.style.position = 'fixed';
-                document.body.style.top = `-${modalScrollPosition}px`;
-                document.body.style.width = '100%';
-            }; 
-            mi.src = x.img || ''; 
-            mt.textContent = x.name; 
-            md.textContent = x.desc || ''; 
-            mp.textContent = x.price; 
-            
-            if (!x.img) {
-                mo.classList.add('active'); 
-                document.body.style.overflow = 'hidden';
-                document.body.style.position = 'fixed';
-                document.body.style.top = `-${modalScrollPosition}px`;
-                document.body.style.width = '100%';
-            }
-            
+    function o(t, i, j, tabId) { 
+        event.stopPropagation();
+        const items = menuData.menu[L].filter(c => c.tab === tabId);
+        const x = items[i].items[j];
+        modalScrollPosition = window.scrollY;
+        history.pushState({ modal: true }, '');
+        mi.onload = () => { 
+            mo.classList.add('active'); 
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${modalScrollPosition}px`;
+            document.body.style.width = '100%';
+        }; 
+        mi.src = x.img || ''; 
+        mt.textContent = x.name; 
+        md.textContent = x.desc || ''; 
+        mp.textContent = x.price; 
+        if (!x.img) {
+            mo.classList.add('active'); 
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${modalScrollPosition}px`;
+            document.body.style.width = '100%';
+        }
+        z();
+    }
+
+    function c() { 
+        mo.classList.add('closing');
+        setTimeout(() => {
+            mo.classList.remove('active', 'closing'); 
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, modalScrollPosition);
             z();
+        }, 300);
+    }
+
+    function handleBackButton(event) {
+        if (mo.classList.contains('active')) { event.preventDefault(); c(); }
+    }
+
+    function z() { s = 1; tx = ty = 0; v(); }
+    function v() { mi.style.transform = `translate(${tx}px,${ty}px) scale(${s})`; }
+
+    e('modalClose').addEventListener('click', (event) => { event.stopPropagation(); history.back(); });
+
+    mi.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 300 && tapLength > 0) {
+            s = s === 1 ? 2.5 : 1;
+            if (s === 1) { tx = ty = 0; }
+            v();
         }
+        lastTap = currentTime;
+    });
 
-        function c() { 
-            mo.classList.add('closing');
-            setTimeout(() => {
-                mo.classList.remove('active', 'closing'); 
-                
-                // Restore scroll position
-                document.body.style.overflow = '';
-                document.body.style.position = '';
-                document.body.style.top = '';
-                document.body.style.width = '';
-                window.scrollTo(0, modalScrollPosition);
-                
-                z();
-            }, 300);
-        }
-
-        function handleBackButton(event) {
-            if (mo.classList.contains('active')) {
-                event.preventDefault();
-                c();
-            }
-        }
-
-        function z() { 
-            s = 1; 
-            tx = ty = 0; 
-            v() 
-        }
-
-        function v() { 
-            mi.style.transform = `translate(${tx}px,${ty}px) scale(${s})` 
-        }
-
-        e('modalClose').addEventListener('click', (event) => {
-            event.stopPropagation();
-            history.back();
-        });
-
-        // Handle double-tap to zoom on images
-        mi.addEventListener('touchend', (e) => {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
-            
-            if (tapLength < 300 && tapLength > 0) {
-                // Double tap detected
-                if (s === 1) {
-                    s = 2.5;
-                } else {
-                    s = 1;
-                    tx = ty = 0;
-                }
-                v();
-            }
-            lastTap = currentTime;
-        });
-
-        mi.addEventListener('mousedown', e => { 
-            if (s <= 1) return; 
-            drag = true; 
-            sx = e.clientX - tx; 
-            sy = e.clientY - ty; 
-            mi.style.cursor = 'grabbing' 
-        });
-
-        mi.addEventListener('touchstart', e => { 
-            if (e.touches.length === 2) { 
-                e.preventDefault(); 
-                const t1 = e.touches[0], t2 = e.touches[1]; 
-                td = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY) 
-            } else if (e.touches.length === 1 && s > 1) { 
-                drag = true; 
-                sx = e.touches[0].clientX - tx; 
-                sy = e.touches[0].clientY - ty 
-            } 
-        }, { passive: false });
-
-        document.addEventListener('mousemove', e => { 
-            if (!drag) return; 
+    mi.addEventListener('mousedown', e => { if (s <= 1) return; drag = true; sx = e.clientX - tx; sy = e.clientY - ty; mi.style.cursor = 'grabbing'; });
+    mi.addEventListener('touchstart', e => { 
+        if (e.touches.length === 2) { 
             e.preventDefault(); 
-            tx = e.clientX - sx; 
-            ty = e.clientY - sy; 
-            v() 
-        });
+            const t1 = e.touches[0], t2 = e.touches[1]; 
+            td = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        } else if (e.touches.length === 1 && s > 1) { 
+            drag = true; sx = e.touches[0].clientX - tx; sy = e.touches[0].clientY - ty;
+        } 
+    }, { passive: false });
 
-        document.addEventListener('touchmove', e => { 
-            if (e.touches.length === 2) { 
-                e.preventDefault(); 
-                const t1 = e.touches[0], t2 = e.touches[1], d = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY); 
-                if (td > 0) { 
-                    const delta = d - td; 
-                    s = Math.max(.5, Math.min(3, s + delta * .01)); 
-                    v() 
-                } 
-                td = d 
-            } else if (drag && e.touches.length === 1) { 
-                e.preventDefault(); 
-                tx = e.touches[0].clientX - sx; 
-                ty = e.touches[0].clientY - sy; 
-                v() 
-            } 
-        }, { passive: false });
-
-        document.addEventListener('mouseup', () => { 
-            drag = false; 
-            mi.style.cursor = 'grab' 
-        });
-
-        document.addEventListener('touchend', () => { 
-            drag = false; 
-            td = 0 
-        });
-
-        e('imageContainer').addEventListener('wheel', e => { 
+    document.addEventListener('mousemove', e => { if (!drag) return; e.preventDefault(); tx = e.clientX - sx; ty = e.clientY - sy; v(); });
+    document.addEventListener('touchmove', e => { 
+        if (e.touches.length === 2) { 
             e.preventDefault(); 
-            const delta = e.deltaY > 0 ? -.1 : .1; 
-            s = Math.max(.5, Math.min(3, s + delta)); 
-            v() 
-        }, { passive: false });
+            const t1 = e.touches[0], t2 = e.touches[1], d = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY); 
+            if (td > 0) { const delta = d - td; s = Math.max(.5, Math.min(3, s + delta * .01)); v(); } 
+            td = d;
+        } else if (drag && e.touches.length === 1) { 
+            e.preventDefault(); tx = e.touches[0].clientX - sx; ty = e.touches[0].clientY - sy; v();
+        } 
+    }, { passive: false });
 
-        document.addEventListener('keydown', e => { 
-            if (!mo.classList.contains('active')) return; 
-            if (e.key === 'Escape') {
-                history.back();
-            }
-        });
+    document.addEventListener('mouseup', () => { drag = false; mi.style.cursor = 'grab'; });
+    document.addEventListener('touchend', () => { drag = false; td = 0; });
+
+    e('imageContainer').addEventListener('wheel', e => { 
+        e.preventDefault(); 
+        const delta = e.deltaY > 0 ? -.1 : .1; 
+        s = Math.max(.5, Math.min(3, s + delta)); 
+        v();
+    }, { passive: false });
+
+    document.addEventListener('keydown', e => { 
+        if (!mo.classList.contains('active')) return; 
+        if (e.key === 'Escape') history.back();
+    });
     </script>
-</body> 
+</body>
 </html>
