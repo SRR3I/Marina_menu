@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | الصفحة غير موجودة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0e1a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(16,185,129,.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59,130,246,.15) 0%, transparent 50%);
+            pointer-events: none;
+            animation: bgPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.9; }
+            50%       { opacity: 1;   }
+        }
+
+        /* جسيمات */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0%   { transform: translateY(110vh) scale(0); opacity: 0;  }
+            10%  { opacity: 1; }
+            90%  { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* شريط علوي */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6, #3b82f6, #10b981);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 0%   0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px 24px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        /* ===== 404 ===== */
+        .error-number {
+            font-size: clamp(6em, 22vw, 10em);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -4px;
+            background: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: numberGlow 3s ease-in-out infinite;
+            margin-bottom: 4px;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(16,185,129,.35)); }
+            50%       { filter: drop-shadow(0 0 45px rgba(59,130,246,.55)); }
+        }
+
+        /* ===== أيقونة ===== */
+        .food-icon {
+            font-size: 3.5em;
+            margin: 8px 0 18px;
+            display: block;
+            animation: bounce 2.2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-14px); }
+        }
+
+        /* ===== نصوص ===== */
+        .error-title {
+            font-size: clamp(1.3em, 5vw, 1.8em);
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .error-desc {
+            font-size: 1em;
+            color: #a0aec0;
+            line-height: 1.75;
+            margin-bottom: 34px;
+        }
+
+        /* ===== بطاقة ===== */
+        .empty-plate {
+            background: rgba(20, 24, 40, 0.6);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,.3);
+            transition: border-color .3s;
+        }
+
+        .empty-plate:hover {
+            border-color: rgba(16,185,129,.3);
+            box-shadow: 0 12px 40px rgba(16,185,129,.2);
+        }
+
+        .empty-plate::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(16,185,129,.05), rgba(59,130,246,.05));
+            pointer-events: none;
+        }
+
+        .plate-emoji {
+            font-size: 2.8em;
+            display: block;
+            margin-bottom: 10px;
+            animation: plateBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes plateBounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-6px); }
+        }
+
+        .plate-text {
+            font-size: 0.95em;
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        /* ===== فاصل ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 28px 0 24px;
+            opacity: 0.3;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+        }
+
+        .divider-icon { font-size: 1em; color: #10b981; }
+
+        /* ===== أزرار ===== */
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 28px;
+            border-radius: 14px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all .3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, rgba(16,185,129,.2), rgba(59,130,246,.2));
+            color: #fff;
+            border: 1px solid rgba(16,185,129,.4);
+            box-shadow: 0 4px 12px rgba(16,185,129,.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, rgba(16,185,129,.3), rgba(59,130,246,.3));
+            box-shadow: 0 8px 24px rgba(16,185,129,.45);
+            border-color: rgba(16,185,129,.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,.05);
+            color: #a0aec0;
+            border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-color: rgba(16,185,129,.2);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 480px) {
+            .error-number { letter-spacing: -2px; }
+            .btn { padding: 11px 20px; font-size: 0.95em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+
+        <div class="error-number">404</div>
+
+        <span class="food-icon">🍽️</span>
+
+        <h1 class="error-title">الصفحة غير موجودة</h1>
+        <p class="error-desc">
+            يبدو أن هذا الطبق غير موجود في قائمتنا!<br>
+            ربما تم نقل الصفحة أو حذفها.
+        </p>
+
+        <div class="empty-plate">
+            <span class="plate-emoji">🫙</span>
+            <p class="plate-text">الطبق الذي تبحث عنه... فرغ!</p>
+        </div>
+
+        <div class="divider">
+            <div class="divider-line"></div>
+            <span class="divider-icon">✦</span>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="buttons">
+            <a href="index.html" class="btn btn-primary">
+                🏠 العودة للرئيسية
+            </a>
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                ← الصفحة السابقة
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        const container = document.getElementById('particles');
+        const colors = [
+            'rgba(16,185,129,',
+            'rgba(59,130,246,',
+            'rgba(139,92,246,',
+        ];
+
+        for (let i = 0; i < 22; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size     = Math.random() * 5 + 2;
+            const color    = colors[Math.floor(Math.random() * colors.length)];
+            const duration = Math.random() * 12 + 8;
+            const delay    = Math.random() * 10;
+            const left     = Math.random() * 100;
+
+            p.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                background: ${color}0.7);
+                left: ${left}%;
+                bottom: -20px;
+                animation-duration: ${duration}s;
+                animation-delay: ${delay}s;
+                box-shadow: 0 0 ${size * 2}px ${color}0.4);
+            `;
+            container.appendChild(p);
+        }
+    </script>
+</body>
+</html>
