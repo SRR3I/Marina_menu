@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة إدارة القائمة - فندق الأنبار الدولي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dark: #8a6b2a;
+    --bg: #0e0e0e;
+    --bg2: #161616;
+    --bg3: #1e1e1e;
+    --bg4: #252525;
+    --surface: #1a1a1a;
+    --border: #2e2e2e;
+    --border-gold: rgba(201,168,76,0.3);
+    --text: #f0e8d8;
+    --text-muted: #888;
+    --text-dim: #555;
+    --danger: #c0392b;
+    --danger-light: #e74c3c;
+    --success: #27ae60;
+    --info: #2980b9;
+    --radius: 10px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #0e0e0e 0%, #1a1204 100%);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-brand .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .header-brand h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+  }
+  .header-brand p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+  }
+  .btn-gold:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-gold);
+    color: var(--gold-light);
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); }
+  .btn-danger {
+    background: var(--danger);
+    color: #fff;
+  }
+  .btn-danger:hover { background: var(--danger-light); }
+  .btn-ghost {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+  .btn-icon { padding: 7px 9px; }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    height: calc(100vh - 64px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 260px;
+    background: var(--bg2);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-section {
+    padding: 14px 16px 8px;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s;
+    margin-bottom: 2px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border: 1px solid transparent;
+  }
+  .sidebar-item:hover {
+    background: var(--bg3);
+    color: var(--text);
+  }
+  .sidebar-item.active {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--border-gold);
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .sidebar-item .icon { font-size: 16px; min-width: 20px; text-align: center; }
+  .sidebar-item .count {
+    margin-right: auto;
+    background: var(--bg4);
+    color: var(--text-muted);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+  .sidebar-item.active .count {
+    background: rgba(201,168,76,0.2);
+    color: var(--gold);
+  }
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+    background: var(--bg);
+  }
+
+  /* ── PAGE SECTIONS ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .page-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .page-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* ── STATS CARDS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .stat-card .value {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--gold-light);
+    margin: 6px 0 2px;
+    line-height: 1;
+  }
+  .stat-card .sub {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg2);
+  }
+  .card-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .card-body { padding: 20px; }
+
+  /* ── SECTION COLLAPSE ── */
+  .section-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section-head {
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    background: var(--bg2);
+    user-select: none;
+    transition: background 0.18s;
+  }
+  .section-head:hover { background: var(--bg3); }
+  .section-head .icon { font-size: 18px; }
+  .section-head .title { font-size: 15px; font-weight: 700; flex: 1; }
+  .section-head .meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-head .tab-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .tab-food { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .tab-drinks { background: rgba(41,128,185,0.15); color: #5dade2; }
+  .tab-shisha { background: rgba(39,174,96,0.15); color: #52be80; }
+
+  .section-body {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+  .section-body.open { display: block; }
+
+  /* ── ITEMS TABLE ── */
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table th {
+    text-align: right;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+    text-transform: uppercase;
+  }
+  .items-table td {
+    padding: 10px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+  .items-table tr:last-child td { border-bottom: none; }
+  .items-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .item-img-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .item-img-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 18px;
+  }
+  .item-name { font-weight: 600; color: var(--text); }
+  .item-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .item-price {
+    font-weight: 700;
+    color: var(--gold-light);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .img-path {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: monospace;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .actions-cell { display: flex; gap: 6px; }
+
+  /* ── ADD ITEM ROW ── */
+  .add-item-row {
+    padding: 12px 16px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,168,76,0.03);
+  }
+  .add-item-row .btn { flex-shrink: 0; }
+
+  /* ── SECTION FOOTER ── */
+  .section-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border-gold);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    animation: modalIn 0.2s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 { font-size: 16px; font-weight: 700; color: var(--gold-light); }
+  .modal-close {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.18s;
+  }
+  .modal-close:hover { border-color: var(--danger); color: var(--danger-light); }
+  .modal-body { padding: 22px; }
+  .modal-footer {
+    padding: 16px 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* ── FORM ── */
+  .form-group { margin-bottom: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    padding: 9px 13px;
+    outline: none;
+    transition: border-color 0.18s;
+    direction: rtl;
+  }
+  input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  select option { background: var(--bg3); }
+
+  /* ── IMAGE PATH INPUT ── */
+  .img-input-wrap {
+    position: relative;
+  }
+  .img-input-wrap input {
+    padding-left: 90px;
+  }
+  .img-browse-btn {
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg4);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .img-browse-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .img-preview-wrap {
+    margin-top: 8px;
+    display: none;
+  }
+  .img-preview-wrap.show { display: flex; align-items: center; gap: 10px; }
+  .img-preview-wrap img {
+    width: 60px; height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .img-preview-wrap span { font-size: 12px; color: var(--text-dim); }
+
+  /* ── TRANSLATION TABS ── */
+  .trans-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .trans-tab {
+    flex: 1;
+    text-align: center;
+    padding: 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.18s;
+    color: var(--text-muted);
+  }
+  .trans-tab.active {
+    background: var(--gold);
+    color: #fff;
+  }
+  .trans-panel { display: none; }
+  .trans-panel.active { display: block; }
+
+  /* ── TOAST ── */
+  .toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .toast {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow);
+    animation: toastIn 0.3s ease;
+    min-width: 240px;
+  }
+  .toast.success { border-color: var(--success); color: #52be80; }
+  .toast.error { border-color: var(--danger); color: var(--danger-light); }
+  .toast.info { border-color: var(--info); color: #5dade2; }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── CONFIRM DIALOG ── */
+  .confirm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+  .confirm-overlay.open { display: flex; }
+  .confirm-box {
+    background: var(--bg2);
+    border: 1px solid var(--border-gold);
+    border-radius: 14px;
+    padding: 28px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    animation: modalIn 0.2s ease;
+  }
+  .confirm-box .icon { font-size: 36px; margin-bottom: 14px; }
+  .confirm-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .confirm-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+  .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+
+  /* ── SEARCH BAR ── */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .search-wrap input {
+    padding-right: 38px;
+    background: var(--bg2);
+  }
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 15px;
+    pointer-events: none;
+  }
+
+  /* ── LOGO SECTION ── */
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: var(--bg3);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .logo-preview {
+    width: 80px; height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border-gold);
+    background: var(--bg4);
+  }
+  .logo-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .logo-info p { font-size: 12px; color: var(--text-muted); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+  }
+  .empty-state .icon { font-size: 36px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+  /* ── HIDDEN FILE INPUT ── */
+  #fileInput { display: none; }
+
+  /* ── JSON EXPORT ── */
+  .json-output {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .collapse-arrow {
+    font-size: 12px;
+    transition: transform 0.2s;
+    color: var(--text-dim);
+  }
+  .collapse-arrow.open { transform: rotate(180deg); }
+
+  .badge-count {
+    background: var(--bg4);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar { width: 200px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">
+    <div class="logo-icon">🏨</div>
+    <div>
+      <h1>لوحة إدارة القائمة</h1>
+      <p>فندق الأنبار الدولي</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div id="file-status-bar" style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);">
+      <span id="file-status-dot" style="width:8px;height:8px;border-radius:50%;background:var(--text-dim);display:inline-block;"></span>
+      <span id="file-status-text">لا يوجد ملف محدد</span>
+    </div>
+    <button class="btn btn-outline" onclick="saveToFile()" id="btn-save-file" style="display:none;">💾 حفظ للملف</button>
+    <button class="btn btn-ghost" onclick="showExportModal()">⬇ تصدير</button>
+    <button class="btn btn-gold" onclick="openFileFromDisk()">📂 فتح ملف JSON</button>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">الصفحات</div>
+      <div class="sidebar-item active" onclick="showPage('dashboard', this)">
+        <span class="icon">📊</span> لوحة التحكم
+      </div>
+      <div class="sidebar-item" onclick="showPage('settings', this)">
+        <span class="icon">⚙️</span> إعدادات عامة
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>القوائم</span>
+        <button onclick="showAddLangModal()" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:14px;padding:0 2px;" title="إضافة لغة">＋</button>
+      </div>
+      <div id="sidebar-langs"></div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">التبويبات</div>
+      <div class="sidebar-item" onclick="showPage('tabs', this)">
+        <span class="icon">🗂️</span> إدارة التبويبات
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">أدوات</div>
+      <div class="sidebar-item" onclick="showPage('import', this)">
+        <span class="icon">📁</span> استيراد / تصدير
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- DASHBOARD PAGE -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div>
+          <h2>لوحة التحكم</h2>
+          <p>نظرة عامة على بيانات القائمة</p>
+        </div>
+        <button class="btn btn-gold" onclick="showPage('menu-ar', document.getElementById('nav-ar'))">
+          ✏️ تعديل القائمة
+        </button>
+      </div>
+
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="label">إجمالي الأقسام</div>
+          <div class="value" id="stat-sections">0</div>
+          <div class="sub">قسم في القائمة</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">إجمالي الأصناف</div>
+          <div class="value" id="stat-items">0</div>
+          <div class="sub">صنف (عربي)</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">الأطعمة</div>
+          <div class="value" id="stat-food">0</div>
+          <div class="sub">صنف</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">المشروبات والأراكيل</div>
+          <div class="value" id="stat-drinks">0</div>
+          <div class="sub">صنف</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>📋 ملخص الأقسام</h3>
+        </div>
+        <div class="card-body" id="dashboard-sections" style="padding:0;">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>القسم</th>
+                <th>التبويب</th>
+                <th>عدد الأصناف</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <div>
+          <h2>⚙️ الإعدادات العامة</h2>
+          <p>الشعار والترجمات والنصوص الثابتة</p>
+        </div>
+        <button class="btn btn-gold" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+      </div>
+
+      <div class="logo-section">
+        <img id="logo-preview-img" class="logo-preview" src="" alt="Logo">
+        <div class="logo-info">
+          <h4>شعار المطعم</h4>
+          <p>مسار الصورة داخل المشروع</p>
+          <div style="margin-top:10px;">
+            <div class="img-input-wrap" style="max-width:360px;">
+              <input type="text" id="logo-url" placeholder="img/logo/logo.jpg" oninput="previewLogoUrl(this.value)">
+              <button class="img-browse-btn" onclick="openFilePicker('logo-url', null, null, null, true)">📂 اختر</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trans-tabs" style="margin-bottom:20px;">
+        <div class="trans-tab active" onclick="switchSettingLang('ar', this)">🇮🇶 العربية</div>
+        <div class="trans-tab" onclick="switchSettingLang('en', this)">🇬🇧 English</div>
+      </div>
+
+      <div id="settings-ar" class="trans-panel active">
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header"><h3>النصوص العربية</h3></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>الشعار الفرعي (subtitle)</label>
+              <input type="text" id="ar-subtitle" placeholder="تجربة طعام فاخرة">
+            </div>
+            <div class="form-group">
+              <label>التذييل 1 (footer1)</label>
+              <input type="text" id="ar-footer1">
+            </div>
+            <div class="form-group">
+              <label>التذييل 2 (footer2)</label>
+              <input type="text" id="ar-footer2">
+            </div>
+            <div class="form-group">
+              <label>التذييل 3 (footer3)</label>
+              <input type="text" id="ar-footer3">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settings-en" class="trans-panel">
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header"><h3>English Texts</h3></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Subtitle</label>
+              <input type="text" id="en-subtitle">
+            </div>
+            <div class="form-group">
+              <label>Footer 1</label>
+              <input type="text" id="en-footer1">
+            </div>
+            <div class="form-group">
+              <label>Footer 2</label>
+              <input type="text" id="en-footer2">
+            </div>
+            <div class="form-group">
+              <label>Footer 3</label>
+              <input type="text" id="en-footer3">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header"><h3>💰 إعدادات العملة</h3></div>
+        <div class="card-body">
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">العملة مشتركة — تُضاف تلقائياً على جميع الأسعار عند التعديل والتصدير</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label>العملة</label>
+              <select id="currency-code" onchange="updateCurrencyPreview()">
+                <option value="IQD">🇮🇶 دينار عراقي (IQD / د.ع)</option>
+                <option value="USD">🇺🇸 دولار أمريكي ($)</option>
+                <option value="SAR">🇸🇦 ريال سعودي (SAR)</option>
+                <option value="AED">🇦🇪 درهم إماراتي (AED)</option>
+                <option value="EUR">🇪🇺 يورو (€)</option>
+                <option value="CUSTOM">✏️ مخصص</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>موضع الرمز</label>
+              <select id="currency-position" onchange="updateCurrencyPreview()">
+                <option value="after">بعد الرقم &nbsp;&nbsp;→&nbsp;&nbsp; 5,000 د.ع</option>
+                <option value="before">قبل الرقم &nbsp;&nbsp;→&nbsp;&nbsp; $ 5,000</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" id="currency-custom-row" style="display:none;">
+            <div class="form-group">
+              <label>رمز عربي مخصص (مثال: د.ع)</label>
+              <input type="text" id="currency-symbol-ar" placeholder="د.ع" oninput="updateCurrencyPreview()">
+            </div>
+            <div class="form-group">
+              <label>رمز إنجليزي مخصص (مثال: IQD)</label>
+              <input type="text" id="currency-symbol-en" placeholder="IQD" oninput="updateCurrencyPreview()">
+            </div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border-gold);border-radius:8px;padding:14px 18px;margin-top:8px;">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">معاينة:</div>
+            <div style="display:flex;gap:32px;">
+              <div><span style="font-size:11px;color:var(--text-dim);">🇮🇶 عربي</span><br><strong id="preview-price-ar" style="color:var(--gold-light);font-size:17px;"></strong></div>
+              <div><span style="font-size:11px;color:var(--text-dim);">🇬🇧 English</span><br><strong id="preview-price-en" style="color:var(--gold-light);font-size:17px;"></strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>بديل النص (Alt Logo)</h3></div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>نص Alt للشعار</label>
+            <input type="text" id="logo-alt">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DYNAMIC LANG PAGES — injected by JS -->
+    <div id="dynamic-lang-pages"></div>
+
+        <!-- TABS PAGE -->
+    <div class="page" id="page-tabs">
+      <div class="page-header">
+        <div>
+          <h2>🗂️ إدارة التبويبات</h2>
+          <p>تعديل أسماء التبويبات ومعرفاتها</p>
+        </div>
+        <button class="btn btn-gold" onclick="saveTabs()">💾 حفظ التبويبات</button>
+      </div>
+      <div id="tabs-dynamic-container" style="margin-bottom:20px;"></div>
+    </div>
+
+    <!-- IMPORT PAGE -->
+    <div class="page" id="page-import">
+      <div class="page-header">
+        <div>
+          <h2>📁 استيراد / تصدير</h2>
+          <p>تحميل ملف JSON أو تصديره</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="card">
+          <div class="card-header"><h3>⬆ استيراد JSON</h3></div>
+          <div class="card-body">
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">استيراد ملف menu-data.json من جهازك لتحميل بيانات جديدة</p>
+            <button class="btn btn-gold" onclick="importJSON()">📂 اختر ملف JSON</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>⬇ تصدير JSON</h3></div>
+          <div class="card-body">
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">تصدير البيانات الحالية كملف menu-data.json جاهز للنسخ إلى مشروعك</p>
+            <button class="btn btn-gold" onclick="downloadJSON()">💾 تحميل ملف JSON</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <h3>معاينة JSON الحالي</h3>
+          <button class="btn btn-outline btn-sm" onclick="refreshJSONPreview()">تحديث</button>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="json-output" id="json-preview"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- MODAL: ITEM EDIT -->
+<div class="modal-overlay" id="itemModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">تعديل صنف</h3>
+      <button class="modal-close" onclick="closeModal('itemModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>الاسم <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="field-name" placeholder="اسم الصنف">
+      </div>
+      <div class="form-group" id="field-desc-wrap">
+        <label>الوصف</label>
+        <textarea id="field-desc" placeholder="وصف الصنف"></textarea>
+      </div>
+      <div class="form-group">
+        <label>السعر <span style="color:var(--danger)">*</span></label>
+        <div style="position:relative;">
+          <input type="text" id="field-price" placeholder="5,000" style="padding-left:60px;" oninput="autoFormatPrice(this)" inputmode="numeric">
+          <span id="price-currency-badge" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:var(--gold);pointer-events:none;"></span>
+        </div>
+        <p style="font-size:11px;color:var(--text-dim);margin-top:5px;">💡 أدخل الرقم فقط — العملة تُضاف تلقائياً من الإعدادات (<span id="price-hint-ar"></span> / <span id="price-hint-en"></span>)</p>
+      </div>
+      <div class="form-group">
+        <label>مسار الصورة</label>
+        <div class="img-input-wrap">
+          <input type="text" id="field-img" placeholder="img/folder/image.jpg" oninput="previewFieldImg(this.value)">
+          <button class="img-browse-btn" onclick="triggerFilePick()">📂 اختر</button>
+        </div>
+        <div class="img-preview-wrap" id="field-img-preview">
+          <img id="field-preview-img" src="">
+          <span id="field-preview-path"></span>
+        </div>
+        <p style="font-size:11px;color:var(--text-dim);margin-top:6px;">💡 ضع الصورة داخل مجلد المشروع ثم اكتب مسارها مثل: img/اطعمة/سلطات/1.jpg</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('itemModal')">إلغاء</button>
+      <button class="btn btn-gold" onclick="saveItem()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SECTION EDIT -->
+<div class="modal-overlay" id="sectionModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="section-modal-title">تعديل قسم</h3>
+      <button class="modal-close" onclick="closeModal('sectionModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>عنوان القسم <span style="color:var(--danger)">*</span></label>
+          <input type="text" id="section-title" placeholder="مثال: شوربات">
+        </div>
+        <div class="form-group">
+          <label>الأيقونة (إيموجي)</label>
+          <input type="text" id="section-icon" placeholder="🍵">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>التبويب <span style="color:var(--danger)">*</span></label>
+        <select id="section-tab">
+          <!-- populated dynamically from data.tabs[lang] -->
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('sectionModal')">إلغاء</button>
+      <button class="btn btn-gold" onclick="saveSection()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EXPORT -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-header">
+      <h3>⬇ تصدير ملف JSON</h3>
+      <button class="modal-close" onclick="closeModal('exportModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">انسخ هذا الـ JSON وضعه في ملف <code>menu-data.json</code> داخل مشروعك، أو اضغط تحميل.</p>
+      <div class="json-output" id="export-json-output" style="max-height:350px;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('exportModal')">إغلاق</button>
+      <button class="btn btn-outline" onclick="copyJSON()">📋 نسخ</button>
+      <button class="btn btn-gold" onclick="downloadJSON()">💾 تحميل</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="icon">⚠️</div>
+    <h3 id="confirm-title">هل أنت متأكد؟</h3>
+    <p id="confirm-msg">لا يمكن التراجع عن هذه العملية</p>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" onclick="closeConfirm()">إلغاء</button>
+      <button class="btn btn-danger" id="confirm-ok" onclick="">تأكيد الحذف</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toasts"></div>
+
+<!-- ADD LANG MODAL -->
+<div class="modal-overlay" id="addLangModal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header">
+      <h3>➕ إضافة لغة جديدة</h3>
+      <button class="modal-close" onclick="closeModal('addLangModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>رمز اللغة (مثال: fr, tr, ku)</label>
+        <input type="text" id="new-lang-code" placeholder="fr" maxlength="10" style="text-transform:lowercase;">
+      </div>
+      <div class="form-group">
+        <label>اسم اللغة للعرض</label>
+        <input type="text" id="new-lang-name" placeholder="مثال: Français">
+      </div>
+      <div class="form-group">
+        <label>علم / أيقونة (اختياري)</label>
+        <input type="text" id="new-lang-flag" placeholder="🇫🇷">
+      </div>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">ستُضاف اللغة الجديدة فارغة وتقدر تضيف أقسام وأصناف يدوياً</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('addLangModal')">إلغاء</button>
+      <button class="btn btn-gold" onclick="confirmAddLang()">➕ إضافة</button>
+    </div>
+  </div>
+</div>
+
+<!-- WELCOME OVERLAY -->
+<div id="welcome-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.97);z-index:9000;align-items:center;justify-content:center;flex-direction:column;gap:0;">
+  <div style="text-align:center;max-width:480px;padding:40px 32px;">
+    <div style="font-size:52px;margin-bottom:20px;">🏨</div>
+    <h2 style="font-size:22px;font-weight:900;color:var(--gold-light);margin-bottom:8px;">لوحة إدارة القائمة</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">
+      حدّد ملف <code style="background:var(--bg3);padding:2px 7px;border-radius:5px;color:var(--gold);">menu-data.json</code> من مشروعك<br>
+      سيتم فتحه مباشرة وحفظ التعديلات عليه بدون تحميل
+    </p>
+    <button class="btn btn-gold" style="font-size:15px;padding:13px 32px;border-radius:10px;" onclick="openFileFromDisk();hideWelcome();">
+      📂 فتح ملف menu-data.json
+    </button>
+    <p style="font-size:11px;color:var(--text-dim);margin-top:18px;">أو اسحب الملف وأفلته هنا</p>
+  </div>
+</div>
+
+<!-- HIDDEN FILE INPUT -->
+<input type="file" id="fileInput" accept="image/*">
+<input type="file" id="jsonFileInput" accept=".json">
+
+<script>
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// STATE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let data = {};
+let editState = { lang: null, sectionIdx: null, itemIdx: null };
+let sectionEditState = { lang: null, sectionIdx: null };
+let confirmCallback = null;
+
+// ── CURRENCY HELPERS ──
+const CURRENCY_PRESETS = {
+  IQD:  { ar: 'د.ع',  en: 'IQD', position: 'after'  },
+  USD:  { ar: '$',    en: '$',   position: 'before' },
+  SAR:  { ar: 'ر.س',  en: 'SAR', position: 'after'  },
+  AED:  { ar: 'د.إ',  en: 'AED', position: 'after'  },
+  EUR:  { ar: '€',    en: '€',   position: 'before' },
+  CUSTOM: { ar: '',   en: '',    position: 'after'  }
+};
+
+function getCurrency() {
+  return data.currency || { symbol_ar: 'د.ع', symbol_en: 'IQD', code: 'IQD', position: 'after' };
+}
+
+function formatPrice(rawNum, lang) {
+  const c = getCurrency();
+  const sym = lang === 'ar' ? c.symbol_ar : c.symbol_en;
+  if (!rawNum) return '';
+  if (c.position === 'before') return sym + ' ' + rawNum;
+  return rawNum + ' ' + sym;
+}
+
+function updateCurrencyPreview() {
+  const code = document.getElementById('currency-code')?.value;
+  const customRow = document.getElementById('currency-custom-row');
+  if (code === 'CUSTOM') {
+    customRow.style.display = 'grid';
+  } else {
+    customRow.style.display = 'none';
+    const preset = CURRENCY_PRESETS[code] || CURRENCY_PRESETS.IQD;
+    document.getElementById('currency-symbol-ar').value = preset.ar;
+    document.getElementById('currency-symbol-en').value = preset.en;
+    document.getElementById('currency-position').value = preset.position;
+  }
+  const arSym = document.getElementById('currency-symbol-ar')?.value || 'د.ع';
+  const enSym = document.getElementById('currency-symbol-en')?.value || 'IQD';
+  const pos = document.getElementById('currency-position')?.value || 'after';
+  const sample = '5,000';
+  const arFmt = pos === 'before' ? arSym + ' ' + sample : sample + ' ' + arSym;
+  const enFmt = pos === 'before' ? enSym + ' ' + sample : sample + ' ' + enSym;
+  document.getElementById('preview-price-ar').textContent = arFmt;
+  document.getElementById('preview-price-en').textContent = enFmt;
+  // Update modal badge
+  const badge = document.getElementById('price-currency-badge');
+  if (badge) badge.textContent = pos === 'before' ? arSym : arSym;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// INIT - Load embedded data
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ── FILE HANDLE (File System Access API) ──
+let fileHandle = null;
+
+function setFileStatus(ok, name) {
+  const dot = document.getElementById('file-status-dot');
+  const txt = document.getElementById('file-status-text');
+  const btn = document.getElementById('btn-save-file');
+  if (ok) {
+    dot.style.background = '#27ae60';
+    txt.textContent = name || 'ملف محدد';
+    if (btn) btn.style.display = 'inline-flex';
+  } else {
+    dot.style.background = 'var(--text-dim)';
+    txt.textContent = 'لا يوجد ملف محدد';
+    if (btn) btn.style.display = 'none';
+  }
+}
+
+async function openFileFromDisk() {
+  try {
+    if (window.showOpenFilePicker) {
+      // Modern API — remembers the file handle for direct save
+      const [handle] = await window.showOpenFilePicker({
+        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }],
+        multiple: false
+      });
+      fileHandle = handle;
+      const file = await handle.getFile();
+      const text = await file.text();
+      loadJSON(text, file.name);
+    } else {
+      // Fallback for older browsers
+      document.getElementById('jsonFileInput').click();
+    }
+  } catch (e) {
+    if (e.name !== 'AbortError') toast('تعذر فتح الملف: ' + e.message, 'error');
+  }
+}
+
+async function saveToFile() {
+  if (!fileHandle) {
+    // No handle yet — use showSaveFilePicker or fallback to download
+    await saveAsNewFile();
+    return;
+  }
+  try {
+    const exportData = buildExportData();
+    const writable = await fileHandle.createWritable();
+    await writable.write(JSON.stringify(exportData, null, 2));
+    await writable.close();
+    toast('✅ تم الحفظ مباشرة على الملف', 'success');
+    setFileStatus(true, fileHandle.name);
+  } catch (e) {
+    toast('خطأ في الحفظ: ' + e.message, 'error');
+  }
+}
+
+async function saveAsNewFile() {
+  try {
+    const exportData = buildExportData();
+    if (window.showSaveFilePicker) {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: 'menu-data.json',
+        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+      });
+      fileHandle = handle;
+      const writable = await handle.createWritable();
+      await writable.write(JSON.stringify(exportData, null, 2));
+      await writable.close();
+      setFileStatus(true, handle.name);
+      toast('✅ تم الحفظ', 'success');
+    } else {
+      downloadJSON();
+    }
+  } catch (e) {
+    if (e.name !== 'AbortError') toast('خطأ: ' + e.message, 'error');
+  }
+}
+
+function loadJSON(text, filename) {
+  try {
+    const parsed = JSON.parse(text);
+    // Strip currency from prices if they still have it (legacy files)
+    for (const lang of ['ar', 'en']) {
+      for (const sec of parsed.menu?.[lang] || []) {
+        for (const item of sec.items || []) {
+          if (item.price) {
+            item.price = item.price.replace(/[^0-9,]/g, '').trim();
+          }
+        }
+      }
+    }
+    data = parsed;
+    if (!data.currency) {
+      data.currency = { symbol_ar: 'د.ع', symbol_en: 'IQD', code: 'IQD', position: 'after' };
+    }
+    renderAll();
+    setFileStatus(true, filename || 'menu-data.json');
+    toast('✅ تم تحميل: ' + (filename || 'menu-data.json'), 'success');
+  } catch (e) {
+    toast('خطأ: الملف غير صالح — ' + e.message, 'error');
+  }
+}
+
+function init() {
+  // Show welcome screen — no embedded data
+  showWelcome();
+}
+
+function showWelcome() {
+  // Show a welcome overlay asking user to open the file
+  const overlay = document.getElementById('welcome-overlay');
+  if (overlay) overlay.style.display = 'flex';
+}
+
+function hideWelcome() {
+  const overlay = document.getElementById('welcome-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function getLangs() {
+  return Object.keys(data.menu || {});
+}
+
+const LANG_META = {
+  ar: { name: 'عربي', flag: '🇮🇶' },
+  en: { name: 'English', flag: '🇬🇧' },
+  fr: { name: 'Français', flag: '🇫🇷' },
+  tr: { name: 'Türkçe', flag: '🇹🇷' },
+  ku: { name: 'Kurdî', flag: '🏳' },
+  de: { name: 'Deutsch', flag: '🇩🇪' },
+  es: { name: 'Español', flag: '🇪🇸' },
+};
+
+function getLangMeta(code) {
+  return data._langMeta?.[code] || LANG_META[code] || { name: code.toUpperCase(), flag: '🌐' };
+}
+
+function renderAll() {
+  if (!data || !data.menu) return;
+  hideWelcome();
+  renderSidebarLangs();
+  renderDynamicLangPages();
+  renderDashboard();
+  renderSettings();
+  renderTabs();
+  refreshJSONPreview();
+}
+
+function renderSidebarLangs() {
+  const container = document.getElementById('sidebar-langs');
+  if (!container) return;
+  const langs = getLangs();
+  container.innerHTML = langs.map(lang => {
+    const meta = getLangMeta(lang);
+    const total = (data.menu[lang] || []).reduce((s, sec) => s + (sec.items?.length || 0), 0);
+    return `
+    <div class="sidebar-item" onclick="showLangPage('${lang}', this)" id="nav-${lang}">
+      <span class="icon">${meta.flag}</span>
+      <span style="flex:1;">${meta.name}</span>
+      <span class="count" id="cnt-${lang}">${total}</span>
+    </div>`;
+  }).join('') + `
+    <div class="sidebar-item" onclick="showAddLangModal()" style="color:var(--text-dim);font-size:12px;border-style:dashed;">
+      <span class="icon">＋</span> إضافة لغة
+    </div>`;
+}
+
+function renderDynamicLangPages() {
+  const container = document.getElementById('dynamic-lang-pages');
+  if (!container) return;
+  const langs = getLangs();
+  container.innerHTML = langs.map(lang => {
+    const meta = getLangMeta(lang);
+    return `
+    <div class="page" id="page-menu-${lang}">
+      <div class="page-header">
+        <div>
+          <h2>${meta.flag} القائمة — ${meta.name}</h2>
+          <p>إضافة وتعديل وحذف الأقسام والأصناف</p>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-danger btn-sm" onclick="deleteLang('${lang}')">🗑 حذف اللغة</button>
+          <button class="btn btn-gold" onclick="addSection('${lang}')">+ إضافة قسم</button>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="بحث..." id="search-${lang}" oninput="filterSections('${lang}', this.value)">
+      </div>
+      <div id="sections-${lang}"></div>
+    </div>`;
+  }).join('');
+
+  // Render sections for each lang
+  langs.forEach(lang => renderMenuSections(lang));
+}
+
+let activeLangPage = null;
+
+function showLangPage(lang, el) {
+  activeLangPage = lang;
+  showPage('menu-' + lang, el);
+}
+
+function showAddLangModal() {
+  document.getElementById('new-lang-code').value = '';
+  document.getElementById('new-lang-name').value = '';
+  document.getElementById('new-lang-flag').value = '';
+  openModal('addLangModal');
+}
+
+function confirmAddLang() {
+  const code = document.getElementById('new-lang-code').value.trim().toLowerCase().replace(/[^a-z]/g, '');
+  const name = document.getElementById('new-lang-name').value.trim();
+  const flag = document.getElementById('new-lang-flag').value.trim() || '🌐';
+  if (!code) { toast('رمز اللغة مطلوب', 'error'); return; }
+  if (!name) { toast('اسم اللغة مطلوب', 'error'); return; }
+  if (data.menu[code]) { toast('هذه اللغة موجودة مسبقاً', 'error'); return; }
+
+  // Add lang to data
+  data.menu[code] = [];
+  if (!data._langMeta) data._langMeta = {};
+  data._langMeta[code] = { name, flag };
+
+  closeModal('addLangModal');
+  renderAll();
+
+  // Navigate to new lang page
+  setTimeout(() => {
+    const navEl = document.getElementById('nav-' + code);
+    if (navEl) showLangPage(code, navEl);
+  }, 50);
+  toast(`تمت إضافة لغة: ${flag} ${name}`, 'success');
+}
+
+function deleteLang(lang) {
+  const meta = getLangMeta(lang);
+  showConfirm(
+    'حذف لغة',
+    `هل تريد حذف القائمة "${meta.flag} ${meta.name}" وجميع بياناتها؟`,
+    () => {
+      delete data.menu[lang];
+      if (data.tabs) delete data.tabs[lang];
+      if (data.translations) delete data.translations[lang];
+      if (data._langMeta) delete data._langMeta[lang];
+      renderAll();
+      // Go back to dashboard
+      showPage('dashboard', document.querySelector('.sidebar-item'));
+      toast('تم حذف اللغة', 'success');
+    }
+  );
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// NAVIGATION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  el.classList.add('active');
+  if (name === 'import') refreshJSONPreview();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DASHBOARD
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function renderDashboard() {
+  const arMenu = data.menu?.ar || [];
+  const totalItems = arMenu.reduce((s, sec) => s + (sec.items?.length || 0), 0);
+  const foodItems = arMenu.filter(s => s.tab === 'food').reduce((s, sec) => s + (sec.items?.length || 0), 0);
+  const otherItems = arMenu.filter(s => s.tab !== 'food').reduce((s, sec) => s + (sec.items?.length || 0), 0);
+
+  document.getElementById('stat-sections').textContent = arMenu.length;
+  document.getElementById('stat-items').textContent = totalItems;
+  document.getElementById('stat-food').textContent = foodItems;
+  document.getElementById('stat-drinks').textContent = otherItems;
+
+  // Update sidebar counts
+  // Update all lang counts in sidebar
+  getLangs().forEach(lang => {
+    const el = document.getElementById('cnt-' + lang);
+    if (el) el.textContent = (data.menu[lang] || []).reduce((s, sec) => s + (sec.items?.length || 0), 0);
+  });
+
+  // Table
+  const tbody = document.getElementById('dashboard-tbody');
+  tbody.innerHTML = arMenu.map((sec, i) => `
+    <tr>
+      <td><span style="font-size:16px;margin-left:8px;">${sec.icon||''}</span><strong>${sec.title}</strong></td>
+      <td><span class="badge-count tab-${sec.tab}" style="font-size:11px;padding:3px 8px;border-radius:20px;">${sec.tab}</span></td>
+      <td><span class="badge-count">${sec.items?.length||0}</span></td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="goEditSection('ar',${i})">✏️ تعديل</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function goEditSection(lang, idx) {
+  const navEl = document.getElementById('nav-' + lang);
+  if (navEl) showLangPage(lang, navEl);
+  setTimeout(() => {
+    const el = document.querySelector(`[data-sec="${lang}-${idx}"]`);
+    if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }, 100);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// RENDER MENU SECTIONS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function getOpenSections(lang) {
+  const open = new Set();
+  document.querySelectorAll(`[data-sec^="${lang}-"]`).forEach(el => {
+    const body = el.querySelector('.section-body');
+    if (body && body.classList.contains('open')) {
+      open.add(el.getAttribute('data-sec'));
+    }
+  });
+  return open;
+}
+
+function renderMenuSections(lang, filter = '') {
+  const container = document.getElementById('sections-' + lang);
+  const menu = data.menu?.[lang] || [];
+
+  // ── Save open state & scroll position before re-render ──
+  const openSections = getOpenSections(lang);
+  const mainEl = document.querySelector('.main');
+  const scrollTop = mainEl ? mainEl.scrollTop : 0;
+
+  const filtered = filter
+    ? menu.filter(sec =>
+        sec.title?.toLowerCase().includes(filter.toLowerCase()) ||
+        sec.items?.some(it => it.name?.toLowerCase().includes(filter.toLowerCase()))
+      )
+    : menu;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>لا توجد نتائج</p></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map((sec, rawIdx) => {
+    const idx = menu.indexOf(sec);
+    return renderSection(lang, sec, idx);
+  }).join('');
+
+  // ── Restore open state ──
+  openSections.forEach(secKey => {
+    const el = document.querySelector(`[data-sec="${secKey}"]`);
+    if (el) {
+      const body = el.querySelector('.section-body');
+      const arrow = el.querySelector('.collapse-arrow');
+      if (body) body.classList.add('open');
+      if (arrow) arrow.classList.add('open');
+    }
+  });
+
+  // ── Restore scroll position ──
+  if (mainEl) mainEl.scrollTop = scrollTop;
+}
+
+function renderSection(lang, sec, idx) {
+  const tabClass = 'tab-' + (sec.tab || 'food');
+  const itemsHtml = (sec.items || []).map((item, ii) => renderItemRow(lang, idx, item, ii)).join('');
+  return `
+  <div class="section-block" data-sec="${lang}-${idx}">
+    <div class="section-head" onclick="toggleSection(this)">
+      <span class="icon">${sec.icon || '📋'}</span>
+      <span class="title">${sec.title || 'بدون عنوان'}</span>
+      <div class="meta">
+        <span class="tab-badge ${tabClass}">${sec.tab}</span>
+        <span class="badge-count">${sec.items?.length || 0} صنف</span>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();editSection(event,'${lang}',${idx})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteSection('${lang}',${idx})">🗑</button>
+      </div>
+      <span class="collapse-arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th width="50">صورة</th>
+            <th>الاسم / الوصف</th>
+            <th>السعر</th>
+            <th>مسار الصورة</th>
+            <th width="120">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="items-${lang}-${idx}">
+          ${itemsHtml}
+        </tbody>
+      </table>
+      <div class="section-footer">
+        <button class="btn btn-outline btn-sm" onclick="addItem('${lang}',${idx})">+ إضافة صنف</button>
+        <button class="btn btn-ghost btn-sm" onclick="moveSectionUp('${lang}',${idx})">⬆ رفع</button>
+        <button class="btn btn-ghost btn-sm" onclick="moveSectionDown('${lang}',${idx})">⬇ تنزيل</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderItemRow(lang, secIdx, item, itemIdx) {
+  const imgSrc = item.img || '';
+  const imgHtml = imgSrc
+    ? `<img class="item-img-thumb" src="${escHtml(imgSrc)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-placeholder" style="display:none">🖼</div>`
+    : `<div class="item-img-placeholder">🖼</div>`;
+  const displayPrice = formatPrice(item.price || '', lang);
+  return `
+  <tr id="item-row-${lang}-${secIdx}-${itemIdx}">
+    <td>${imgHtml}</td>
+    <td>
+      <div class="item-name">${escHtml(item.name||'')}</div>
+      ${item.desc ? `<div class="item-desc">${escHtml(item.desc)}</div>` : ''}
+    </td>
+    <td><span class="item-price">${escHtml(displayPrice)}</span></td>
+    <td><span class="img-path" title="${escHtml(imgSrc)}">${escHtml(imgSrc||'—')}</span></td>
+    <td>
+      <div class="actions-cell">
+        <button class="btn btn-ghost btn-sm btn-icon" onclick="editItem('${lang}',${secIdx},${itemIdx})" title="تعديل">✏️</button>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="deleteItem('${lang}',${secIdx},${itemIdx})" title="حذف">🗑</button>
+        <button class="btn btn-ghost btn-sm btn-icon" onclick="moveItemUp('${lang}',${secIdx},${itemIdx})" title="رفع">⬆</button>
+        <button class="btn btn-ghost btn-sm btn-icon" onclick="moveItemDown('${lang}',${secIdx},${itemIdx})" title="تنزيل">⬇</button>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function toggleSection(head) {
+  const body = head.nextElementSibling;
+  const arrow = head.querySelector('.collapse-arrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// FILTER
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function filterSections(lang, val) {
+  renderMenuSections(lang, val);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ITEM CRUD
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function addItem(lang, secIdx) {
+  editState = { lang, sectionIdx: secIdx, itemIdx: null };
+  document.getElementById('modal-title').textContent = lang === 'ar' ? 'إضافة صنف جديد' : 'Add New Item';
+  document.getElementById('field-name').value = '';
+  document.getElementById('field-desc').value = '';
+  document.getElementById('field-price').value = '';
+  document.getElementById('field-img').value = '';
+  document.getElementById('field-img-preview').classList.remove('show');
+  // Show currency badge
+  const c = getCurrency();
+  const badge = document.getElementById('price-currency-badge');
+  if (badge) badge.textContent = c.position === 'before' ? c.symbol_ar + ' ...' : '... ' + c.symbol_ar;
+  openModal('itemModal');
+}
+
+function editItem(lang, secIdx, itemIdx) {
+  editState = { lang, sectionIdx: secIdx, itemIdx };
+  const item = data.menu[lang][secIdx].items[itemIdx];
+  document.getElementById('modal-title').textContent = lang === 'ar' ? 'تعديل صنف' : 'Edit Item';
+  document.getElementById('field-name').value = item.name || '';
+  document.getElementById('field-desc').value = item.desc || '';
+  // Show raw price (number only)
+  // Format price correctly when opening modal
+  const priceRaw = (item.price || '').replace(/[^0-9]/g, '');
+  document.getElementById('field-price').value = priceRaw ? Number(priceRaw).toLocaleString('en-US') : '';
+  document.getElementById('field-img').value = item.img || '';
+  previewFieldImg(item.img || '');
+  // Update currency badge in modal
+  const c = getCurrency();
+  const badge = document.getElementById('price-currency-badge');
+  if (badge) badge.textContent = c.position === 'before' ? c.symbol_ar + ' ...' : '... ' + c.symbol_ar;
+  openModal('itemModal');
+}
+
+function autoFormatPrice(input) {
+  // Remove everything except digits
+  let raw = input.value.replace(/[^0-9]/g, '');
+  if (!raw) { input.value = ''; return; }
+  // Add commas every 3 digits from the right
+  input.value = Number(raw).toLocaleString('en-US');
+}
+
+function saveItem() {
+  const name = document.getElementById('field-name').value.trim();
+  const rawPrice = document.getElementById('field-price').value.trim();
+  if (!name || !rawPrice) { toast('الاسم والسعر مطلوبان', 'error'); return; }
+
+  const { lang, sectionIdx, itemIdx } = editState;
+  const desc = document.getElementById('field-desc').value.trim() || undefined;
+  const img = document.getElementById('field-img').value.trim() || '';
+
+  const newItem = { name, price: rawPrice, img };
+  if (desc) newItem.desc = desc;
+
+  if (itemIdx === null) {
+    data.menu[lang][sectionIdx].items.push(newItem);
+  } else {
+    data.menu[lang][sectionIdx].items[itemIdx] = newItem;
+  }
+
+  closeModal('itemModal');
+  renderMenuSections(lang);
+  renderDashboard();
+  renderSidebarLangs();
+  toast('تم حفظ الصنف ✓', 'success');
+}
+
+function deleteItem(lang, secIdx, itemIdx) {
+  const item = data.menu[lang][secIdx].items[itemIdx];
+  showConfirm(
+    'حذف صنف',
+    `هل تريد حذف "${item.name}"؟ لا يمكن التراجع.`,
+    () => {
+      data.menu[lang][secIdx].items.splice(itemIdx, 1);
+      renderMenuSections(lang);
+      renderDashboard();
+      toast('تم الحذف', 'success');
+    }
+  );
+}
+
+function moveItemUp(lang, secIdx, itemIdx) {
+  if (itemIdx === 0) return;
+  const items = data.menu[lang][secIdx].items;
+  [items[itemIdx-1], items[itemIdx]] = [items[itemIdx], items[itemIdx-1]];
+  renderMenuSections(lang);
+}
+
+function moveItemDown(lang, secIdx, itemIdx) {
+  const items = data.menu[lang][secIdx].items;
+  if (itemIdx >= items.length - 1) return;
+  [items[itemIdx], items[itemIdx+1]] = [items[itemIdx+1], items[itemIdx]];
+  renderMenuSections(lang);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SECTION CRUD
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function populateTabSelect(lang, currentVal) {
+  const sel = document.getElementById('section-tab');
+  // Get tabs for this lang, fallback to data.tabs.ar, then hardcoded defaults
+  const tabs = data.tabs?.[lang] || data.tabs?.ar || [
+    { id: 'food', name: '🍽️ الأطعمة' },
+    { id: 'drinks', name: '☕ المشروبات' },
+    { id: 'shisha', name: '🍃 الأراكيل' }
+  ];
+  sel.innerHTML = tabs.map(t =>
+    `<option value="${t.id}" ${t.id === currentVal ? 'selected' : ''}>${t.name} (${t.id})</option>`
+  ).join('');
+}
+
+function addSection(lang) {
+  sectionEditState = { lang, sectionIdx: null };
+  document.getElementById('section-modal-title').textContent = lang === 'ar' ? 'إضافة قسم جديد' : 'Add New Section';
+  document.getElementById('section-title').value = '';
+  document.getElementById('section-icon').value = '';
+  populateTabSelect(lang, null);
+  openModal('sectionModal');
+}
+
+function editSection(e, lang, idx) {
+  sectionEditState = { lang, sectionIdx: idx };
+  const sec = data.menu[lang][idx];
+  document.getElementById('section-modal-title').textContent = lang === 'ar' ? 'تعديل قسم' : 'Edit Section';
+  document.getElementById('section-title').value = sec.title || '';
+  document.getElementById('section-icon').value = sec.icon || '';
+  populateTabSelect(lang, sec.tab || '');
+  openModal('sectionModal');
+}
+
+function saveSection() {
+  const title = document.getElementById('section-title').value.trim();
+  if (!title) { toast('عنوان القسم مطلوب', 'error'); return; }
+
+  const { lang, sectionIdx } = sectionEditState;
+  const sec = {
+    tab: document.getElementById('section-tab').value,
+    title,
+    icon: document.getElementById('section-icon').value.trim() || '📋',
+    items: sectionIdx !== null ? data.menu[lang][sectionIdx].items : []
+  };
+
+  if (sectionIdx === null) {
+    data.menu[lang].push(sec);
+  } else {
+    data.menu[lang][sectionIdx] = sec;
+  }
+
+  closeModal('sectionModal');
+  // Re-render this lang page sections only
+  renderMenuSections(lang);
+  renderDashboard();
+  renderSidebarLangs();
+  toast('تم حفظ القسم ✓', 'success');
+}
+
+function deleteSection(lang, idx) {
+  const sec = data.menu[lang][idx];
+  showConfirm(
+    'حذف قسم',
+    `هل تريد حذف قسم "${sec.title}" وجميع أصنافه (${sec.items?.length||0} صنف)؟`,
+    () => {
+      data.menu[lang].splice(idx, 1);
+      renderMenuSections(lang);
+      renderDashboard();
+      toast('تم حذف القسم', 'success');
+    }
+  );
+}
+
+function moveSectionUp(lang, idx) {
+  if (idx === 0) return;
+  const menu = data.menu[lang];
+  [menu[idx-1], menu[idx]] = [menu[idx], menu[idx-1]];
+  renderMenuSections(lang);
+}
+
+function moveSectionDown(lang, idx) {
+  const menu = data.menu[lang];
+  if (idx >= menu.length - 1) return;
+  [menu[idx], menu[idx+1]] = [menu[idx+1], menu[idx]];
+  renderMenuSections(lang);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SETTINGS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function renderSettings() {
+  const t = data.translations || {};
+  const ar = t.ar || {};
+  const en = t.en || {};
+  document.getElementById('ar-subtitle').value = ar.subtitle || '';
+  document.getElementById('ar-footer1').value = ar.footer1 || '';
+  document.getElementById('ar-footer2').value = ar.footer2 || '';
+  document.getElementById('ar-footer3').value = ar.footer3 || '';
+  document.getElementById('en-subtitle').value = en.subtitle || '';
+  document.getElementById('en-footer1').value = en.footer1 || '';
+  document.getElementById('en-footer2').value = en.footer2 || '';
+  document.getElementById('en-footer3').value = en.footer3 || '';
+  const logo = data.logo || {};
+  document.getElementById('logo-url').value = logo.url || '';
+  document.getElementById('logo-alt').value = logo.alt || '';
+  previewLogoUrl(logo.url || '');
+  // Load currency settings
+  const c = getCurrency();
+  const codeEl = document.getElementById('currency-code');
+  if (codeEl) {
+    // Find matching preset or set CUSTOM
+    let matched = 'CUSTOM';
+    for (const [k, v] of Object.entries(CURRENCY_PRESETS)) {
+      if (k !== 'CUSTOM' && v.ar === c.symbol_ar && v.en === c.symbol_en) { matched = k; break; }
+    }
+    codeEl.value = matched;
+    document.getElementById('currency-symbol-ar').value = c.symbol_ar || 'د.ع';
+    document.getElementById('currency-symbol-en').value = c.symbol_en || 'IQD';
+    document.getElementById('currency-position').value = c.position || 'after';
+    document.getElementById('currency-custom-row').style.display = matched === 'CUSTOM' ? 'grid' : 'none';
+    updateCurrencyPreview();
+  }
+}
+
+function saveSettings() {
+  if (!data.translations) data.translations = { ar: {}, en: {} };
+  data.translations.ar = {
+    subtitle: document.getElementById('ar-subtitle').value,
+    footer1: document.getElementById('ar-footer1').value,
+    footer2: document.getElementById('ar-footer2').value,
+    footer3: document.getElementById('ar-footer3').value
+  };
+  data.translations.en = {
+    subtitle: document.getElementById('en-subtitle').value,
+    footer1: document.getElementById('en-footer1').value,
+    footer2: document.getElementById('en-footer2').value,
+    footer3: document.getElementById('en-footer3').value
+  };
+  data.logo = {
+    url: document.getElementById('logo-url').value,
+    alt: document.getElementById('logo-alt').value
+  };
+  // Save currency
+  data.currency = {
+    symbol_ar: document.getElementById('currency-symbol-ar').value.trim() || 'د.ع',
+    symbol_en: document.getElementById('currency-symbol-en').value.trim() || 'IQD',
+    code: document.getElementById('currency-code').value,
+    position: document.getElementById('currency-position').value
+  };
+  // Re-render menus so price display updates
+  renderMenuSections('ar');
+  toast('تم حفظ الإعدادات والعملة ✓', 'success');
+}
+
+function switchSettingLang(lang, el) {
+  document.querySelectorAll('.trans-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.trans-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('settings-' + lang).classList.add('active');
+}
+
+function previewLogoUrl(val) {
+  const img = document.getElementById('logo-preview-img');
+  img.src = val || '';
+  img.onerror = () => img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect fill="%23252525" width="80" height="80" rx="10"/><text x="40" y="50" text-anchor="middle" font-size="28">🏨</text></svg>';
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// TABS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function renderTabs() {
+  const container = document.getElementById('tabs-dynamic-container');
+  if (!container) return;
+  const langs = getLangs();
+  container.innerHTML = langs.map(lang => {
+    const meta = getLangMeta(lang);
+    const tabs = data.tabs?.[lang] || [];
+    return `
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><h3>${meta.flag} ${meta.name}</h3></div>
+      <div class="card-body">
+        <div id="tabs-${lang}-list">
+          ${tabs.map((tab, i) => `
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+            <input type="text" value="${escHtml(tab.id)}" placeholder="id" style="flex:0.4;" onchange="if(!data.tabs)data.tabs={};if(!data.tabs['${lang}'])data.tabs['${lang}']=[];data.tabs['${lang}'][${i}].id=this.value">
+            <input type="text" value="${escHtml(tab.name)}" placeholder="name" style="flex:1;" onchange="if(!data.tabs)data.tabs={};if(!data.tabs['${lang}'])data.tabs['${lang}']=[];data.tabs['${lang}'][${i}].name=this.value">
+            <button class="btn btn-danger btn-sm btn-icon" onclick="deleteTabItem('${lang}',${i})">🗑</button>
+          </div>`).join('')}
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="addTabItem('${lang}')" style="margin-top:6px;">+ إضافة تبويب</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addTabItem(lang) {
+  if (!data.tabs) data.tabs = {};
+  if (!data.tabs[lang]) data.tabs[lang] = [];
+  data.tabs[lang].push({ id: 'new', name: 'جديد' });
+  renderTabs();
+}
+
+function deleteTabItem(lang, idx) {
+  data.tabs[lang].splice(idx, 1);
+  renderTabs();
+}
+
+function saveTabs() {
+  // Tabs are already bound via onchange
+  toast('تم حفظ التبويبات', 'success');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMAGE PICKER
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let filePickCallback = null;
+
+function triggerFilePick() {
+  filePickCallback = (path) => {
+    document.getElementById('field-img').value = path;
+    previewFieldImg(path);
+  };
+  document.getElementById('fileInput').click();
+}
+
+function openFilePicker(fieldId, lang, secIdx, itemIdx, isLogo) {
+  filePickCallback = (path) => {
+    document.getElementById(fieldId).value = path;
+    if (isLogo) previewLogoUrl(path);
+  };
+  document.getElementById('fileInput').click();
+}
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  // Show dialog to enter folder path
+  const folder = prompt(
+    'أدخل مسار المجلد داخل المشروع (مثال: img/اطعمة/سلطات)\nالملف: ' + file.name,
+    'img/'
+  );
+  if (folder === null) return;
+  const fullPath = (folder.replace(/\/+$/, '') + '/' + file.name).replace(/^\/+/, '');
+  if (filePickCallback) filePickCallback(fullPath);
+  filePickCallback = null;
+  this.value = '';
+});
+
+document.getElementById('jsonFileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    loadJSON(ev.target.result, file.name);
+    hideWelcome();
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+
+function previewFieldImg(val) {
+  const wrap = document.getElementById('field-img-preview');
+  const img = document.getElementById('field-preview-img');
+  const path = document.getElementById('field-preview-path');
+  if (val) {
+    img.src = val;
+    path.textContent = val;
+    wrap.classList.add('show');
+    img.onerror = () => { img.src = ''; wrap.classList.remove('show'); };
+  } else {
+    wrap.classList.remove('show');
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMPORT / EXPORT
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function importJSON() {
+  openFileFromDisk();
+}
+
+function showExportModal() {
+  const exportData = buildExportData();
+  document.getElementById('export-json-output').textContent = JSON.stringify(exportData, null, 2);
+  openModal('exportModal');
+}
+
+function buildExportData() {
+  // Deep clone and format prices with currency for export
+  const exportData = JSON.parse(JSON.stringify(data));
+  // Remove internal meta
+  delete exportData._langMeta;
+  // Format prices for all langs
+  for (const lang of getLangs()) {
+    for (const sec of exportData.menu?.[lang] || []) {
+      for (const item of sec.items || []) {
+        item.price = formatPrice(item.price, lang);
+      }
+    }
+  }
+  return exportData;
+}
+
+function downloadJSON() {
+  const exportData = buildExportData();
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'menu-data.json';
+  a.click();
+  toast('تم تحميل الملف — الأسعار مع العملة ✓', 'success');
+}
+
+function copyJSON() {
+  const exportData = buildExportData();
+  navigator.clipboard.writeText(JSON.stringify(exportData, null, 2))
+    .then(() => toast('تم النسخ إلى الحافظة (مع العملة)', 'success'))
+    .catch(() => toast('تعذر النسخ', 'error'));
+}
+
+function refreshJSONPreview() {
+  const el = document.getElementById('json-preview');
+  if (el) {
+    try {
+      const exportData = buildExportData();
+      el.textContent = JSON.stringify(exportData, null, 2).substring(0, 3000) + '\n... (مقتطع)';
+    } catch(e) {
+      el.textContent = JSON.stringify(data, null, 2).substring(0, 3000) + '\n... (مقتطع)';
+    }
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MODAL UTILS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// CONFIRM
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function showConfirm(title, msg, cb) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent = msg;
+  confirmCallback = cb;
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('open');
+  confirmCallback = null;
+}
+document.getElementById('confirm-ok').addEventListener('click', () => {
+  if (confirmCallback) confirmCallback();
+  closeConfirm();
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// TOAST
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function toast(msg, type = 'info') {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// UTILS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DRAG & DROP
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  const file = e.dataTransfer?.files?.[0];
+  if (!file) return;
+  if (!file.name.endsWith('.json')) { toast('يجب أن يكون الملف بصيغة .json', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => { loadJSON(ev.target.result, file.name); hideWelcome(); };
+  reader.readAsText(file);
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// START
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+init();
+</script>
+</body>
+</html>
