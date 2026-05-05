@@ -310,25 +310,25 @@
           },
           {
             "name": "ستيك دجاج",
-            "price": "14,000 د.ع",
+            "price": "16,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/3.jpeg",
             "desc": "شرائح دجاج مشوية مع صلصة وخضار وبطاطا مهروسة"
           },
           {
             "name": "شرائح دجاج بالكاري",
-            "price": "12,000 د.ع",
+            "price": "16,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/4.jpeg",
             "desc": "شرائح دجاج مشوية مع صلصة الكاري والخضار ورز مسلوق"
           },
           {
             "name": "طبق اسكالوب دجاج",
-            "price": "9,000 د.ع",
+            "price": "12,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/5.jpeg",
             "desc": "صدر دجاج مقرمش ومقلي مع فنكر و3 صلصات"
           },
           {
             "name": "طبق فاهيتا دجاج",
-            "price": "12,000 د.ع",
+            "price": "14,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/6.jpeg",
             "desc": "صدر دجاج مقطع مع فلفل الألوان وبصل وفطر وجبنة مع 3 صلصات"
           },
@@ -359,7 +359,7 @@
         "items": [
           {
             "name": "ساندويش فاهيتا دجاج",
-            "price": "7,000 د.ع",
+            "price": "7,500 د.ع",
             "img": "img/اطعمة/سناك/1.jpg",
             "desc": "صدر دجاج مقطع مع فلفل الألوان وبصل وفطر وجبنة مع صلصة"
           },
@@ -383,7 +383,7 @@
           },
           {
             "name": "ساندويش كرسبي",
-            "price": "6,500 د.ع",
+            "price": "7,000 د.ع",
             "img": "img/اطعمة/سناك/5.jpg",
             "desc": "صدر دجاج مقرمش مع خس وطماطم وفنكر وصلصة"
           }
@@ -1202,25 +1202,25 @@
           },
           {
             "name": "Chicken Steak",
-            "price": "14,000 IQD",
+            "price": "16,000 IQD",
             "img": "img/اطعمة/اطباق_رئيسية/3.jpeg",
             "desc": "Grilled chicken steaks with sauce, vegetables & mashed potatoes"
           },
           {
             "name": "Chicken Curry",
-            "price": "12,000 IQD",
+            "price": "16,000 IQD",
             "img": "img/اطعمة/اطباق_رئيسية/4.jpeg",
             "desc": "Grilled chicken steaks with curry sauce, vegetables & steamed rice"
           },
           {
             "name": "Chicken Scalope",
-            "desc": "Crispy fried chicken breast with fries & 3 sauces",
-            "price": "9,000 IQD",
-            "img": "img/اطعمة/اطباق_رئيسية/5.jpeg"
+            "price": "12,000 IQD",
+            "img": "img/اطعمة/اطباق_رئيسية/5.jpeg",
+            "desc": "Crispy fried chicken breast with fries & 3 sauces"
           },
           {
             "name": "Chicken Fajita",
-            "price": "12,000 IQD",
+            "price": "14,000 IQD",
             "img": "img/اطعمة/اطباق_رئيسية/6.jpeg",
             "desc": "Diced chicken breast with bell peppers, onions, mushrooms & cheese with 3 sauces"
           },
@@ -1251,9 +1251,9 @@
         "items": [
           {
             "name": "Chicken Fajita Wrap",
-            "desc": "Diced chicken breast with bell peppers, onions, mushrooms & cheese with sauce",
-            "price": "7,000 IQD",
-            "img": "img/اطعمة/سناك/1.jpg"
+            "price": "7,500 IQD",
+            "img": "img/اطعمة/سناك/1.jpg",
+            "desc": "Diced chicken breast with bell peppers, onions, mushrooms & cheese with sauce"
           },
           {
             "name": "Beef Fajita Wrap",
@@ -1275,9 +1275,9 @@
           },
           {
             "name": "Crispy Chicken Sandwich",
-            "desc": "Crispy chicken breast with lettuce, tomatoes, fries & sauce",
-            "price": "6,500 IQD",
-            "img": "img/اطعمة/سناك/5.jpg"
+            "price": "7,000 IQD",
+            "img": "img/اطعمة/سناك/5.jpg",
+            "desc": "Crispy chicken breast with lettuce, tomatoes, fries & sauce"
           }
         ]
       },
