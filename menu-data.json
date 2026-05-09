@@ -58,34 +58,34 @@
   "menu": {
     "ar": [
       {
-        "tab": "food",
         "title": "شوربات",
+        "tab": "food",
         "icon": "🍵",
         "items": [
           {
             "name": "شوربة عدس",
-            "price": "3,000 د.ع",
+            "price": "4,000 د.ع",
             "img": "img/اطعمة/شوربات/1.jpg",
             "desc": "عدس وتوست مشوي وليمون"
           },
           {
             "name": "شوربة فطر",
-            "price": "4,000 د.ع",
+            "price": "5,000 د.ع",
             "img": "img/اطعمة/شوربات/2.jpg",
             "desc": "فطر وكريمة طبخ وبصل وتوست مشوي"
           }
         ]
       },
       {
-        "tab": "food",
         "title": "سلطات",
+        "tab": "food",
         "icon": "🥗",
         "items": [
           {
             "name": "سلطة فتوش",
-            "desc": "خيار وطماطم وبصل وفجل وخبز مقلي",
             "price": "5,500 د.ع",
-            "img": "img/اطعمة/سلطات/3.jpeg"
+            "img": "img/اطعمة/سلطات/3.jpeg",
+            "desc": "خيار وطماطم وبصل وفجل وخبز مقلي"
           },
           {
             "name": "سلطة جرجير",
@@ -101,9 +101,9 @@
           },
           {
             "name": "سلطة تبولة",
-            "desc": "معدنوس وليمون وطماطم",
             "price": "5,500 د.ع",
-            "img": "img/اطعمة/سلطات/4.jpeg"
+            "img": "img/اطعمة/سلطات/4.jpeg",
+            "desc": "معدنوس وليمون وطماطم"
           },
           {
             "name": "سلطة يونانية",
@@ -114,8 +114,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "مقبلات باردة",
+        "tab": "food",
         "icon": "🥙",
         "items": [
           {
@@ -144,15 +144,15 @@
           },
           {
             "name": "يالنجي",
-            "price": "4,000 د.ع",
+            "price": "6,000 د.ع",
             "img": "img/اطعمة/مقبلات_باردة/4.jpeg",
             "desc": "ورق عنب حشوة خضر ورز"
           }
         ]
       },
       {
-        "tab": "food",
         "title": "مشاوي",
+        "tab": "food",
         "icon": "🔥",
         "items": [
           {
@@ -163,7 +163,7 @@
           },
           {
             "name": "عرايس لحم",
-            "price": "12,000 د.ع",
+            "price": "14,000 د.ع",
             "img": "img/اطعمة/مشاوي/2.jpeg",
             "desc": "خبز عراقي محشي باللحمة ومشوي على الفحم"
           },
@@ -175,19 +175,19 @@
           },
           {
             "name": "كباب لحم",
-            "desc": "كباب لحم غنم مشوي مع طماطم مشوية وبصل مشوي",
             "price": "22,000 د.ع",
-            "img": "img/اطعمة/مشاوي/4.jpeg"
+            "img": "img/اطعمة/مشاوي/4.jpeg",
+            "desc": "كباب لحم غنم مشوي مع طماطم مشوية وبصل مشوي"
           },
           {
             "name": "كباب دجاج",
-            "price": "16,000 د.ع",
+            "price": "18,000 د.ع",
             "img": "img/اطعمة/مشاوي/5.jpeg",
             "desc": "كباب دجاج 3 شيش مع فنكر وصلصة ثومية وطماطم مشوية وبصل مشوي"
           },
           {
             "name": "مشاوي مشكل",
-            "price": "27,000 د.ع",
+            "price": "28,000 د.ع",
             "img": "img/اطعمة/مشاوي/6.jpeg",
             "desc": "كباب لحم 1 شيش كباب دجاج 1 شيش تكة لحم 1 شيش تكة دجاج 1 شيش مع فنكر وصلصة ثومية"
           },
@@ -199,7 +199,7 @@
           },
           {
             "name": "تكة دجاج",
-            "price": "16,000 د.ع",
+            "price": "18,000 د.ع",
             "img": "img/اطعمة/مشاوي/8.jpeg",
             "desc": "طاووق مشوي 3 شيش مع فنكر وصلصة ثومية"
           },
@@ -212,8 +212,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "باستا",
+        "tab": "food",
         "icon": "🍝",
         "items": [
           {
@@ -230,7 +230,7 @@
           },
           {
             "name": "سباغيتي بولونيز",
-            "price": "12,000 د.ع",
+            "price": "16,000 د.ع",
             "img": "img/اطعمة/باستا/3.jpeg",
             "desc": "إسباغيتي مع صلصة طماطم ولحم مفروم"
           },
@@ -243,8 +243,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "مقبلات ساخنة",
+        "tab": "food",
         "icon": "🍤",
         "items": [
           {
@@ -255,9 +255,9 @@
           },
           {
             "name": "أجنحة بروفنسال",
-            "desc": "أجنحة دجاج مع صلصة الليمون والزيت والثوم",
             "price": "7,000 د.ع",
-            "img": "img/اطعمة/مقبلات_ساخنة/2.jpeg"
+            "img": "img/اطعمة/مقبلات_ساخنة/2.jpeg",
+            "desc": "أجنحة دجاج مع صلصة الليمون والزيت والثوم"
           },
           {
             "name": "كبدة دجاج",
@@ -273,7 +273,7 @@
           },
           {
             "name": "بطاطا حارة",
-            "price": "3,500 د.ع",
+            "price": "5,500 د.ع",
             "img": "img/اطعمة/مقبلات_ساخنة/5.jpg",
             "desc": "بطاطا مقلية مع الصلصة الحارة"
           },
@@ -292,8 +292,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "الأطباق الرئيسية",
+        "tab": "food",
         "icon": "🍖",
         "items": [
           {
@@ -310,7 +310,7 @@
           },
           {
             "name": "ستيك دجاج",
-            "price": "16,000 د.ع",
+            "price": "18,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/3.jpeg",
             "desc": "شرائح دجاج مشوية مع صلصة وخضار وبطاطا مهروسة"
           },
@@ -322,7 +322,7 @@
           },
           {
             "name": "طبق اسكالوب دجاج",
-            "price": "12,000 د.ع",
+            "price": "18,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/5.jpeg",
             "desc": "صدر دجاج مقرمش ومقلي مع فنكر و3 صلصات"
           },
@@ -346,15 +346,15 @@
           },
           {
             "name": "طبق كرسبي",
-            "price": "9,000 د.ع",
+            "price": "12,000 د.ع",
             "img": "img/اطعمة/اطباق_رئيسية/9.jpeg",
             "desc": "صدر دجاج مقرمش 3 قطع مع فنكر و3 صلصات"
           }
         ]
       },
       {
-        "tab": "food",
         "title": "سناك",
+        "tab": "food",
         "icon": "🍔",
         "items": [
           {
@@ -390,8 +390,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "بيتزا",
+        "tab": "food",
         "icon": "🍕",
         "items": [
           {
@@ -408,9 +408,9 @@
           },
           {
             "name": "خضار",
-            "desc": "صلصة طماطم وفلفل الألوان وذرة وزيتون وطماطم وجبنة",
             "price": "9,000 د.ع",
-            "img": "img/اطعمة/بيتزا/3.jpeg"
+            "img": "img/اطعمة/بيتزا/3.jpeg",
+            "desc": "صلصة طماطم وفلفل الألوان وذرة وزيتون وطماطم وجبنة"
           },
           {
             "name": "ببروني",
@@ -433,8 +433,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "مشروبات",
+        "tab": "drinks",
         "icon": "🥤",
         "items": [
           {
@@ -470,8 +470,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "مشروبات ساخنة",
+        "tab": "drinks",
         "icon": "☕",
         "items": [
           {
@@ -562,8 +562,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "مشروبات باردة",
+        "tab": "drinks",
         "icon": "🧊",
         "items": [
           {
@@ -624,8 +624,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "عصائر فريش",
+        "tab": "drinks",
         "icon": "🍊",
         "items": [
           {
@@ -666,8 +666,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "ميلك شيك",
+        "tab": "drinks",
         "icon": "🥤",
         "items": [
           {
@@ -693,8 +693,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "موهيتو",
+        "tab": "drinks",
         "icon": "🍹",
         "items": [
           {
@@ -730,8 +730,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "سموذي",
+        "tab": "drinks",
         "icon": "🍓",
         "items": [
           {
@@ -772,8 +772,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "كوكتيل",
+        "tab": "drinks",
         "icon": "🥭",
         "items": [
           {
@@ -819,8 +819,8 @@
         ]
       },
       {
-        "tab": "shisha",
         "title": "أراكيل",
+        "tab": "shisha",
         "icon": "🍃",
         "items": [
           {
@@ -866,8 +866,8 @@
         ]
       },
       {
-        "tab": "candies",
         "title": "حلويات",
+        "tab": "candies",
         "icon": "🍰",
         "items": [
           {
@@ -950,34 +950,34 @@
     ],
     "en": [
       {
-        "tab": "food",
         "title": "Soups",
+        "tab": "food",
         "icon": "🍵",
         "items": [
           {
             "name": "Lentil Soup",
-            "price": "3,000 IQD",
+            "price": "4,000 IQD",
             "img": "img/اطعمة/شوربات/1.jpg",
             "desc": "Lentils, toasted bread & lemon"
           },
           {
             "name": "Mushroom Soup",
-            "price": "4,000 IQD",
+            "price": "5,000 IQD",
             "img": "img/اطعمة/شوربات/2.jpg",
             "desc": "Mushrooms, cream, onions & toasted bread"
           }
         ]
       },
       {
-        "tab": "food",
         "title": "Salads",
+        "tab": "food",
         "icon": "🥗",
         "items": [
           {
             "name": "Fattoush Salad",
-            "desc": "Cucumber, tomatoes, onions, radish & fried bread",
             "price": "5,500 IQD",
-            "img": "img/اطعمة/سلطات/3.jpeg"
+            "img": "img/اطعمة/سلطات/3.jpeg",
+            "desc": "Cucumber, tomatoes, onions, radish & fried bread"
           },
           {
             "name": "Arugula Salad",
@@ -993,9 +993,9 @@
           },
           {
             "name": "Tabbouleh Salad",
-            "desc": "Parsley, lemon & tomatoes",
             "price": "5,500 IQD",
-            "img": "img/اطعمة/سلطات/4.jpeg"
+            "img": "img/اطعمة/سلطات/4.jpeg",
+            "desc": "Parsley, lemon & tomatoes"
           },
           {
             "name": "Greek Salad",
@@ -1006,8 +1006,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "Cold Appetizers",
+        "tab": "food",
         "icon": "🥙",
         "items": [
           {
@@ -1030,21 +1030,21 @@
           },
           {
             "name": "Raheb",
-            "desc": "Grilled eggplant, bell peppers & olive oil",
-            "price": "3,000 IQD",
-            "img": "img/اطعمة/مقبلات_باردة/3.jpeg"
+            "price": "3,500 IQD",
+            "img": "img/اطعمة/مقبلات_باردة/3.jpeg",
+            "desc": "Grilled eggplant, bell peppers & olive oil"
           },
           {
             "name": "Yalanji",
-            "desc": "Grape leaves stuffed with vegetables & rice",
-            "price": "3,000 IQD",
-            "img": "img/اطعمة/مقبلات_باردة/4.jpeg"
+            "price": "6,000 IQD",
+            "img": "img/اطعمة/مقبلات_باردة/4.jpeg",
+            "desc": "Grape leaves stuffed with vegetables & rice"
           }
         ]
       },
       {
-        "tab": "food",
         "title": "Grills",
+        "tab": "food",
         "icon": "🔥",
         "items": [
           {
@@ -1055,7 +1055,7 @@
           },
           {
             "name": "Meat Arayes",
-            "price": "12,000 IQD",
+            "price": "14,000 IQD",
             "img": "img/اطعمة/مشاوي/2.jpeg",
             "desc": "Iraqi bread stuffed with meat & grilled on charcoal"
           },
@@ -1067,19 +1067,19 @@
           },
           {
             "name": "Meat Kebab",
-            "desc": "Grilled lamb kebab with grilled tomatoes & onions",
             "price": "22,000 IQD",
-            "img": "img/اطعمة/مشاوي/4.jpeg"
+            "img": "img/اطعمة/مشاوي/4.jpeg",
+            "desc": "Grilled lamb kebab with grilled tomatoes & onions"
           },
           {
             "name": "Chicken Kebab",
-            "price": "16,000 IQD",
+            "price": "18,000 IQD",
             "img": "img/اطعمة/مشاوي/5.jpeg",
             "desc": "Chicken kebab 3 skewers with fries, garlic sauce, grilled tomatoes & onions"
           },
           {
             "name": "Mixed Grill",
-            "price": "27,000 IQD",
+            "price": "28,000 IQD",
             "img": "img/اطعمة/مشاوي/6.jpeg",
             "desc": "Meat kebab 1, chicken kebab 1, meat tikka 1, chicken tikka 1 with fries & garlic sauce"
           },
@@ -1091,7 +1091,7 @@
           },
           {
             "name": "Chicken Tikka",
-            "price": "16,000 IQD",
+            "price": "18,000 IQD",
             "img": "img/اطعمة/مشاوي/8.jpeg",
             "desc": "Grilled tawouk 3 skewers with fries & garlic sauce"
           },
@@ -1104,8 +1104,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "Pasta",
+        "tab": "food",
         "icon": "🍝",
         "items": [
           {
@@ -1122,7 +1122,7 @@
           },
           {
             "name": "Spaghetti Bolognese",
-            "price": "12,000 IQD",
+            "price": "16,000 IQD",
             "img": "img/اطعمة/باستا/3.jpeg",
             "desc": "Spaghetti with tomato sauce & ground meat"
           },
@@ -1135,8 +1135,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "Hot Appetizers",
+        "tab": "food",
         "icon": "🍤",
         "items": [
           {
@@ -1147,9 +1147,9 @@
           },
           {
             "name": "Provencal Wings",
-            "desc": "Chicken wings with lemon, oil & garlic sauce",
             "price": "7,000 IQD",
-            "img": "img/اطعمة/مقبلات_ساخنة/2.jpeg"
+            "img": "img/اطعمة/مقبلات_ساخنة/2.jpeg",
+            "desc": "Chicken wings with lemon, oil & garlic sauce"
           },
           {
             "name": "Chicken Liver",
@@ -1165,7 +1165,7 @@
           },
           {
             "name": "Spicy Potatoes",
-            "price": "3,500 IQD",
+            "price": "5,500 IQD",
             "img": "img/اطعمة/مقبلات_ساخنة/5.jpg",
             "desc": "French fries with spicy sauce"
           },
@@ -1184,8 +1184,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "Main Dishes",
+        "tab": "food",
         "icon": "🍖",
         "items": [
           {
@@ -1202,7 +1202,7 @@
           },
           {
             "name": "Chicken Steak",
-            "price": "16,000 IQD",
+            "price": "18,000 IQD",
             "img": "img/اطعمة/اطباق_رئيسية/3.jpeg",
             "desc": "Grilled chicken steaks with sauce, vegetables & mashed potatoes"
           },
@@ -1214,7 +1214,7 @@
           },
           {
             "name": "Chicken Scalope",
-            "price": "12,000 IQD",
+            "price": "18,000 IQD",
             "img": "img/اطعمة/اطباق_رئيسية/5.jpeg",
             "desc": "Crispy fried chicken breast with fries & 3 sauces"
           },
@@ -1238,15 +1238,15 @@
           },
           {
             "name": "Kids Meal",
-            "price": "9,000 IQD",
+            "price": "12,000 IQD",
             "img": "img/اطعمة/اطباق_رئيسية/9.jpeg",
             "desc": "Crispy chicken breast 3 pieces with fries & 3 sauces"
           }
         ]
       },
       {
-        "tab": "food",
         "title": "Snacks",
+        "tab": "food",
         "icon": "🍔",
         "items": [
           {
@@ -1282,8 +1282,8 @@
         ]
       },
       {
-        "tab": "food",
         "title": "Pizza",
+        "tab": "food",
         "icon": "🍕",
         "items": [
           {
@@ -1300,9 +1300,9 @@
           },
           {
             "name": "Vegetable Pizza",
-            "desc": "Tomato sauce, bell peppers, corn, olives, tomatoes & cheese",
             "price": "9,000 IQD",
-            "img": "img/اطعمة/بيتزا/3.jpeg"
+            "img": "img/اطعمة/بيتزا/3.jpeg",
+            "desc": "Tomato sauce, bell peppers, corn, olives, tomatoes & cheese"
           },
           {
             "name": "Pepperoni Pizza",
@@ -1325,8 +1325,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Beverages",
+        "tab": "drinks",
         "icon": "🥤",
         "items": [
           {
@@ -1362,8 +1362,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Hot Beverages",
+        "tab": "drinks",
         "icon": "☕",
         "items": [
           {
@@ -1454,8 +1454,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Cold Beverages",
+        "tab": "drinks",
         "icon": "🧊",
         "items": [
           {
@@ -1516,8 +1516,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Fresh Juices",
+        "tab": "drinks",
         "icon": "🍊",
         "items": [
           {
@@ -1558,8 +1558,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Milkshakes",
+        "tab": "drinks",
         "icon": "🥤",
         "items": [
           {
@@ -1585,8 +1585,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Mojito",
+        "tab": "drinks",
         "icon": "🍹",
         "items": [
           {
@@ -1622,8 +1622,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Smoothies",
+        "tab": "drinks",
         "icon": "🍓",
         "items": [
           {
@@ -1664,8 +1664,8 @@
         ]
       },
       {
-        "tab": "drinks",
         "title": "Cocktails",
+        "tab": "drinks",
         "icon": "🥭",
         "items": [
           {
@@ -1711,8 +1711,8 @@
         ]
       },
       {
-        "tab": "shisha",
         "title": "Shisha",
+        "tab": "shisha",
         "icon": "🍃",
         "items": [
           {
@@ -1758,8 +1758,8 @@
         ]
       },
       {
-        "tab": "candies",
         "title": "Candies",
+        "tab": "candies",
         "icon": "🍰",
         "items": [
           {
