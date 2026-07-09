@@ -455,17 +455,17 @@
           {
             "name": "مياه غازية",
             "price": "1,000 د.ع",
-            "img": ""
+            "img": "img\\المشروبات\\مشروبات\\4.jpeg"
           },
           {
             "name": "لبن",
             "price": "2,000 د.ع",
-            "img": ""
+            "img": "img\\المشروبات\\مشروبات\\5.jpeg"
           },
           {
             "name": "ريد بول",
             "price": "3,000 د.ع",
-            "img": ""
+            "img": "img\\المشروبات\\مشروبات\\6.jpeg"
           }
         ]
       },
@@ -482,12 +482,12 @@
           {
             "name": "إسبريسو دبل",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/مشروبات_ساخنة/1.jpeg"
+            "img": "img/المشروبات/مشروبات_ساخنة/3.jpeg"
           },
           {
             "name": "إسبريسو سنجل",
             "price": "3,000 د.ع",
-            "img": "img/المشروبات/مشروبات_ساخنة/1.jpeg"
+            "img": "img/المشروبات/مشروبات_ساخنة/3.jpeg"
           },
           {
             "name": "أمريكانو",
@@ -497,7 +497,7 @@
           {
             "name": "كابتشينو",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/مشروبات_ساخنة/1.jpeg"
+            "img": "img/المشروبات/مشروبات_ساخنة/5.jpeg"
           },
           {
             "name": "قهوة تركية",
@@ -512,7 +512,7 @@
           {
             "name": "شاي",
             "price": "1,000 د.ع",
-            "img": "img/المشروبات/مشروبات_ساخنة/7.jpg"
+            "img": "img/المشروبات/مشروبات_ساخنة/8.jpeg"
           },
           {
             "name": "وايت موكا لاتيه",
@@ -631,17 +631,20 @@
           {
             "name": "أناناس",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/1.jpeg",
+            "desc": "عصير اناناس فرش"
           },
           {
             "name": "برتقال",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/2.jpeg",
+            "desc": "عصير برتقال"
           },
           {
             "name": "رمان",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/3.jpeg",
+            "desc": "عصير رمان"
           },
           {
             "name": "ليمون ونعناع",
@@ -651,17 +654,19 @@
           {
             "name": "فراولة",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/5.jpg"
+            "img": "img/المشروبات/عصائر فريش/5.jpg",
+            "desc": "عصير فراوله"
           },
           {
             "name": "مانجو",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/6.jpeg"
           },
           {
             "name": "ليموناضة",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/7.jpeg",
+            "desc": "ليمون و نعنع"
           }
         ]
       },
@@ -673,17 +678,20 @@
           {
             "name": "ميلك شيك أوريو",
             "price": "6,000 د.ع",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/1.jpeg",
+            "desc": "آيس كريم فانيلا - آيس كريم شوكولا - بسكويت اوريو"
           },
           {
             "name": "ميلك شيك تشيز كيك",
             "price": "6,000 د.ع",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/2.jpeg",
+            "desc": "آيس كريم فانيلا - بودره تشيز كيك - صوص كرمال"
           },
           {
             "name": "ميلك شيك موكا",
             "price": "6,000 د.ع",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/3.jpeg",
+            "desc": "آيس كريم فانيلا - آيس كريم شوكولا - قهوه"
           },
           {
             "name": "ميلك شيك",
@@ -700,32 +708,37 @@
           {
             "name": "موهيتو كلاسيك",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/1.jpeg"
+            "img": "img/المشروبات/موهيتو/1.jpeg",
+            "desc": "سبرايت - سيروب موهيتو - ليمون"
           },
           {
             "name": "موهيتو أناناس",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/2.jpeg",
+            "desc": "سبرايت - سيروب موهيتو - سيريب اناناس"
           },
           {
             "name": "موهيتو بلو",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/1.jpeg"
+            "img": "img/المشروبات/موهيتو/3.jpeg",
+            "desc": "سبرايت - سيروب موهيتو - سيروب بلو"
           },
           {
             "name": "موهيتو فراولة",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/4.jpeg",
+            "desc": "حليب - موز فرش- فراوله فرش"
           },
           {
             "name": "موهيتو مكس بيري",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/5.jpeg"
           },
           {
             "name": "موهيتو جرينادين",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/6.jpeg",
+            "desc": "سبرايت - سيروب رمان بري - سيروب موهيتو"
           }
         ]
       },
@@ -747,7 +760,8 @@
           {
             "name": "سموذي مكس بيري",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/3.jpeg",
+            "desc": "صوص فراوله - صوص توت - صوص راسبيري"
           },
           {
             "name": "سموذي مانجو",
@@ -784,7 +798,8 @@
           {
             "name": "كوكتيل موز وفراولة",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/كوكتيل/2.jpeg"
+            "img": "img/المشروبات/كوكتيل/2.jpeg",
+            "desc": "حليب - موز فرش- فراوله فرش"
           },
           {
             "name": "كوكتيل حليب وموز",
@@ -1347,17 +1362,17 @@
           {
             "name": "Sparkling Water",
             "price": "1,000 IQD",
-            "img": ""
+            "img": "img\\المشروبات\\مشروبات\\4.jpeg"
           },
           {
             "name": "Yogurt Drink",
             "price": "2,000 IQD",
-            "img": ""
+            "img": "img\\المشروبات\\مشروبات\\5.jpeg"
           },
           {
             "name": "Red Bull",
             "price": "3,000 IQD",
-            "img": ""
+            "img": "img\\المشروبات\\مشروبات\\6.jpeg"
           }
         ]
       },
@@ -1374,12 +1389,12 @@
           {
             "name": "Double Espresso",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/مشروبات_ساخنة/1.jpeg"
+            "img": "img/المشروبات/مشروبات_ساخنة/3.jpeg"
           },
           {
             "name": "Single Espresso",
             "price": "3,000 IQD",
-            "img": "img/المشروبات/مشروبات_ساخنة/1.jpeg"
+            "img": "img/المشروبات/مشروبات_ساخنة/3.jpeg"
           },
           {
             "name": "Americano",
@@ -1389,7 +1404,7 @@
           {
             "name": "cappuccino",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/مشروبات_ساخنة/1.jpeg"
+            "img": "img/المشروبات/مشروبات_ساخنة/5.jpeg"
           },
           {
             "name": "Turkish Coffee",
@@ -1404,7 +1419,7 @@
           {
             "name": "Tea",
             "price": "1,000 IQD",
-            "img": "img/المشروبات/مشروبات_ساخنة/7.jpg"
+            "img": "img/المشروبات/مشروبات_ساخنة/8.jpeg"
           },
           {
             "name": "White Mocha Latte",
@@ -1523,17 +1538,19 @@
           {
             "name": "Pineapple",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/1.jpeg"
           },
           {
             "name": "Orange",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/2.jpeg",
+            "desc": "orange juice"
           },
           {
             "name": "Pomegranate",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/3.jpeg",
+            "desc": "Pomegranate juice"
           },
           {
             "name": "Lemon Mint",
@@ -1543,7 +1560,8 @@
           {
             "name": "Strawberry",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/عصائر فريش/5.jpg"
+            "img": "img/المشروبات/عصائر فريش/5.jpg",
+            "desc": "Strawberry juice"
           },
           {
             "name": "Mango",
@@ -1553,7 +1571,8 @@
           {
             "name": "Lemonade",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/عصائر فريش/2.jpeg"
+            "img": "img/المشروبات/عصائر فريش/7.jpeg",
+            "desc": "Lemon and Mint"
           }
         ]
       },
@@ -1565,17 +1584,20 @@
           {
             "name": "Oreo Milkshake",
             "price": "6,000 IQD",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/1.jpeg",
+            "desc": "Vanilla ice cream - Chocolate ice cream - Oreo cookies"
           },
           {
             "name": "Cheesecake Milkshake",
             "price": "6,000 IQD",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/2.jpeg",
+            "desc": "Vanilla ice cream - cheesecake powder - caramel sauce"
           },
           {
             "name": "Mocha Milkshake",
             "price": "6,000 IQD",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/3.jpeg",
+            "desc": "Vanilla ice cream - Chocolate ice cream - Coffee"
           },
           {
             "name": "Milkshake",
@@ -1592,32 +1614,36 @@
           {
             "name": "Classic Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/1.jpeg"
+            "img": "img/المشروبات/موهيتو/1.jpeg",
+            "desc": "Sprite - mojito syrup - lemon"
           },
           {
             "name": "Pineapple Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/2.jpeg",
+            "desc": "Sprite - mojito syrup - pineapple syrup"
           },
           {
             "name": "Blue Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/1.jpeg"
+            "img": "img/المشروبات/موهيتو/3.jpeg",
+            "desc": "Sprite - mojito syrup - blue syrup"
           },
           {
             "name": "Strawberry Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/4.jpeg"
           },
           {
             "name": "Mixed Berry Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/5.jpeg"
           },
           {
             "name": "Grenadine Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/2.jpeg"
+            "img": "img/المشروبات/موهيتو/6.jpeg",
+            "desc": "Sprite - wild pomegranate syrup - mojito syrup"
           }
         ]
       },
@@ -1639,7 +1665,8 @@
           {
             "name": "Mixed Berry Smoothie",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/3.jpeg",
+            "desc": "Strawberry sauce - Berry sauce - Raspberry sauce"
           },
           {
             "name": "Mango Smoothie",
@@ -1676,7 +1703,8 @@
           {
             "name": "Banana Strawberry Cocktail",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/كوكتيل/2.jpeg"
+            "img": "img/المشروبات/كوكتيل/2.jpeg",
+            "desc": "Milk – Fresh bananas – Fresh strawberries"
           },
           {
             "name": "Milk Banana Cocktail",
