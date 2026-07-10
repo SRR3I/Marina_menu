@@ -1,0 +1,26 @@
+# Prevent stale menu data/pages after every upload to Hostinger.
+# HTML + JSON must always be revalidated (so edits appear immediately);
+# images can cache normally since their URLs are versioned (?v=...) by the app.
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|json)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+    # Tells Hostinger's LiteSpeed page cache to skip these files too
+    Header set X-LiteSpeed-Cache-Control "no-cache"
+  </FilesMatch>
+
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/json "access plus 0 seconds"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+</IfModule>

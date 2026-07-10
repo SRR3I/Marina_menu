@@ -265,6 +265,29 @@
     .stats-grid { grid-template-columns: 1fr 1fr; }
     .form-row { grid-template-columns: 1fr; }
   }
+
+  /* ── ICONS ── */
+  .menu-icon { width: 20px; height: 20px; flex-shrink: 0; }
+  .icon-pick-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'Cairo', sans-serif; font-size: 13px; padding: 8px 13px; cursor: pointer; transition: border-color .18s; }
+  .icon-pick-btn:hover { border-color: var(--gold); }
+  .icon-pick-btn .menu-icon { color: var(--gold-light); width: 22px; height: 22px; }
+  .icon-picker-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .icon-opt { display: flex; flex-direction: column; align-items: center; gap: 4px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 10px 4px; cursor: pointer; transition: all .15s; color: var(--text-muted); }
+  .icon-opt:hover { border-color: var(--gold); color: var(--gold-light); }
+  .icon-opt.selected { border-color: var(--gold); background: rgba(201,168,76,0.12); color: var(--gold-light); }
+  .icon-opt .menu-icon { width: 22px; height: 22px; }
+  .icon-opt span { font-size: 10px; }
+
+  /* ── LANG CHIPS ── */
+  .lang-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 4px; }
+  .lang-chip { display: flex; align-items: center; gap: 6px; background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 5px 10px; font-size: 12px; color: var(--text-muted); }
+  .lang-chip button { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 13px; line-height: 1; padding: 0; }
+  .lang-chip button:hover { color: var(--danger-light); }
+
+  /* ── UNIFIED SECTION LANG BLOCKS ── */
+  .lang-value-line { display: flex; align-items: baseline; gap: 6px; }
+  .lang-value-line .flag { font-size: 12px; }
+  .lang-value-line + .lang-value-line { margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -286,7 +309,8 @@
     <button class="btn btn-excel" onclick="exportToExcel()">📊 تصدير Excel</button>
     <button class="btn btn-outline" style="display:none;" id="btn-save-file" onclick="saveToFile()">💾 حفظ للملف</button>
     <button class="btn btn-ghost" onclick="showExportModal()">⬇ تصدير JSON</button>
-    <button class="btn btn-gold" onclick="openFileFromDisk()">📂 فتح JSON</button>
+    <button class="btn btn-outline" onclick="openFileFromDisk()">📄 فتح JSON فقط</button>
+    <button class="btn btn-gold" onclick="openProjectFolder()">📂 فتح مجلد المشروع</button>
   </div>
 </div>
 
@@ -304,11 +328,15 @@
     </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">
-      <div class="sidebar-label">
-        <span>القوائم</span>
+      <div class="sidebar-label"><span>القائمة</span></div>
+      <div class="sidebar-item" id="nav-menu" onclick="showPage('menu', this)">
+        <span class="icon">🍽️</span> إدارة الأقسام والأصناف
+      </div>
+      <div class="sidebar-label" style="margin-top:10px;">
+        <span>اللغات</span>
         <button onclick="showAddLangModal()" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:14px;padding:0 2px;">＋</button>
       </div>
-      <div id="sidebar-langs"></div>
+      <div class="lang-chips" id="sidebar-langs"></div>
     </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">
@@ -409,14 +437,21 @@
       </div></div>
     </div>
 
-    <!-- DYNAMIC LANG PAGES -->
-    <div id="dynamic-lang-pages"></div>
+    <!-- UNIFIED MENU PAGE -->
+    <div class="page" id="page-menu">
+      <div class="page-header">
+        <div><h2>🍽️ إدارة الأقسام والأصناف</h2><p>تعديل واحد ينعكس على كل اللغات مباشرة</p></div>
+        <button class="btn btn-gold" onclick="addSection()">+ إضافة قسم</button>
+      </div>
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="بحث..." id="search-menu" oninput="filterSections(this.value)"></div>
+      <div id="sections-menu"></div>
+    </div>
 
     <!-- TABS PAGE -->
     <div class="page" id="page-tabs">
       <div class="page-header">
-        <div><h2>🗂️ إدارة التبويبات</h2><p>تعديل أسماء التبويبات</p></div>
-        <button class="btn btn-gold" onclick="toast('تم حفظ التبويبات','success')">💾 حفظ</button>
+        <div><h2>🗂️ إدارة التبويبات</h2><p>تعديل أسماء وأيقونات التبويبات (مشتركة بين كل اللغات، الاسم فقط لكل لغة)</p></div>
+        <button class="btn btn-gold" onclick="scheduleAutoSave();toast('تم حفظ التبويبات','success')">💾 حفظ</button>
       </div>
       <div id="tabs-dynamic-container"></div>
     </div>
@@ -434,7 +469,7 @@
         <div class="excel-cols-grid">
           <div class="excel-col-badge"><span class="col-letter">A</span><span class="col-name">القسم (section)</span></div>
           <div class="excel-col-badge"><span class="col-letter">B</span><span class="col-name">التبويب (tab)</span></div>
-          <div class="excel-col-badge"><span class="col-letter">C</span><span class="col-name">الأيقونة (icon)</span></div>
+          <div class="excel-col-badge"><span class="col-letter">C</span><span class="col-name">مفتاح الأيقونة (مثال: soup, salad, grill)</span></div>
           <div class="excel-col-badge"><span class="col-letter">D</span><span class="col-name">الاسم (name)</span></div>
           <div class="excel-col-badge"><span class="col-letter">E</span><span class="col-name">الوصف (desc)</span></div>
           <div class="excel-col-badge"><span class="col-letter">F</span><span class="col-name">السعر (price)</span></div>
@@ -523,15 +558,15 @@
   <div class="modal">
     <div class="modal-header"><h3 id="modal-title">تعديل صنف</h3><button class="modal-close" onclick="closeModal('itemModal')">✕</button></div>
     <div class="modal-body">
-      <div class="form-group"><label>الاسم *</label><input type="text" id="field-name"></div>
-      <div class="form-group"><label>الوصف</label><textarea id="field-desc"></textarea></div>
-      <div class="form-group"><label>السعر * (رقم فقط)</label>
+      <div class="trans-tabs" id="item-lang-tabs"></div>
+      <div id="item-lang-panels"></div>
+      <div class="form-group"><label>السعر * (رقم فقط — مشترك بين كل اللغات)</label>
         <div style="position:relative;">
           <input type="text" id="field-price" placeholder="5,000" style="padding-left:60px;" oninput="autoFormatPrice(this)" inputmode="numeric">
           <span id="price-currency-badge" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:var(--gold);pointer-events:none;"></span>
         </div>
       </div>
-      <div class="form-group"><label>مسار الصورة</label>
+      <div class="form-group"><label>مسار الصورة (مشترك بين كل اللغات)</label>
         <div class="img-input-wrap"><input type="text" id="field-img" placeholder="img/folder/image.jpg" oninput="previewFieldImg(this.value)"><button class="img-browse-btn" onclick="triggerFilePick()">📂</button></div>
         <div class="img-preview-wrap" id="field-img-preview"><img id="field-preview-img" src=""><span id="field-preview-path"></span></div>
       </div>
@@ -548,15 +583,29 @@
   <div class="modal">
     <div class="modal-header"><h3 id="section-modal-title">تعديل قسم</h3><button class="modal-close" onclick="closeModal('sectionModal')">✕</button></div>
     <div class="modal-body">
+      <div class="trans-tabs" id="section-lang-tabs"></div>
+      <div id="section-lang-panels"></div>
       <div class="form-row">
-        <div class="form-group"><label>عنوان القسم *</label><input type="text" id="section-title"></div>
-        <div class="form-group"><label>أيقونة</label><input type="text" id="section-icon" placeholder="🍵"></div>
+        <div class="form-group"><label>أيقونة (مشتركة)</label>
+          <button type="button" class="icon-pick-btn" id="section-icon-btn" onclick="openIconPicker(document.getElementById('section-icon-key').value, k=>setSectionIcon(k))" style="width:100%;justify-content:flex-start;"></button>
+          <input type="hidden" id="section-icon-key" value="plate">
+        </div>
+        <div class="form-group"><label>التبويب * (مشترك)</label><select id="section-tab"></select></div>
       </div>
-      <div class="form-group"><label>التبويب *</label><select id="section-tab"></select></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('sectionModal')">إلغاء</button>
       <button class="btn btn-gold" onclick="saveSection()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ICON PICKER MODAL -->
+<div class="modal-overlay" id="iconPickerModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><h3>اختيار أيقونة</h3><button class="modal-close" onclick="closeModal('iconPickerModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="icon-picker-grid" id="icon-picker-grid"></div>
     </div>
   </div>
 </div>
@@ -612,10 +661,11 @@
     <h2 style="font-size:22px;font-weight:900;color:var(--gold-light);margin-bottom:8px;">لوحة إدارة القائمة</h2>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">افتح ملف <code style="background:var(--bg3);padding:2px 7px;border-radius:5px;color:var(--gold);">menu-data.json</code> من مشروعك</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn btn-gold" style="font-size:15px;padding:13px 32px;border-radius:10px;" onclick="openFileFromDisk();hideWelcome();">📂 فتح JSON</button>
+      <button class="btn btn-gold" style="font-size:15px;padding:13px 32px;border-radius:10px;" onclick="openProjectFolder();">📂 فتح مجلد المشروع</button>
+      <button class="btn btn-outline" style="font-size:15px;padding:13px 32px;border-radius:10px;" onclick="openFileFromDisk();hideWelcome();">📄 فتح JSON فقط</button>
       <button class="btn btn-excel" style="font-size:15px;padding:13px 32px;border-radius:10px;" onclick="document.getElementById('file-input-xlsx').click();hideWelcome();">📊 استيراد Excel</button>
     </div>
-    <p style="font-size:11px;color:var(--text-dim);margin-top:18px;">أو اسحب أي ملف وأفلته هنا</p>
+    <p style="font-size:11px;color:var(--text-dim);margin-top:18px;">فتح المجلد يفعّل الحفظ التلقائي ورفع الصور مباشرة إلى img — أو اسحب أي ملف وأفلته هنا</p>
   </div>
 </div>
 
@@ -632,11 +682,93 @@
 // STATE
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let data = {};
-let editState = { lang: null, sectionIdx: null, itemIdx: null };
-let sectionEditState = { lang: null, sectionIdx: null };
+let editState = { sectionIdx: null, itemIdx: null };
+let sectionEditState = { sectionIdx: null };
 let confirmCallback = null;
 let fileHandle = null;
+let rootDirHandle = null;
+let imgDirHandle = null;
 let pendingImportData = null; // holds parsed excel data before confirm
+let autoSaveTimer = null;
+
+// ── REFERENCE LANGUAGE (structural source of truth: order/count of sections & items) ──
+function refLang() { return getLangs()[0] || 'ar'; }
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ICONS (shared set — keep in sync with index.html)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const MENU_ICONS = {
+  soup: '<path d="M3 12h18a1 1 0 0 1 1 1c0 3.5-2.5 6-6 7H8c-3.5-1-6-3.5-6-7a1 1 0 0 1 1-1Z"/><path d="M7 12c0-2 1-3 1-5M12 12c0-2 1-3 1-5M17 12c0-2 1-3 1-5"/>',
+  salad: '<path d="M3 12h18a1 1 0 0 1 1 1c0 3.6-2.6 6-6 7H8c-3.4-1-6-3.4-6-7a1 1 0 0 1 1-1Z"/><path d="M12 12V8"/><path d="M12 8c0-2-1.5-3-3.5-3 0 2 1.5 3.5 3.5 3Z"/><path d="M12 9c0-1.7 1.3-3 3-3 0 1.7-1.3 3-3 3Z"/>',
+  'cold-appetizer': '<circle cx="12" cy="13" r="8"/><circle cx="12" cy="13" r="4.2"/><circle cx="9" cy="9.3" r=".9" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r=".9" fill="currentColor" stroke="none"/>',
+  grill: '<path d="M12 22c-4.4 0-7-2.7-7-6.5 0-3.2 1.8-5 2.8-7.7.6 2 2 3 2 3-.6-3.4 1.3-6.2 3.7-7.8-1 2.8.4 4.3 2 6 1.7 1.8 3.5 3.6 3.5 6.5 0 3.8-2.6 6.5-7 6.5Z"/><path d="M12 19c-1.7 0-3-1.1-3-2.8 0-1.2.8-1.9 1.2-2.9.2 1 .8 1.4.8 1.4-.2-1.4.6-2.3 1.5-3-.3 1.2.4 1.8 1 2.5.6.7 1.5 1.5 1.5 2.8 0 1.7-1.3 2-4 2Z" stroke-width="1.3"/>',
+  pasta: '<path d="M3 13h18a1 1 0 0 1 1 1c0 3.4-2.5 5.8-6 6.8H8c-3.5-1-6-3.4-6-6.8a1 1 0 0 1 1-1Z"/><path d="M7 13c1.5-1 1-2.5 2.5-3.5M12 13c1.5-1 1-2.8 2.5-4M16 13c1.2-.8.8-2 2-3"/>',
+  'hot-appetizer': '<path d="M4 15c0-3 3.5-5 8-5s8 2 8 5"/><path d="M4 15h16"/><path d="M8 15c0-1.5 1.8-2.5 4-2.5s4 1 4 2.5"/><path d="M6 8c0-1.4.8-2 .8-3.4M12 7c0-1.4.8-2 .8-3.4M17 8c0-1.4.8-2 .8-3.4"/>',
+  'main-dish': '<path d="M3 17h18"/><path d="M4 17a8 8 0 0 1 16 0Z"/><path d="M12 6v2"/><circle cx="12" cy="5" r="1"/>',
+  snack: '<path d="M4 11a8 8 0 0 1 16 0Z"/><path d="M3 11h18"/><path d="M3.5 14h17"/><path d="M4 17h16a1 1 0 0 1 1 1 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 1 1 0 0 1 1-1Z"/><circle cx="9" cy="7.5" r=".6" fill="currentColor" stroke="none"/><circle cx="13" cy="6.8" r=".6" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8" r=".6" fill="currentColor" stroke="none"/>',
+  pizza: '<path d="M12 4 3 19a1 1 0 0 0 .9 1.4h16.2a1 1 0 0 0 .9-1.4Z"/><path d="M4.5 17.5a9 9 0 0 1 15 0"/><circle cx="12" cy="9" r=".9" fill="currentColor" stroke="none"/><circle cx="9.5" cy="13.5" r=".9" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13.5" r=".9" fill="currentColor" stroke="none"/>',
+  beverage: '<path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8Z"/><path d="M15 8 16 3M9 8l-.5-3"/><path d="M6.5 12h11"/>',
+  'hot-drink': '<path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z"/><path d="M17 10h1.5a2.2 2.2 0 0 1 0 4.4H17"/><path d="M8 5c0-1 .8-1.2.8-2M12 5c0-1 .8-1.2.8-2"/>',
+  'cold-drink': '<path d="M6 4h12l-1.3 15.2A2 2 0 0 1 14.7 21H9.3a2 2 0 0 1-2-1.8Z"/><path d="M6.6 9h10.8"/><rect x="9.5" y="11" width="2.6" height="2.6" rx=".4"/><rect x="12.5" y="14.5" width="2.6" height="2.6" rx=".4"/>',
+  juice: '<path d="M7 5h10l-1 14.3A2 2 0 0 1 14 21h-4a2 2 0 0 1-2-1.7Z"/><path d="M15 5 17 2"/><circle cx="12" cy="10.5" r="2.3"/><path d="M12 8.2v4.6M9.7 10.5h4.6"/>',
+  milkshake: '<path d="M8 9h8l-.9 10.3A2 2 0 0 1 13.1 21h-2.2a2 2 0 0 1-2-1.7Z"/><path d="M7.5 9a4.5 2 0 0 0 9 0Z"/><path d="M15 6l2-3"/><circle cx="12" cy="4.5" r="1" fill="currentColor" stroke="none"/>',
+  mojito: '<path d="M7 6h10l-1.1 13.3A2 2 0 0 1 13.9 21h-3.8a2 2 0 0 1-2-1.7Z"/><path d="M16 6 18 3"/><path d="M9 9c1.6 0 2.6 1 2.6 2.4 0 0-2.6.4-2.6-2.4Z"/><circle cx="13" cy="14" r=".6" fill="currentColor" stroke="none"/><circle cx="11" cy="17" r=".6" fill="currentColor" stroke="none"/>',
+  smoothie: '<path d="M7.5 9h9l-1 10.3A2 2 0 0 1 13.5 21h-3a2 2 0 0 1-2-1.7Z"/><path d="M8 9c0-2.5 1.8-4.5 4-4.5s4 2 4 4.5"/><path d="M15 5 17 2.5"/>',
+  cocktail: '<path d="M4 4h16L12 13Z"/><path d="M12 13v7M8 20h8"/><circle cx="9" cy="6.3" r=".9" fill="currentColor" stroke="none"/>',
+  shisha: '<path d="M8 3h5l1 4H7Z"/><path d="M9.5 7v3"/><ellipse cx="9.5" cy="14" rx="6" ry="4.5"/><path d="M14.5 12c2 .8 3 2 3 4M6 21h7"/><path d="M9.5 18.5V21"/>',
+  dessert: '<path d="M4 20 12 8l8 12Z"/><path d="M8 20l1.2-3.5h5.6L16 20"/><path d="M12 8V5.5"/><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none"/>',
+  plate: '<circle cx="13" cy="12" r="8"/><circle cx="13" cy="12" r="4.3"/><path d="M4 5v5a1.5 1.5 0 0 0 3 0V5M5.5 5v14"/>'
+};
+const MENU_ICON_CATALOG = [
+  ['soup','شوربة'],['salad','سلطة'],['cold-appetizer','مقبلات باردة'],['grill','مشاوي'],
+  ['pasta','باستا'],['hot-appetizer','مقبلات ساخنة'],['main-dish','طبق رئيسي'],['snack','سناك'],
+  ['pizza','بيتزا'],['beverage','مشروبات'],['hot-drink','مشروب ساخن'],['cold-drink','مشروب بارد'],
+  ['juice','عصير'],['milkshake','ميلك شيك'],['mojito','موهيتو'],['smoothie','سموذي'],
+  ['cocktail','كوكتيل'],['shisha','أركيلة'],['dessert','حلويات'],['plate','عام']
+];
+const MENU_ICON_EMOJI_MAP = {
+  '🍵':'soup','🥗':'salad','🥙':'cold-appetizer','🔥':'grill','🍝':'pasta','🍤':'hot-appetizer',
+  '🍖':'main-dish','🍔':'snack','🍕':'pizza','🥤':'beverage','☕':'hot-drink','🧊':'cold-drink',
+  '🍊':'juice','🍹':'mojito','🍓':'smoothie','🥭':'cocktail','🍃':'shisha','🍰':'dessert',
+  '🍽️':'plate','🎂':'dessert','📋':'plate'
+};
+function normalizeIconKey(val) {
+  if (!val) return 'plate';
+  const v = String(val).trim();
+  if (MENU_ICONS[v]) return v;
+  if (MENU_ICON_EMOJI_MAP[v]) return MENU_ICON_EMOJI_MAP[v];
+  for (const ch of v) { if (MENU_ICON_EMOJI_MAP[ch]) return MENU_ICON_EMOJI_MAP[ch]; }
+  return 'plate';
+}
+function iconSvg(key, cls) {
+  const k = MENU_ICONS[key] ? key : normalizeIconKey(key);
+  return `<svg class="${cls||'menu-icon'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${MENU_ICONS[k]}</svg>`;
+}
+
+let iconPickerCallback = null;
+function openIconPicker(currentKey, onSelect) {
+  iconPickerCallback = onSelect;
+  const grid = document.getElementById('icon-picker-grid');
+  const sel = normalizeIconKey(currentKey);
+  grid.innerHTML = MENU_ICON_CATALOG.map(([key,label]) => `
+    <div class="icon-opt ${key===sel?'selected':''}" onclick="pickIcon('${key}')">
+      ${iconSvg(key)}<span>${label}</span>
+    </div>`).join('');
+  openModal('iconPickerModal');
+}
+function pickIcon(key) {
+  if (iconPickerCallback) iconPickerCallback(key);
+  closeModal('iconPickerModal');
+}
+function setSectionIcon(key) {
+  document.getElementById('section-icon-key').value = key;
+  renderSectionIconBtn();
+}
+function renderSectionIconBtn() {
+  const key = document.getElementById('section-icon-key').value || 'plate';
+  const label = (MENU_ICON_CATALOG.find(c=>c[0]===key)||[key,key])[1];
+  document.getElementById('section-icon-btn').innerHTML = iconSvg(key) + `<span>${label}</span>`;
+}
 
 // ── CURRENCY ──
 function getCurrency() {
@@ -688,6 +820,44 @@ async function saveToFile() {
   } catch(e) { toast('خطأ: ' + e.message, 'error'); }
 }
 
+async function openProjectFolder() {
+  if (!window.showDirectoryPicker) {
+    toast('متصفحك لا يدعم فتح المجلد (يعمل على Chrome/Edge) — استخدم "فتح JSON فقط"', 'error');
+    return;
+  }
+  try {
+    const dirHandle = await window.showDirectoryPicker();
+    const jsonHandle = await dirHandle.getFileHandle('menu-data.json').catch(() => null);
+    if (!jsonHandle) {
+      toast('لم أجد menu-data.json داخل هذا المجلد', 'error');
+      return;
+    }
+    rootDirHandle = dirHandle;
+    fileHandle = jsonHandle;
+    imgDirHandle = await dirHandle.getDirectoryHandle('img', { create: true });
+    const file = await jsonHandle.getFile();
+    loadJSON(await file.text(), file.name);
+    setFileStatus(true, dirHandle.name + '/menu-data.json');
+    hideWelcome();
+    toast('✅ تم فتح المجلد — الحفظ ورفع الصور أصبحا تلقائيين', 'success');
+  } catch (e) {
+    if (e.name !== 'AbortError') toast('تعذر فتح المجلد: ' + e.message, 'error');
+  }
+}
+
+function scheduleAutoSave() {
+  if (!fileHandle) return;
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(async () => {
+    try {
+      const w = await fileHandle.createWritable();
+      await w.write(JSON.stringify(buildExportData(), null, 2));
+      await w.close();
+      toast('💾 تم الحفظ تلقائياً', 'success');
+    } catch (e) { toast('فشل الحفظ التلقائي: ' + e.message, 'error'); }
+  }, 500);
+}
+
 async function saveAsNewFile() {
   try {
     if (window.showSaveFilePicker) {
@@ -702,16 +872,34 @@ async function saveAsNewFile() {
   } catch(e) { if (e.name !== 'AbortError') toast('خطأ: ' + e.message, 'error'); }
 }
 
+// Defensive migration for legacy files: emoji icons -> icon keys, tab.name with embedded emoji -> {icon,name}.
+function migrateLegacyIcons(parsed) {
+  for (const lang of Object.keys(parsed.menu || {})) {
+    for (const sec of parsed.menu[lang] || []) {
+      sec.icon = normalizeIconKey(sec.icon);
+    }
+  }
+  for (const lang of Object.keys(parsed.tabs || {})) {
+    for (const tab of parsed.tabs[lang] || []) {
+      if (tab.icon) { tab.icon = normalizeIconKey(tab.icon); continue; }
+      const stripped = String(tab.name || '').replace(/^([^\p{L}\p{N}]+)/u, (m) => { tab.icon = normalizeIconKey(m.trim()); return ''; }).trim();
+      tab.name = stripped;
+      if (!tab.icon) tab.icon = 'plate';
+    }
+  }
+}
+
 function loadJSON(text, filename) {
   try {
     const parsed = JSON.parse(text);
-    for (const lang of ['ar','en']) {
-      for (const sec of parsed.menu?.[lang] || []) {
+    for (const lang of Object.keys(parsed.menu || {})) {
+      for (const sec of parsed.menu[lang] || []) {
         for (const item of sec.items || []) {
           if (item.price) item.price = stripCurrency(item.price);
         }
       }
     }
+    migrateLegacyIcons(parsed);
     data = parsed;
     if (!data.currency) data.currency = { symbol_ar: 'د.ع', symbol_en: 'IQD', code: 'IQD', position: 'after' };
     renderAll();
@@ -843,7 +1031,7 @@ function readExcelFile(file) {
           const row = rows[i];
           const sectionTitle = String(row[0] || '').trim();
           const tab = String(row[1] || 'food').trim();
-          const icon = String(row[2] || '📋').trim();
+          const icon = normalizeIconKey(String(row[2] || '').trim());
           const name = String(row[3] || '').trim();
           const desc = String(row[4] || '').trim();
           const priceRaw = String(row[5] || '').trim();
@@ -944,9 +1132,9 @@ function applyImport() {
     if (!data.tabs) data.tabs = {};
     if (!data.tabs[lang]) {
       data.tabs[lang] = [
-        { id: 'food', name: lang === 'ar' ? '🍽️ الأطعمة' : '🍽️ Food' },
-        { id: 'drinks', name: lang === 'ar' ? '☕ المشروبات' : '☕ Beverages' },
-        { id: 'shisha', name: lang === 'ar' ? '🍃 الأراكيل' : '🍃 Shisha' }
+        { id: 'food', icon: 'plate', name: lang === 'ar' ? 'الأطعمة' : 'Food' },
+        { id: 'drinks', icon: 'beverage', name: lang === 'ar' ? 'المشروبات' : 'Beverages' },
+        { id: 'shisha', icon: 'shisha', name: lang === 'ar' ? 'الأراكيل' : 'Shisha' }
       ];
     }
   });
@@ -1016,7 +1204,7 @@ function renderAll() {
   if (!data || !data.menu) return;
   hideWelcome();
   renderSidebarLangs();
-  renderDynamicLangPages();
+  renderMenuSections();
   renderDashboard();
   renderSettings();
   renderTabs();
@@ -1029,36 +1217,10 @@ function renderSidebarLangs() {
   const langs = getLangs();
   container.innerHTML = langs.map(lang => {
     const meta = getLangMeta(lang);
-    const total = (data.menu[lang]||[]).reduce((s,sec)=>s+(sec.items?.length||0),0);
-    return `<div class="sidebar-item" onclick="showLangPage('${lang}',this)" id="nav-${lang}">
-      <span class="icon">${meta.flag}</span><span style="flex:1;">${meta.name}</span>
-      <span class="count" id="cnt-${lang}">${total}</span></div>`;
-  }).join('') + `<div class="sidebar-item" onclick="showAddLangModal()" style="color:var(--text-dim);font-size:12px;border-style:dashed;"><span class="icon">＋</span> إضافة لغة</div>`;
-}
-
-function renderDynamicLangPages() {
-  const container = document.getElementById('dynamic-lang-pages');
-  if (!container) return;
-  const langs = getLangs();
-  container.innerHTML = langs.map(lang => {
-    const meta = getLangMeta(lang);
-    return `<div class="page" id="page-menu-${lang}">
-      <div class="page-header">
-        <div><h2>${meta.flag} القائمة — ${meta.name}</h2><p>إضافة وتعديل الأصناف</p></div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-excel btn-sm" onclick="exportToExcel('${lang}')">📊 تصدير Excel</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteLang('${lang}')">🗑 حذف اللغة</button>
-          <button class="btn btn-gold" onclick="addSection('${lang}')">+ إضافة قسم</button>
-        </div>
-      </div>
-      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="بحث..." id="search-${lang}" oninput="filterSections('${lang}',this.value)"></div>
-      <div id="sections-${lang}"></div>
-    </div>`;
+    const canDelete = langs.length > 1;
+    return `<div class="lang-chip"><span>${meta.flag} ${meta.name}</span>${canDelete ? `<button onclick="deleteLang('${lang}')" title="حذف">✕</button>` : ''}</div>`;
   }).join('');
-  langs.forEach(lang => renderMenuSections(lang));
 }
-
-function showLangPage(lang, el) { showPage('menu-'+lang, el); }
 
 function showAddLangModal() {
   ['new-lang-code','new-lang-name','new-lang-flag'].forEach(id => document.getElementById(id).value = '');
@@ -1071,23 +1233,33 @@ function confirmAddLang() {
   const flag = document.getElementById('new-lang-flag').value.trim() || '🌐';
   if (!code || !name) { toast('رمز اللغة والاسم مطلوبان', 'error'); return; }
   if (data.menu[code]) { toast('اللغة موجودة مسبقاً', 'error'); return; }
-  data.menu[code] = [];
+  // Clone structure from the reference language so arrays stay index-aligned;
+  // text fields start blank, shared fields (tab/icon/price/img) are copied.
+  const ref = refLang();
+  data.menu[code] = (data.menu[ref] || []).map(sec => ({
+    tab: sec.tab, icon: sec.icon, title: '',
+    items: (sec.items || []).map(it => ({ name: '', desc: '', price: it.price || '', img: it.img || '' }))
+  }));
+  if (data.tabs) {
+    data.tabs[code] = (data.tabs[ref] || []).map(t => ({ id: t.id, icon: t.icon, name: '' }));
+  }
   if (!data._langMeta) data._langMeta = {};
   data._langMeta[code] = { name, flag };
   closeModal('addLangModal');
   renderAll();
-  setTimeout(() => { const el = document.getElementById('nav-'+code); if (el) showLangPage(code, el); }, 50);
-  toast(`تمت إضافة: ${flag} ${name}`, 'success');
+  scheduleAutoSave();
+  toast(`تمت إضافة: ${flag} ${name} — الآن أكمل الترجمة من نافذة كل قسم/صنف`, 'success');
 }
 
 function deleteLang(lang) {
+  if (getLangs().length <= 1) { toast('لا يمكن حذف آخر لغة', 'error'); return; }
   const meta = getLangMeta(lang);
   showConfirm('حذف لغة', `حذف "${meta.flag} ${meta.name}" وجميع بياناتها؟`, () => {
     delete data.menu[lang];
     if (data.tabs) delete data.tabs[lang];
     if (data._langMeta) delete data._langMeta[lang];
     renderAll();
-    showPage('dashboard', document.querySelector('.sidebar-item'));
+    scheduleAutoSave();
     toast('تم حذف اللغة', 'success');
   });
 }
@@ -1108,51 +1280,59 @@ function showPage(name, el) {
 // DASHBOARD
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function renderDashboard() {
-  const arMenu = data.menu?.ar || [];
-  const totalItems = arMenu.reduce((s,sec)=>s+(sec.items?.length||0),0);
-  const foodItems = arMenu.filter(s=>s.tab==='food').reduce((s,sec)=>s+(sec.items?.length||0),0);
-  const otherItems = arMenu.filter(s=>s.tab!=='food').reduce((s,sec)=>s+(sec.items?.length||0),0);
-  document.getElementById('stat-sections').textContent = arMenu.length;
+  const refMenu = data.menu?.[refLang()] || [];
+  const totalItems = refMenu.reduce((s,sec)=>s+(sec.items?.length||0),0);
+  const foodItems = refMenu.filter(s=>s.tab==='food').reduce((s,sec)=>s+(sec.items?.length||0),0);
+  const otherItems = refMenu.filter(s=>s.tab!=='food').reduce((s,sec)=>s+(sec.items?.length||0),0);
+  document.getElementById('stat-sections').textContent = refMenu.length;
   document.getElementById('stat-items').textContent = totalItems;
   document.getElementById('stat-food').textContent = foodItems;
   document.getElementById('stat-drinks').textContent = otherItems;
-  getLangs().forEach(lang => { const el = document.getElementById('cnt-'+lang); if(el) el.textContent=(data.menu[lang]||[]).reduce((s,sec)=>s+(sec.items?.length||0),0); });
   const tbody = document.getElementById('dashboard-tbody');
-  tbody.innerHTML = arMenu.map((sec,i) => `
-    <tr><td><span style="font-size:16px;margin-left:8px;">${sec.icon||''}</span><strong>${sec.title}</strong></td>
+  tbody.innerHTML = refMenu.map((sec,i) => `
+    <tr><td><div style="display:flex;align-items:center;gap:8px;color:var(--gold-light);">${iconSvg(sec.icon,'menu-icon')}<strong>${escHtml(sec.title)}</strong></div></td>
     <td><span class="badge-count tab-${sec.tab}">${sec.tab}</span></td>
     <td><span class="badge-count">${sec.items?.length||0}</span></td>
-    <td><button class="btn btn-ghost btn-sm" onclick="goEdit('ar',${i})">✏️</button></td></tr>`).join('');
+    <td><button class="btn btn-ghost btn-sm" onclick="goEdit(${i})">✏️</button></td></tr>`).join('');
 }
 
-function goEdit(lang, idx) {
-  const el = document.getElementById('nav-'+lang);
-  if (el) showLangPage(lang, el);
-  setTimeout(() => { const el = document.querySelector(`[data-sec="${lang}-${idx}"]`); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+function goEdit(idx) {
+  showPage('menu', document.getElementById('nav-menu'));
+  setTimeout(() => { const el = document.querySelector(`[data-sec="${idx}"]`); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // RENDER MENU SECTIONS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function getOpenSections(lang) {
+function getOpenSections() {
   const open = new Set();
-  document.querySelectorAll(`[data-sec^="${lang}-"]`).forEach(el => {
+  document.querySelectorAll(`[data-sec]`).forEach(el => {
     const body = el.querySelector('.section-body');
     if (body?.classList.contains('open')) open.add(el.getAttribute('data-sec'));
   });
   return open;
 }
 
-function renderMenuSections(lang, filter='') {
-  const container = document.getElementById('sections-'+lang);
+function renderMenuSections(filter='') {
+  const container = document.getElementById('sections-menu');
   if (!container) return;
-  const menu = data.menu?.[lang] || [];
-  const openSections = getOpenSections(lang);
+  const menu = data.menu?.[refLang()] || [];
+  const openSections = getOpenSections();
   const mainEl = document.querySelector('.main');
   const scrollTop = mainEl ? mainEl.scrollTop : 0;
-  const filtered = filter ? menu.filter(sec => sec.title?.toLowerCase().includes(filter.toLowerCase()) || sec.items?.some(it=>it.name?.toLowerCase().includes(filter.toLowerCase()))) : menu;
-  if (!filtered.length) { container.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>لا توجد نتائج</p></div>`; return; }
-  container.innerHTML = filtered.map(sec => { const idx = menu.indexOf(sec); return renderSection(lang, sec, idx); }).join('');
+  const f = filter.toLowerCase();
+  const matchesFilter = (idx) => {
+    if (!f) return true;
+    return getLangs().some(lang => {
+      const sec = data.menu[lang]?.[idx];
+      if (!sec) return false;
+      if (sec.title?.toLowerCase().includes(f)) return true;
+      return sec.items?.some(it => it.name?.toLowerCase().includes(f));
+    });
+  };
+  const indices = menu.map((_, idx) => idx).filter(matchesFilter);
+  if (!indices.length) { container.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>لا توجد نتائج</p></div>`; return; }
+  container.innerHTML = indices.map(idx => renderSection(idx)).join('');
   openSections.forEach(secKey => {
     const el = document.querySelector(`[data-sec="${secKey}"]`);
     if (el) { el.querySelector('.section-body')?.classList.add('open'); el.querySelector('.collapse-arrow')?.classList.add('open'); }
@@ -1160,49 +1340,63 @@ function renderMenuSections(lang, filter='') {
   if (mainEl) mainEl.scrollTop = scrollTop;
 }
 
-function renderSection(lang, sec, idx) {
+function renderSection(idx) {
+  const sec = data.menu[refLang()][idx];
   const tabClass = 'tab-'+(sec.tab||'food');
-  const itemsHtml = (sec.items||[]).map((item,ii)=>renderItemRow(lang,idx,item,ii)).join('');
-  return `<div class="section-block" data-sec="${lang}-${idx}">
+  const itemCount = sec.items?.length || 0;
+  const titleLines = getLangs().map(lang => {
+    const s = data.menu[lang]?.[idx];
+    const meta = getLangMeta(lang);
+    return `<div class="lang-value-line"><span class="flag">${meta.flag}</span><span>${escHtml(s?.title || '—')}</span></div>`;
+  }).join('');
+  const itemsHtml = (sec.items||[]).map((item,ii)=>renderItemRow(idx,ii)).join('');
+  return `<div class="section-block" data-sec="${idx}">
     <div class="section-head" onclick="toggleSection(this)">
-      <span class="icon">${sec.icon||'📋'}</span>
-      <span class="title">${sec.title||'بدون عنوان'}</span>
+      ${iconSvg(sec.icon,'menu-icon')}
+      <span class="title">${titleLines}</span>
       <div class="meta">
         <span class="tab-badge ${tabClass}">${sec.tab}</span>
-        <span class="badge-count">${sec.items?.length||0} صنف</span>
-        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();editSection(event,'${lang}',${idx})">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteSection('${lang}',${idx})">🗑</button>
+        <span class="badge-count">${itemCount} صنف</span>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();editSection(${idx})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteSection(${idx})">🗑</button>
       </div>
       <span class="collapse-arrow">▼</span>
     </div>
     <div class="section-body">
       <table class="items-table"><thead><tr><th width="50">صورة</th><th>الاسم</th><th>السعر</th><th>الصورة</th><th width="140">إجراءات</th></tr></thead>
-      <tbody id="items-${lang}-${idx}">${itemsHtml}</tbody></table>
+      <tbody id="items-${idx}">${itemsHtml}</tbody></table>
       <div class="section-footer">
-        <button class="btn btn-outline btn-sm" onclick="addItem('${lang}',${idx})">+ صنف</button>
-        <button class="btn btn-ghost btn-sm" onclick="moveSectionUp('${lang}',${idx})">⬆</button>
-        <button class="btn btn-ghost btn-sm" onclick="moveSectionDown('${lang}',${idx})">⬇</button>
+        <button class="btn btn-outline btn-sm" onclick="addItem(${idx})">+ صنف</button>
+        <button class="btn btn-ghost btn-sm" onclick="moveSectionUp(${idx})">⬆</button>
+        <button class="btn btn-ghost btn-sm" onclick="moveSectionDown(${idx})">⬇</button>
       </div>
     </div>
   </div>`;
 }
 
-function renderItemRow(lang, secIdx, item, itemIdx) {
-  const imgSrc = item.img || '';
+function renderItemRow(secIdx, itemIdx) {
+  const refItem = data.menu[refLang()][secIdx].items[itemIdx];
+  const imgSrc = refItem.img || '';
   const imgHtml = imgSrc
     ? `<img class="item-img-thumb" src="${escHtml(imgSrc)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="item-img-placeholder" style="display:none">🖼</div>`
     : `<div class="item-img-placeholder">🖼</div>`;
-  const displayPrice = formatPrice(item.price || '', lang);
+  const c = getCurrency();
+  const displayPrice = refItem.price ? `${refItem.price} ${c.symbol_ar}` : '';
+  const nameLines = getLangs().map(lang => {
+    const it = data.menu[lang]?.[secIdx]?.items?.[itemIdx];
+    const meta = getLangMeta(lang);
+    return `<div class="lang-value-line"><span class="flag">${meta.flag}</span><span class="item-name">${escHtml(it?.name || '—')}</span></div>${it?.desc ? `<div class="item-desc">${escHtml(it.desc)}</div>` : ''}`;
+  }).join('');
   return `<tr>
     <td>${imgHtml}</td>
-    <td><div class="item-name">${escHtml(item.name||'')}</div>${item.desc?`<div class="item-desc">${escHtml(item.desc)}</div>`:''}</td>
+    <td>${nameLines}</td>
     <td><span class="item-price">${escHtml(displayPrice)}</span></td>
     <td><span class="img-path" title="${escHtml(imgSrc)}">${escHtml(imgSrc||'—')}</span></td>
     <td><div class="actions-cell">
-      <button class="btn btn-ghost btn-sm btn-icon" onclick="editItem('${lang}',${secIdx},${itemIdx})">✏️</button>
-      <button class="btn btn-danger btn-sm btn-icon" onclick="deleteItem('${lang}',${secIdx},${itemIdx})">🗑</button>
-      <button class="btn btn-ghost btn-sm btn-icon" onclick="moveItemUp('${lang}',${secIdx},${itemIdx})">⬆</button>
-      <button class="btn btn-ghost btn-sm btn-icon" onclick="moveItemDown('${lang}',${secIdx},${itemIdx})">⬇</button>
+      <button class="btn btn-ghost btn-sm btn-icon" onclick="editItem(${secIdx},${itemIdx})">✏️</button>
+      <button class="btn btn-danger btn-sm btn-icon" onclick="deleteItem(${secIdx},${itemIdx})">🗑</button>
+      <button class="btn btn-ghost btn-sm btn-icon" onclick="moveItemUp(${secIdx},${itemIdx})">⬆</button>
+      <button class="btn btn-ghost btn-sm btn-icon" onclick="moveItemDown(${secIdx},${itemIdx})">⬇</button>
     </div></td>
   </tr>`;
 }
@@ -1212,30 +1406,64 @@ function toggleSection(head) {
   head.querySelector('.collapse-arrow').classList.toggle('open');
 }
 
-function filterSections(lang, val) { renderMenuSections(lang, val); }
+function filterSections(val) { renderMenuSections(val); }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ITEM CRUD
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function addItem(lang, secIdx) {
-  editState = { lang, sectionIdx: secIdx, itemIdx: null };
+// Generic multi-language field tabs, reused by the item & section modals.
+function buildLangFieldsUI(tabsElId, panelsElId, fields) {
+  const langs = getLangs();
+  const tabsEl = document.getElementById(tabsElId);
+  const panelsEl = document.getElementById(panelsElId);
+  tabsEl.innerHTML = langs.map((l,i) => {
+    const meta = getLangMeta(l);
+    return `<div class="trans-tab ${i===0?'active':''}" data-lang="${l}" onclick="switchLangTab(this,'${panelsElId}')">${meta.flag} ${meta.name}</div>`;
+  }).join('');
+  panelsEl.innerHTML = langs.map((l,i) => `
+    <div class="trans-panel ${i===0?'active':''}" data-lang-panel="${l}">
+      ${fields.map(f => `<div class="form-group"><label>${f.label}</label>${f.type==='textarea' ? `<textarea id="lf-${f.key}-${l}"></textarea>` : `<input type="text" id="lf-${f.key}-${l}">`}</div>`).join('')}
+    </div>`).join('');
+}
+function switchLangTab(el, panelsElId) {
+  el.parentElement.querySelectorAll('.trans-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const panelsEl = document.getElementById(panelsElId);
+  panelsEl.querySelectorAll('.trans-panel').forEach(p=>p.classList.remove('active'));
+  panelsEl.querySelector(`[data-lang-panel="${el.dataset.lang}"]`).classList.add('active');
+}
+function langFieldVal(key, lang) { return document.getElementById(`lf-${key}-${lang}`)?.value.trim() || ''; }
+function setLangFieldVal(key, lang, val) { const el = document.getElementById(`lf-${key}-${lang}`); if (el) el.value = val || ''; }
+
+function addItem(secIdx) {
+  editState = { sectionIdx: secIdx, itemIdx: null };
   document.getElementById('modal-title').textContent = 'إضافة صنف جديد';
-  ['field-name','field-desc','field-price','field-img'].forEach(id => document.getElementById(id).value='');
+  buildLangFieldsUI('item-lang-tabs', 'item-lang-panels', [
+    { key:'name', label:'الاسم *' }, { key:'desc', label:'الوصف', type:'textarea' }
+  ]);
+  document.getElementById('field-price').value = '';
+  document.getElementById('field-img').value = '';
   document.getElementById('field-img-preview').classList.remove('show');
   updatePriceBadge();
   openModal('itemModal');
 }
 
-function editItem(lang, secIdx, itemIdx) {
-  editState = { lang, sectionIdx: secIdx, itemIdx };
-  const item = data.menu[lang][secIdx].items[itemIdx];
+function editItem(secIdx, itemIdx) {
+  editState = { sectionIdx: secIdx, itemIdx };
   document.getElementById('modal-title').textContent = 'تعديل صنف';
-  document.getElementById('field-name').value = item.name || '';
-  document.getElementById('field-desc').value = item.desc || '';
-  const priceRaw = stripCurrency(item.price || '');
+  buildLangFieldsUI('item-lang-tabs', 'item-lang-panels', [
+    { key:'name', label:'الاسم *' }, { key:'desc', label:'الوصف', type:'textarea' }
+  ]);
+  getLangs().forEach(lang => {
+    const item = data.menu[lang]?.[secIdx]?.items?.[itemIdx];
+    setLangFieldVal('name', lang, item?.name || '');
+    setLangFieldVal('desc', lang, item?.desc || '');
+  });
+  const refItem = data.menu[refLang()][secIdx].items[itemIdx];
+  const priceRaw = stripCurrency(refItem.price || '');
   document.getElementById('field-price').value = priceRaw ? Number(priceRaw.replace(/,/g,'')).toLocaleString('en-US') : '';
-  document.getElementById('field-img').value = item.img || '';
-  previewFieldImg(item.img || '');
+  document.getElementById('field-img').value = refItem.img || '';
+  previewFieldImg(refItem.img || '');
   updatePriceBadge();
   openModal('itemModal');
 }
@@ -1253,113 +1481,141 @@ function autoFormatPrice(input) {
 }
 
 function saveItem() {
-  const name = document.getElementById('field-name').value.trim();
+  const langs = getLangs();
+  const refName = langFieldVal('name', refLang());
   const rawPrice = document.getElementById('field-price').value.trim();
-  if (!name || !rawPrice) { toast('الاسم والسعر مطلوبان', 'error'); return; }
-  const { lang, sectionIdx, itemIdx } = editState;
-  const desc = document.getElementById('field-desc').value.trim() || undefined;
+  if (!refName || !rawPrice) { toast(`الاسم (${getLangMeta(refLang()).name}) والسعر مطلوبان`, 'error'); return; }
+  const { sectionIdx, itemIdx } = editState;
   const img = document.getElementById('field-img').value.trim() || '';
-  const newItem = { name, price: rawPrice, img };
-  if (desc) newItem.desc = desc;
-  if (itemIdx === null) data.menu[lang][sectionIdx].items.push(newItem);
-  else data.menu[lang][sectionIdx].items[itemIdx] = newItem;
+  langs.forEach(lang => {
+    const name = langFieldVal('name', lang);
+    const desc = langFieldVal('desc', lang);
+    const newItem = { name, price: rawPrice, img };
+    if (desc) newItem.desc = desc;
+    const items = data.menu[lang][sectionIdx].items;
+    if (itemIdx === null) items.push(newItem);
+    else items[itemIdx] = newItem;
+  });
   closeModal('itemModal');
-  renderMenuSections(lang);
+  renderMenuSections();
   renderDashboard();
-  renderSidebarLangs();
+  scheduleAutoSave();
   toast('تم حفظ الصنف ✓', 'success');
 }
 
-function deleteItem(lang, secIdx, itemIdx) {
-  const item = data.menu[lang][secIdx].items[itemIdx];
+function deleteItem(secIdx, itemIdx) {
+  const item = data.menu[refLang()][secIdx].items[itemIdx];
   showConfirm('حذف صنف', `حذف "${item.name}"؟`, () => {
-    data.menu[lang][secIdx].items.splice(itemIdx, 1);
-    renderMenuSections(lang);
+    getLangs().forEach(lang => data.menu[lang][secIdx].items.splice(itemIdx, 1));
+    renderMenuSections();
     renderDashboard();
+    scheduleAutoSave();
     toast('تم الحذف', 'success');
   });
 }
 
-function moveItemUp(lang, secIdx, itemIdx) {
+function moveItemUp(secIdx, itemIdx) {
   if (itemIdx===0) return;
-  const items = data.menu[lang][secIdx].items;
-  [items[itemIdx-1],items[itemIdx]]=[items[itemIdx],items[itemIdx-1]];
-  renderMenuSections(lang);
+  getLangs().forEach(lang => {
+    const items = data.menu[lang][secIdx].items;
+    [items[itemIdx-1],items[itemIdx]]=[items[itemIdx],items[itemIdx-1]];
+  });
+  renderMenuSections();
+  scheduleAutoSave();
 }
-function moveItemDown(lang, secIdx, itemIdx) {
-  const items = data.menu[lang][secIdx].items;
-  if (itemIdx>=items.length-1) return;
-  [items[itemIdx],items[itemIdx+1]]=[items[itemIdx+1],items[itemIdx]];
-  renderMenuSections(lang);
+function moveItemDown(secIdx, itemIdx) {
+  const items0 = data.menu[refLang()][secIdx].items;
+  if (itemIdx>=items0.length-1) return;
+  getLangs().forEach(lang => {
+    const items = data.menu[lang][secIdx].items;
+    [items[itemIdx],items[itemIdx+1]]=[items[itemIdx+1],items[itemIdx]];
+  });
+  renderMenuSections();
+  scheduleAutoSave();
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SECTION CRUD
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function populateTabSelect(lang, currentVal) {
+function populateTabSelect(currentVal) {
   const sel = document.getElementById('section-tab');
-  const tabs = data.tabs?.[lang] || data.tabs?.ar || [
-    { id:'food',name:'🍽️ الأطعمة' },
-    { id:'drinks',name:'☕ المشروبات' },
-    { id:'shisha',name:'🍃 الأراكيل' }
+  const tabs = data.tabs?.[refLang()] || [
+    { id:'food', name:'الأطعمة' }, { id:'drinks', name:'المشروبات' }, { id:'shisha', name:'الأراكيل' }
   ];
   sel.innerHTML = tabs.map(t=>`<option value="${t.id}" ${t.id===currentVal?'selected':''}>${t.name} (${t.id})</option>`).join('');
 }
 
-function addSection(lang) {
-  sectionEditState = { lang, sectionIdx: null };
+function addSection() {
+  sectionEditState = { sectionIdx: null };
   document.getElementById('section-modal-title').textContent = 'إضافة قسم جديد';
-  document.getElementById('section-title').value = '';
-  document.getElementById('section-icon').value = '';
-  populateTabSelect(lang, null);
+  buildLangFieldsUI('section-lang-tabs', 'section-lang-panels', [{ key:'title', label:'عنوان القسم *' }]);
+  document.getElementById('section-icon-key').value = 'plate';
+  renderSectionIconBtn();
+  populateTabSelect(null);
   openModal('sectionModal');
 }
 
-function editSection(e, lang, idx) {
-  sectionEditState = { lang, sectionIdx: idx };
-  const sec = data.menu[lang][idx];
+function editSection(idx) {
+  sectionEditState = { sectionIdx: idx };
   document.getElementById('section-modal-title').textContent = 'تعديل قسم';
-  document.getElementById('section-title').value = sec.title || '';
-  document.getElementById('section-icon').value = sec.icon || '';
-  populateTabSelect(lang, sec.tab || '');
+  buildLangFieldsUI('section-lang-tabs', 'section-lang-panels', [{ key:'title', label:'عنوان القسم *' }]);
+  getLangs().forEach(lang => setLangFieldVal('title', lang, data.menu[lang]?.[idx]?.title || ''));
+  const sec = data.menu[refLang()][idx];
+  document.getElementById('section-icon-key').value = sec.icon || 'plate';
+  renderSectionIconBtn();
+  populateTabSelect(sec.tab || '');
   openModal('sectionModal');
 }
 
 function saveSection() {
-  const title = document.getElementById('section-title').value.trim();
-  if (!title) { toast('عنوان القسم مطلوب', 'error'); return; }
-  const { lang, sectionIdx } = sectionEditState;
-  const sec = { tab: document.getElementById('section-tab').value, title, icon: document.getElementById('section-icon').value.trim() || '📋', items: sectionIdx !== null ? data.menu[lang][sectionIdx].items : [] };
-  if (sectionIdx === null) data.menu[lang].push(sec);
-  else data.menu[lang][sectionIdx] = sec;
+  const langs = getLangs();
+  const refTitle = langFieldVal('title', refLang());
+  if (!refTitle) { toast(`عنوان القسم (${getLangMeta(refLang()).name}) مطلوب`, 'error'); return; }
+  const { sectionIdx } = sectionEditState;
+  const tab = document.getElementById('section-tab').value;
+  const icon = document.getElementById('section-icon-key').value || 'plate';
+  langs.forEach(lang => {
+    const title = langFieldVal('title', lang);
+    const sec = { tab, title, icon, items: sectionIdx !== null ? data.menu[lang][sectionIdx].items : [] };
+    if (sectionIdx === null) data.menu[lang].push(sec);
+    else data.menu[lang][sectionIdx] = sec;
+  });
   closeModal('sectionModal');
-  renderMenuSections(lang);
+  renderMenuSections();
   renderDashboard();
-  renderSidebarLangs();
+  scheduleAutoSave();
   toast('تم حفظ القسم ✓', 'success');
 }
 
-function deleteSection(lang, idx) {
-  const sec = data.menu[lang][idx];
-  showConfirm('حذف قسم', `حذف "${sec.title}" (${sec.items?.length||0} صنف)؟`, () => {
-    data.menu[lang].splice(idx, 1);
-    renderMenuSections(lang);
+function deleteSection(idx) {
+  const sec = data.menu[refLang()][idx];
+  showConfirm('حذف قسم', `حذف "${sec.title}" (${sec.items?.length||0} صنف) من كل اللغات؟`, () => {
+    getLangs().forEach(lang => data.menu[lang].splice(idx, 1));
+    renderMenuSections();
     renderDashboard();
+    scheduleAutoSave();
     toast('تم حذف القسم', 'success');
   });
 }
 
-function moveSectionUp(lang, idx) {
+function moveSectionUp(idx) {
   if (idx===0) return;
-  const menu = data.menu[lang];
-  [menu[idx-1],menu[idx]]=[menu[idx],menu[idx-1]];
-  renderMenuSections(lang);
+  getLangs().forEach(lang => {
+    const menu = data.menu[lang];
+    [menu[idx-1],menu[idx]]=[menu[idx],menu[idx-1]];
+  });
+  renderMenuSections();
+  scheduleAutoSave();
 }
-function moveSectionDown(lang, idx) {
-  const menu = data.menu[lang];
-  if (idx>=menu.length-1) return;
-  [menu[idx],menu[idx+1]]=[menu[idx+1],menu[idx]];
-  renderMenuSections(lang);
+function moveSectionDown(idx) {
+  const menu0 = data.menu[refLang()];
+  if (idx>=menu0.length-1) return;
+  getLangs().forEach(lang => {
+    const menu = data.menu[lang];
+    [menu[idx],menu[idx+1]]=[menu[idx+1],menu[idx]];
+  });
+  renderMenuSections();
+  scheduleAutoSave();
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1396,13 +1652,15 @@ function saveSettings() {
     code: document.getElementById('currency-symbol-en').value.trim()||'IQD',
     position: document.getElementById('currency-position').value
   };
-  renderMenuSections('ar');
+  renderMenuSections();
+  scheduleAutoSave();
   toast('تم حفظ الإعدادات ✓', 'success');
 }
 
 function switchSettingLang(lang, el) {
-  document.querySelectorAll('.trans-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.trans-panel').forEach(p=>p.classList.remove('active'));
+  const scope = document.getElementById('page-settings');
+  scope.querySelectorAll('.trans-tab').forEach(t=>t.classList.remove('active'));
+  scope.querySelectorAll('.trans-panel').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('settings-'+lang).classList.add('active');
 }
@@ -1419,51 +1677,115 @@ function previewLogoUrl(val) {
 function renderTabs() {
   const container = document.getElementById('tabs-dynamic-container');
   if (!container) return;
-  container.innerHTML = getLangs().map(lang => {
-    const meta = getLangMeta(lang);
-    const tabs = data.tabs?.[lang] || [];
-    return `<div class="card" style="margin-bottom:16px;"><div class="card-header"><h3>${meta.flag} ${meta.name}</h3></div><div class="card-body">
-      ${tabs.map((tab,i)=>`<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
-        <input type="text" value="${escHtml(tab.id)}" placeholder="id" style="flex:0.4;" onchange="if(!data.tabs)data.tabs={};if(!data.tabs['${lang}'])data.tabs['${lang}']=[];data.tabs['${lang}'][${i}].id=this.value">
-        <input type="text" value="${escHtml(tab.name)}" placeholder="name" style="flex:1;" onchange="data.tabs['${lang}'][${i}].name=this.value">
-        <button class="btn btn-danger btn-sm btn-icon" onclick="deleteTabItem('${lang}',${i})">🗑</button>
+  const ref = refLang();
+  const tabs = data.tabs?.[ref] || [];
+  container.innerHTML = `<div class="card"><div class="card-body">
+    ${tabs.map((tab,i)=>`
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;">
+        <button type="button" class="icon-pick-btn" onclick="openIconPicker('${tab.icon||'plate'}', k=>setTabIcon(${i},k))">${iconSvg(tab.icon)}</button>
+        <input type="text" value="${escHtml(tab.id)}" placeholder="id" style="flex:0.3;min-width:80px;" onchange="setTabId(${i}, this.value)">
+        ${getLangs().map(lang => `<input type="text" value="${escHtml(data.tabs[lang]?.[i]?.name||'')}" placeholder="${getLangMeta(lang).flag} name" style="flex:1;min-width:100px;" onchange="setTabName('${lang}',${i}, this.value)">`).join('')}
+        <button class="btn btn-danger btn-sm btn-icon" onclick="deleteTabItem(${i})">🗑</button>
       </div>`).join('')}
-      <button class="btn btn-outline btn-sm" onclick="addTabItem('${lang}')" style="margin-top:6px;">+ تبويب</button>
-    </div></div>`;
-  }).join('');
+    <button class="btn btn-outline btn-sm" onclick="addTabItem()" style="margin-top:6px;">+ تبويب</button>
+  </div></div>`;
 }
 
-function addTabItem(lang) {
+function setTabId(idx, val) { getLangs().forEach(lang => { if (data.tabs[lang]?.[idx]) data.tabs[lang][idx].id = val; }); scheduleAutoSave(); }
+function setTabIcon(idx, key) { getLangs().forEach(lang => { if (data.tabs[lang]?.[idx]) data.tabs[lang][idx].icon = key; }); renderTabs(); scheduleAutoSave(); }
+function setTabName(lang, idx, val) { if (data.tabs[lang]?.[idx]) data.tabs[lang][idx].name = val; scheduleAutoSave(); }
+
+function addTabItem() {
   if (!data.tabs) data.tabs={};
-  if (!data.tabs[lang]) data.tabs[lang]=[];
-  data.tabs[lang].push({id:'new',name:'جديد'});
+  getLangs().forEach(lang => {
+    if (!data.tabs[lang]) data.tabs[lang]=[];
+    data.tabs[lang].push({ id:'new', icon:'plate', name: lang===refLang() ? 'جديد' : '' });
+  });
   renderTabs();
+  scheduleAutoSave();
 }
-function deleteTabItem(lang,idx) { data.tabs[lang].splice(idx,1); renderTabs(); }
+function deleteTabItem(idx) {
+  getLangs().forEach(lang => data.tabs[lang]?.splice(idx,1));
+  renderTabs();
+  scheduleAutoSave();
+}
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // IMAGE PICKER
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let filePickCallback = null;
+let filePickContext = null; // 'item' | 'logo'
 
 function triggerFilePick() {
   filePickCallback = (path) => { document.getElementById('field-img').value=path; previewFieldImg(path); };
+  filePickContext = 'item';
   document.getElementById('fileInput').click();
 }
 
 function openFilePicker(fieldId, lang, secIdx, itemIdx, isLogo) {
   filePickCallback = (path) => { document.getElementById(fieldId).value=path; if(isLogo) previewLogoUrl(path); };
+  filePickContext = isLogo ? 'logo' : 'item';
   document.getElementById('fileInput').click();
 }
 
-document.getElementById('fileInput').addEventListener('change', function(e) {
+// ── Real image writing via File System Access API (only available once a project folder is open) ──
+const TAB_FOLDER_MAP = { food:'اطعمة', drinks:'المشروبات', candies:'حلويات', shisha:'اراكيل' };
+function slugFolder(name) { return String(name||'').trim().replace(/[\\/:*?"<>|]/g,'').replace(/\s+/g,'_') || 'قسم'; }
+async function ensureDir(root, parts) { let d = root; for (const p of parts) { d = await d.getDirectoryHandle(p, { create: true }); } return d; }
+async function nextFileName(dirHandle, ext) {
+  let max = 0;
+  for await (const name of dirHandle.keys()) { const m = name.match(/^(\d+)\./); if (m) max = Math.max(max, parseInt(m[1], 10)); }
+  return (max + 1) + '.' + ext;
+}
+async function writeFileToDir(dirHandle, filename, file) {
+  const fh = await dirHandle.getFileHandle(filename, { create: true });
+  const w = await fh.createWritable();
+  await w.write(await file.arrayBuffer());
+  await w.close();
+}
+async function saveItemImageFile(file, secIdx) {
+  const sec = data.menu[refLang()][secIdx];
+  const tabFolder = TAB_FOLDER_MAP[sec.tab] || sec.tab;
+  const secFolder = slugFolder(sec.title);
+  const dir = await ensureDir(imgDirHandle, [tabFolder, secFolder]);
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const filename = await nextFileName(dir, ext);
+  await writeFileToDir(dir, filename, file);
+  return `img/${tabFolder}/${secFolder}/${filename}`;
+}
+async function saveLogoImageFile(file) {
+  const dir = await ensureDir(imgDirHandle, ['logo']);
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const filename = 'logo.' + ext;
+  await writeFileToDir(dir, filename, file);
+  return `img/logo/${filename}`;
+}
+
+document.getElementById('fileInput').addEventListener('change', async function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const folder = prompt('أدخل مسار المجلد (مثال: img/اطعمة/سلطات)\nالملف: '+file.name, 'img/');
-  if (folder === null) return;
-  const fullPath = (folder.replace(/\/+$/,'')+'/'+file.name).replace(/^\/+/,'');
-  if (filePickCallback) filePickCallback(fullPath);
+  if (imgDirHandle && filePickContext === 'item') {
+    try {
+      const path = await saveItemImageFile(file, editState.sectionIdx);
+      if (filePickCallback) filePickCallback(path);
+      toast('✅ تم حفظ الصورة في ' + path, 'success');
+      scheduleAutoSave();
+    } catch (err) { toast('فشل حفظ الصورة: ' + err.message, 'error'); }
+  } else if (imgDirHandle && filePickContext === 'logo') {
+    try {
+      const path = await saveLogoImageFile(file);
+      if (filePickCallback) filePickCallback(path);
+      toast('✅ تم حفظ الشعار في ' + path, 'success');
+      scheduleAutoSave();
+    } catch (err) { toast('فشل حفظ الصورة: ' + err.message, 'error'); }
+  } else {
+    const folder = prompt('لم يتم فتح مجلد المشروع، لذلك لن تُحفظ الصورة تلقائياً.\nأدخل مسار المجلد يدوياً (مثال: img/اطعمة/سلطات)\nالملف: '+file.name, 'img/');
+    if (folder === null) return;
+    const fullPath = (folder.replace(/\/+$/,'')+'/'+file.name).replace(/^\/+/,'');
+    if (filePickCallback) filePickCallback(fullPath);
+  }
   filePickCallback = null;
+  filePickContext = null;
   this.value = '';
 });
 
@@ -1497,6 +1819,9 @@ function buildExportData() {
       }
     }
   }
+  // Bump on every export/save so index.html can cache-bust images & itself
+  // re-fetch fresh data even behind aggressive host/browser caching (e.g. Hostinger).
+  exportData.version = Date.now();
   return exportData;
 }
 

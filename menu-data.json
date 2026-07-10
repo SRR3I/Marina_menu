@@ -1,4 +1,5 @@
 {
+  "version": 1783691027933,
   "translations": {
     "ar": {
       "subtitle": "تجربة طعام فاخرة",
@@ -21,37 +22,45 @@
     "ar": [
       {
         "id": "food",
-        "name": "🍽️ الأطعمة"
+        "name": "الأطعمة",
+        "icon": "plate"
       },
       {
         "id": "drinks",
-        "name": "☕ المشروبات"
+        "name": "المشروبات",
+        "icon": "beverage"
       },
       {
         "id": "candies",
-        "name": "🎂 حلويات"
+        "name": "حلويات",
+        "icon": "dessert"
       },
       {
         "id": "shisha",
-        "name": "🍃 الأراكيل"
+        "name": "الأراكيل",
+        "icon": "shisha"
       }
     ],
     "en": [
       {
         "id": "food",
-        "name": "🍽️ Food"
+        "name": "Food",
+        "icon": "plate"
       },
       {
         "id": "drinks",
-        "name": "☕ Beverages"
+        "name": "Beverages",
+        "icon": "beverage"
       },
       {
         "id": "candies",
-        "name": "🎂 candies"
+        "name": "candies",
+        "icon": "dessert"
       },
       {
         "id": "shisha",
-        "name": "🍃 Shisha"
+        "name": "Shisha",
+        "icon": "shisha"
       }
     ]
   },
@@ -60,7 +69,7 @@
       {
         "title": "شوربات",
         "tab": "food",
-        "icon": "🍵",
+        "icon": "soup",
         "items": [
           {
             "name": "شوربة عدس",
@@ -79,7 +88,7 @@
       {
         "title": "سلطات",
         "tab": "food",
-        "icon": "🥗",
+        "icon": "salad",
         "items": [
           {
             "name": "سلطة فتوش",
@@ -116,7 +125,7 @@
       {
         "title": "مقبلات باردة",
         "tab": "food",
-        "icon": "🥙",
+        "icon": "cold-appetizer",
         "items": [
           {
             "name": "حمص",
@@ -153,7 +162,7 @@
       {
         "title": "مشاوي",
         "tab": "food",
-        "icon": "🔥",
+        "icon": "grill",
         "items": [
           {
             "name": "طبق مشاوي مارينا",
@@ -214,7 +223,7 @@
       {
         "title": "باستا",
         "tab": "food",
-        "icon": "🍝",
+        "icon": "pasta",
         "items": [
           {
             "name": "باستا الفريدو",
@@ -245,7 +254,7 @@
       {
         "title": "مقبلات ساخنة",
         "tab": "food",
-        "icon": "🍤",
+        "icon": "hot-appetizer",
         "items": [
           {
             "name": "روبيان دايناميت",
@@ -294,7 +303,7 @@
       {
         "title": "الأطباق الرئيسية",
         "tab": "food",
-        "icon": "🍖",
+        "icon": "main-dish",
         "items": [
           {
             "name": "ستيك تيبون",
@@ -355,7 +364,7 @@
       {
         "title": "سناك",
         "tab": "food",
-        "icon": "🍔",
+        "icon": "snack",
         "items": [
           {
             "name": "ساندويش فاهيتا دجاج",
@@ -392,7 +401,7 @@
       {
         "title": "بيتزا",
         "tab": "food",
-        "icon": "🍕",
+        "icon": "pizza",
         "items": [
           {
             "name": "بيتزا مارينا",
@@ -435,7 +444,7 @@
       {
         "title": "مشروبات",
         "tab": "drinks",
-        "icon": "🥤",
+        "icon": "beverage",
         "items": [
           {
             "name": "ماء صغير",
@@ -472,7 +481,7 @@
       {
         "title": "مشروبات ساخنة",
         "tab": "drinks",
-        "icon": "☕",
+        "icon": "hot-drink",
         "items": [
           {
             "name": "نسكافيه",
@@ -564,7 +573,7 @@
       {
         "title": "مشروبات باردة",
         "tab": "drinks",
-        "icon": "🧊",
+        "icon": "cold-drink",
         "items": [
           {
             "name": "آيس تشيز كيك",
@@ -626,7 +635,7 @@
       {
         "title": "عصائر فريش",
         "tab": "drinks",
-        "icon": "🍊",
+        "icon": "juice",
         "items": [
           {
             "name": "أناناس",
@@ -673,7 +682,7 @@
       {
         "title": "ميلك شيك",
         "tab": "drinks",
-        "icon": "🥤",
+        "icon": "milkshake",
         "items": [
           {
             "name": "ميلك شيك أوريو",
@@ -703,7 +712,7 @@
       {
         "title": "موهيتو",
         "tab": "drinks",
-        "icon": "🍹",
+        "icon": "mojito",
         "items": [
           {
             "name": "موهيتو كلاسيك",
@@ -745,7 +754,7 @@
       {
         "title": "سموذي",
         "tab": "drinks",
-        "icon": "🍓",
+        "icon": "smoothie",
         "items": [
           {
             "name": "سموذي فراولة",
@@ -788,7 +797,7 @@
       {
         "title": "كوكتيل",
         "tab": "drinks",
-        "icon": "🥭",
+        "icon": "cocktail",
         "items": [
           {
             "name": "كوكتيل فواكه فريش",
@@ -836,7 +845,7 @@
       {
         "title": "أراكيل",
         "tab": "shisha",
-        "icon": "🍃",
+        "icon": "shisha",
         "items": [
           {
             "name": "إنجليزي",
@@ -883,7 +892,7 @@
       {
         "title": "حلويات",
         "tab": "candies",
-        "icon": "🍰",
+        "icon": "dessert",
         "items": [
           {
             "name": "كيك",
@@ -967,7 +976,7 @@
       {
         "title": "Soups",
         "tab": "food",
-        "icon": "🍵",
+        "icon": "soup",
         "items": [
           {
             "name": "Lentil Soup",
@@ -986,7 +995,7 @@
       {
         "title": "Salads",
         "tab": "food",
-        "icon": "🥗",
+        "icon": "salad",
         "items": [
           {
             "name": "Fattoush Salad",
@@ -1023,7 +1032,7 @@
       {
         "title": "Cold Appetizers",
         "tab": "food",
-        "icon": "🥙",
+        "icon": "cold-appetizer",
         "items": [
           {
             "name": "Hummus",
@@ -1060,7 +1069,7 @@
       {
         "title": "Grills",
         "tab": "food",
-        "icon": "🔥",
+        "icon": "grill",
         "items": [
           {
             "name": "Marina Mixed Grill Platter",
@@ -1121,7 +1130,7 @@
       {
         "title": "Pasta",
         "tab": "food",
-        "icon": "🍝",
+        "icon": "pasta",
         "items": [
           {
             "name": "Fettuccine Alfredo",
@@ -1152,7 +1161,7 @@
       {
         "title": "Hot Appetizers",
         "tab": "food",
-        "icon": "🍤",
+        "icon": "hot-appetizer",
         "items": [
           {
             "name": "Dynamite Shrimp",
@@ -1201,7 +1210,7 @@
       {
         "title": "Main Dishes",
         "tab": "food",
-        "icon": "🍖",
+        "icon": "main-dish",
         "items": [
           {
             "name": "Steak Tipon",
@@ -1262,7 +1271,7 @@
       {
         "title": "Snacks",
         "tab": "food",
-        "icon": "🍔",
+        "icon": "snack",
         "items": [
           {
             "name": "Chicken Fajita Wrap",
@@ -1299,7 +1308,7 @@
       {
         "title": "Pizza",
         "tab": "food",
-        "icon": "🍕",
+        "icon": "pizza",
         "items": [
           {
             "name": "Marina Pizza",
@@ -1342,7 +1351,7 @@
       {
         "title": "Beverages",
         "tab": "drinks",
-        "icon": "🥤",
+        "icon": "beverage",
         "items": [
           {
             "name": "Small Water",
@@ -1379,7 +1388,7 @@
       {
         "title": "Hot Beverages",
         "tab": "drinks",
-        "icon": "☕",
+        "icon": "hot-drink",
         "items": [
           {
             "name": "Nescafe",
@@ -1471,7 +1480,7 @@
       {
         "title": "Cold Beverages",
         "tab": "drinks",
-        "icon": "🧊",
+        "icon": "cold-drink",
         "items": [
           {
             "name": "Cheesecake",
@@ -1533,7 +1542,7 @@
       {
         "title": "Fresh Juices",
         "tab": "drinks",
-        "icon": "🍊",
+        "icon": "juice",
         "items": [
           {
             "name": "Pineapple",
@@ -1579,7 +1588,7 @@
       {
         "title": "Milkshakes",
         "tab": "drinks",
-        "icon": "🥤",
+        "icon": "milkshake",
         "items": [
           {
             "name": "Oreo Milkshake",
@@ -1609,7 +1618,7 @@
       {
         "title": "Mojito",
         "tab": "drinks",
-        "icon": "🍹",
+        "icon": "mojito",
         "items": [
           {
             "name": "Classic Mojito",
@@ -1650,7 +1659,7 @@
       {
         "title": "Smoothies",
         "tab": "drinks",
-        "icon": "🍓",
+        "icon": "smoothie",
         "items": [
           {
             "name": "Strawberry Smoothie",
@@ -1693,7 +1702,7 @@
       {
         "title": "Cocktails",
         "tab": "drinks",
-        "icon": "🥭",
+        "icon": "cocktail",
         "items": [
           {
             "name": "Fresh Fruit Cocktail",
@@ -1741,7 +1750,7 @@
       {
         "title": "Shisha",
         "tab": "shisha",
-        "icon": "🍃",
+        "icon": "shisha",
         "items": [
           {
             "name": "English",
@@ -1788,7 +1797,7 @@
       {
         "title": "Candies",
         "tab": "candies",
-        "icon": "🍰",
+        "icon": "dessert",
         "items": [
           {
             "name": "Cake",
