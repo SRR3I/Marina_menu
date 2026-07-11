@@ -1,5 +1,5 @@
 {
-  "version": 1783691027933,
+  "version": 1783767005091,
   "translations": {
     "ar": {
       "subtitle": "تجربة طعام فاخرة",
@@ -663,7 +663,7 @@
           {
             "name": "فراولة",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/عصائر فريش/5.jpg",
+            "img": "img/المشروبات/عصائر فريش/5.jpeg",
             "desc": "عصير فراوله"
           },
           {
@@ -676,6 +676,12 @@
             "price": "5,000 د.ع",
             "img": "img/المشروبات/عصائر فريش/7.jpeg",
             "desc": "ليمون و نعنع"
+          },
+          {
+            "name": "عصير مكس برتقال وليمون",
+            "price": "5,000 د.ع",
+            "img": "\\img\\المشروبات\\عصائر فريش\\8.jpg",
+            "desc": "عصير برتقال فرش- عصير ليمون فرش"
           }
         ]
       },
@@ -703,9 +709,22 @@
             "desc": "آيس كريم فانيلا - آيس كريم شوكولا - قهوه"
           },
           {
-            "name": "ميلك شيك",
+            "name": "ميلك شايك لوتوس",
             "price": "6,000 د.ع",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/4.jpg",
+            "desc": "آيس كريم فانيلا - صوص لوتوس - بسكويت لوتوس"
+          },
+          {
+            "name": "ميلك شايك ميكس بيري",
+            "price": "6,000 د.ع",
+            "img": "\\img\\المشروبات\\ميلك شيك\\5.jpg",
+            "desc": "آيس كريم فانيلا - فراوله فرش - صوص بلو بيري"
+          },
+          {
+            "name": "ستراوبيري ميلك شايك",
+            "price": "6,000 د.ع",
+            "img": "\\img\\المشروبات\\ميلك شيك\\6.jpg",
+            "desc": "آيس كريم فانيلا - فراوله فرش"
           }
         ]
       },
@@ -736,18 +755,25 @@
             "name": "موهيتو فراولة",
             "price": "5,000 د.ع",
             "img": "img/المشروبات/موهيتو/4.jpeg",
-            "desc": "حليب - موز فرش- فراوله فرش"
+            "desc": "سبرايت - سيروب موهيتو - سيروب فراوله"
           },
           {
             "name": "موهيتو مكس بيري",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/موهيتو/5.jpeg"
+            "img": "img/المشروبات/موهيتو/5.jpeg",
+            "desc": "سبرايت - سيروب موهيتو - صوص بلو بيري - فراوله فرش"
           },
           {
             "name": "موهيتو جرينادين",
             "price": "5,000 د.ع",
             "img": "img/المشروبات/موهيتو/6.jpeg",
             "desc": "سبرايت - سيروب رمان بري - سيروب موهيتو"
+          },
+          {
+            "name": "انرجي موهيتو  مارينا",
+            "price": "5,000 د.ع",
+            "img": "\\img\\المشروبات\\موهيتو\\7.jpg",
+            "desc": "ريد بول - سيروب بلو - ليمون"
           }
         ]
       },
@@ -759,7 +785,8 @@
           {
             "name": "سموذي فراولة",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/1.jpeg",
+            "desc": "صوص فراوله - صوص باشن فروت"
           },
           {
             "name": "سموذي أناناس ومانجو",
@@ -773,14 +800,16 @@
             "desc": "صوص فراوله - صوص توت - صوص راسبيري"
           },
           {
-            "name": "سموذي مانجو",
+            "name": "سموذي مانجو واناناس",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/4.jpeg",
+            "desc": "صوص منغا - فرش اناناس"
           },
           {
             "name": "سموذي خوخ",
             "price": "5,000 د.ع",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/5.svg",
+            "desc": "صوص خوخ -سيروب غرينادين - ليمون"
           },
           {
             "name": "سموذي كيوي وبلوبيري",
@@ -791,6 +820,18 @@
             "name": "سموذي برتقال وأناناس",
             "price": "5,000 د.ع",
             "img": "img/المشروبات/سموذي/1.jpeg"
+          },
+          {
+            "name": "سموذي ميكس كيوي و برتقال",
+            "price": "5,000 د.ع",
+            "img": "\\img\\المشروبات\\سموذي\\8.jpg",
+            "desc": "سموذي ميكس كيوي اورنج"
+          },
+          {
+            "name": "سموذي تروبيكل مانجو",
+            "price": "5,000 د.ع",
+            "img": "\\img\\المشروبات\\سموذي\\9.jpg",
+            "desc": "صوص منغا - صوص باشن فروت"
           }
         ]
       },
@@ -1569,7 +1610,7 @@
           {
             "name": "Strawberry",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/عصائر فريش/5.jpg",
+            "img": "img/المشروبات/عصائر فريش/5.jpeg",
             "desc": "Strawberry juice"
           },
           {
@@ -1582,6 +1623,12 @@
             "price": "5,000 IQD",
             "img": "img/المشروبات/عصائر فريش/7.jpeg",
             "desc": "Lemon and Mint"
+          },
+          {
+            "name": "Mixed orange and lemon juice",
+            "price": "5,000 IQD",
+            "img": "\\img\\المشروبات\\عصائر فريش\\8.jpg",
+            "desc": "Fresh orange juice - Fresh lemon juice"
           }
         ]
       },
@@ -1609,9 +1656,22 @@
             "desc": "Vanilla ice cream - Chocolate ice cream - Coffee"
           },
           {
-            "name": "Milkshake",
+            "name": "Lotus milkshake",
             "price": "6,000 IQD",
-            "img": "img/المشروبات/ميلك شيك/4.jpeg"
+            "img": "img/المشروبات/ميلك شيك/4.jpg",
+            "desc": "Vanilla ice cream - Lotus sauce - Lotus biscuits"
+          },
+          {
+            "name": "Mixed Berry Milkshake",
+            "price": "6,000 IQD",
+            "img": "\\img\\المشروبات\\ميلك شيك\\5.jpg",
+            "desc": "Vanilla ice cream - fresh strawberries - blueberry sauce"
+          },
+          {
+            "name": "Strawberry Milkshake",
+            "price": "6,000 IQD",
+            "img": "\\img\\المشروبات\\ميلك شيك\\6.jpg",
+            "desc": "Vanilla Ice Cream - Fresh Strawberry"
           }
         ]
       },
@@ -1641,18 +1701,26 @@
           {
             "name": "Strawberry Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/4.jpeg"
+            "img": "img/المشروبات/موهيتو/4.jpeg",
+            "desc": "Sprite - Mojito Syrup - Strawberry Syrup"
           },
           {
             "name": "Mixed Berry Mojito",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/موهيتو/5.jpeg"
+            "img": "img/المشروبات/موهيتو/5.jpeg",
+            "desc": "Sprite - Mojito Syrup - Blueberry Sauce - Fresh Strawberries"
           },
           {
             "name": "Grenadine Mojito",
             "price": "5,000 IQD",
             "img": "img/المشروبات/موهيتو/6.jpeg",
             "desc": "Sprite - wild pomegranate syrup - mojito syrup"
+          },
+          {
+            "name": "Energy Mojito Marina",
+            "price": "5,000 IQD",
+            "img": "\\img\\المشروبات\\موهيتو\\7.jpg",
+            "desc": "Red Bull - Syrup Blue - Lemon"
           }
         ]
       },
@@ -1664,7 +1732,8 @@
           {
             "name": "Strawberry Smoothie",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/1.jpeg",
+            "desc": "Strawberry sauce - Passion fruit sauce"
           },
           {
             "name": "Pineapple Mango Smoothie",
@@ -1678,14 +1747,16 @@
             "desc": "Strawberry sauce - Berry sauce - Raspberry sauce"
           },
           {
-            "name": "Mango Smoothie",
+            "name": "Mango and pineapple smoothie",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/4.jpeg",
+            "desc": "Mango sauce - Fresh pineapple"
           },
           {
             "name": "Peach Smoothie",
             "price": "5,000 IQD",
-            "img": "img/المشروبات/سموذي/1.jpeg"
+            "img": "img/المشروبات/سموذي/5.svg",
+            "desc": "Peach sauce - grenadine syrup - lemon"
           },
           {
             "name": "Kiwi Blueberry Smoothie",
@@ -1696,6 +1767,18 @@
             "name": "Orange Pineapple Smoothie",
             "price": "5,000 IQD",
             "img": "img/المشروبات/سموذي/1.jpeg"
+          },
+          {
+            "name": "Kiwi and orange smoothie mix",
+            "price": "5,000 IQD",
+            "img": "\\img\\المشروبات\\سموذي\\8.jpg",
+            "desc": "Kiwi Orange Smoothie Mix"
+          },
+          {
+            "name": "Mango Tropical Smoothie",
+            "price": "5,000 IQD",
+            "img": "\\img\\المشروبات\\سموذي\\9.jpg",
+            "desc": "Mango sauce - Passion fruit sauce"
           }
         ]
       },
