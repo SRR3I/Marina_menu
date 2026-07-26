@@ -907,6 +907,7 @@
             "name": "كيك",
             "price": "6,000 د.ع",
             "img": "img/حلويات/كيك/1.webp"
+"desc": "سعر القطعة الواحدة"
           }
         ]
       },
@@ -1874,6 +1875,7 @@
             "name": "Cake",
             "price": "6,000 IQD",
             "img": "img/حلويات/كيك/1.webp"
+            desc": "Price per piece"
           }
         ]
       },
