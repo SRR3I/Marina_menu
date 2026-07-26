@@ -897,24 +897,24 @@
             "img": "img/اراكيل/1.webp"
           }
         ]
-      },
-      {
+      }, 
+      { 
         "title": "كيك",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "كيك",
             "price": "6,000 د.ع",
-            "img": "img/حلويات/كيك/1.webp"
-"desc": "سعر القطعة الواحدة"
+            "img": "img/حلويات/كيك/1.webp",
+            "desc": "سعر القطعة الواحدة (1)"
           }
         ]
       },
       {
         "title": "وافل",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "وافل كلاسك",
@@ -926,7 +926,7 @@
       {
         "title": "فواكه",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "طبق سلطة فواكه نوتلا",
@@ -948,7 +948,7 @@
       {
         "title": "كريب",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "فواكه كريب",
@@ -1869,20 +1869,20 @@
       {
         "title": "Cake",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "Cake",
             "price": "6,000 IQD",
-            "img": "img/حلويات/كيك/1.webp"
-            desc": "Price per piece"
+            "img": "img/حلويات/كيك/1.webp",
+            "desc": "Price per piece (1)"
           }
         ]
       },
       {
         "title": "Waffle",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "Classic Waffle",
@@ -1894,7 +1894,7 @@
       {
         "title": "Fruits",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "Nutella Fruit Salad Plate",
@@ -1916,7 +1916,7 @@
       {
         "title": "Crepe",
         "tab": "Desserts",
-        "icon": "plate",
+        "icon": "dessert",
         "items": [
           {
             "name": "Fruit Crepe",
@@ -1957,7 +1957,7 @@
       },
       {
         "id": "Desserts",
-        "icon": "desserts",
+        "icon": "dessert",
         "name": "الحلويات"
       },
       {
@@ -1979,7 +1979,7 @@
       },
       {
         "id": "Desserts",
-        "icon": "desserts",
+        "icon": "dessert",
         "name": "Desserts"
       },
       {
@@ -1989,5 +1989,5 @@
       }
     ]
   },
-  "version": 1785069076013
+  "version": 178506913
 }
