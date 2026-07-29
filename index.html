@@ -186,6 +186,12 @@
             font-size: 20px;
         }
 
+        .burger-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #34d399;
+        }
+
         .burger-icon:hover {
             background: rgba(16, 185, 129, 0.2);
             border-color: rgba(16, 185, 129, .5);
@@ -272,6 +278,12 @@
             z-index: 1;
             min-width: 24px;
             text-align: center;
+        }
+
+        .lang-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #34d399;
         }
 
         /* Menu Tabs - تنسيق مع الهيدر */
@@ -497,16 +509,20 @@
             transform: scale(1.05);
         }
 
-        /* تحسين أداء الصور */
         .item-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform .2s ease;
-            will-change: transform;
+            transition: transform .2s ease, opacity .35s ease;
+            will-change: transform, opacity;
             transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            opacity: 0;
+        }
+
+        .item-image.loaded {
+            opacity: 1;
         }
 
         .menu-item:hover .item-image {
@@ -660,7 +676,12 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
             cursor: grab;
             user-select: none;
-            transition: transform 0.2s ease-out;
+            transition: transform 0.2s ease-out, opacity .3s ease;
+            opacity: 0;
+        }
+
+        .modal-image.loaded {
+            opacity: 1;
         }
 
         .modal-image:active {
@@ -813,15 +834,15 @@
     <div class="header" id="mainHeader">
         <div class="language-menu" id="languageMenu">
             <div class="burger-icon" id="burgerIcon">
-                🌐
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
             </div>
             <div class="language-dropdown">
                 <div class="lang-option active" data-lang="ar">
-                    <span class="lang-icon"></span>
+                    <span class="lang-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
                     <span>العربية</span>
                 </div>
                 <div class="lang-option" data-lang="en">
-                    <span class="lang-icon"></span>
+                    <span class="lang-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
                     <span>English</span>
                 </div>
             </div>
@@ -840,9 +861,9 @@
     </div>
 
     <div class="menu-tabs" id="menuTabs">
-        <button class="tab-btn active" data-tab="food">🍽️ الأطعمة</button>
-        <button class="tab-btn" data-tab="drinks">☕ المشروبات</button>
-        <button class="tab-btn" data-tab="shisha">🍃 الأراكيل</button>
+        <button class="tab-btn active" data-tab="food">الأطعمة</button>
+        <button class="tab-btn" data-tab="drinks">المشروبات</button>
+        <button class="tab-btn" data-tab="shisha">الأراكيل</button>
     </div>
 
     <div class="menu-container" id="menuContainer">
@@ -914,8 +935,7 @@
 
         let menuData = null;
 
-        // Cache-busting: always fetch the freshest menu data, bypassing browser/host caching
-        // (Hostinger and similar shared hosts often cache static files aggressively).
+       
         function verUrl(url) {
             if (!url) return url;
             const v = menuData?.version || '';
@@ -1064,7 +1084,7 @@
                             itemDiv.className = 'menu-item';
                             itemDiv.innerHTML = `
                                 ${x.img ? `<div class="item-image-wrapper">
-                                    <img src="${verUrl(x.img)}" alt="${x.name}" class="item-image" loading="lazy" decoding="async">
+                                    <img src="${verUrl(x.img)}" alt="${x.name}" class="item-image" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
                                 </div>` : ''}
                                 <div class="item-content">
                                     <div class="item-header">
@@ -1089,6 +1109,14 @@
                 
                 mc.innerHTML = '';
                 mc.appendChild(fragment);
+
+                requestAnimationFrame(() => {
+                    mc.querySelectorAll('.item-image').forEach(img => {
+                        if (img.complete && img.naturalWidth > 0) {
+                            img.classList.add('loaded');
+                        }
+                    });
+                });
             });
         }
 
@@ -1128,8 +1156,10 @@
             // Add state to history for back button handling
             history.pushState({ modal: true }, '');
             
+            mi.classList.remove('loaded');
             mi.onload = () => { 
                 mo.classList.add('active'); 
+                mi.classList.add('loaded');
                 document.body.style.overflow = 'hidden';
                 document.body.style.position = 'fixed';
                 document.body.style.top = `-${modalScrollPosition}px`;
