@@ -112,6 +112,11 @@
         "icon": "grill",
         "items": [
           {
+            "name": "طبق مشاوي مارينا",
+            "price": "65,000 د.ع",
+            "img": "img\\اطعمة\\مشاوي\\1.webp"
+          },
+          {
             "name": "عرايس لحم",
             "price": "16,000 د.ع",
             "img": "img/اطعمة/مشاوي/2.webp",
@@ -217,7 +222,7 @@
           },
           {
             "name": "بطاطا حارة",
-            "price": "7,500 د.ع",
+            "price": "6,000 د.ع",
             "img": "img/اطعمة/مقبلات_ساخنة/5.webp",
             "desc": "بطاطا مقلية مع الصلصة الحارة"
           },
@@ -229,7 +234,7 @@
           },
           {
             "name": "روبيان باني",
-            "price": "13,000 د.ع",
+            "price": "14,000 د.ع",
             "img": "img/اطعمة/مقبلات_ساخنة/7.webp",
             "desc": "روبيان مقرمش مع صلصة وبطاطا مقلية"
           },
@@ -246,11 +251,6 @@
         "tab": "food",
         "icon": "hot-appetizer",
         "items": [
-          {
-            "name": "طبق مشاوي مارينا",
-            "price": "75,000 د.ع",
-            "img": ""
-          },
           {
             "name": "شرحات لحم",
             "price": "30,000 د.ع",
@@ -320,7 +320,7 @@
           },
           {
             "name": "برغر لحم",
-            "price": "12,000 د.ع",
+            "price": "10,000 د.ع",
             "img": "img/اطعمة/سناك/3.webp",
             "desc": "لحم عراقي مع خس طماطم فنكر"
           },
@@ -923,8 +923,13 @@
         "items": [
           {
             "name": "وافل كلاسك",
-            "price": "10,000 د.ع",
+            "price": "8,000 د.ع",
             "img": "img/حلويات/وافل/1.webp"
+          },
+          {
+            "name": "وافل فواكه",
+            "price": "10,000 د.ع",
+            "img": "img/حلويات/وافل/2.webp"
           }
         ]
       },
@@ -957,7 +962,7 @@
         "items": [
           {
             "name": "فواكه كريب",
-            "price": "15,000 د.ع",
+            "price": "10,000 د.ع",
             "img": "img/حلويات/كريب/1.webp"
           },
           {
@@ -1085,6 +1090,11 @@
         "icon": "grill",
         "items": [
           {
+            "name": "Marina Mixed Grill Platter",
+            "price": "65,000 IQD",
+            "img": "img\\اطعمة\\مشاوي\\1.webp"
+          },
+          {
             "name": "Meat Arayes",
             "price": "16,000 IQD",
             "img": "img/اطعمة/مشاوي/2.webp",
@@ -1190,7 +1200,7 @@
           },
           {
             "name": "Spicy Potatoes",
-            "price": "7,500 IQD",
+            "price": "6,000 IQD",
             "img": "img/اطعمة/مقبلات_ساخنة/5.webp",
             "desc": "Fried potatoes with spicy sauce"
           },
@@ -1202,7 +1212,7 @@
           },
           {
             "name": "Breaded Shrimp",
-            "price": "13,000 IQD",
+            "price": "14,000 IQD",
             "img": "img/اطعمة/مقبلات_ساخنة/7.webp",
             "desc": "Crispy shrimp with sauce and fries"
           },
@@ -1219,11 +1229,6 @@
         "tab": "food",
         "icon": "hot-appetizer",
         "items": [
-          {
-            "name": "Marina Mixed Grill Platter",
-            "price": "75,000 IQD",
-            "img": ""
-          },
           {
             "name": "Meat Cutlets",
             "price": "30,000 IQD",
@@ -1293,7 +1298,7 @@
           },
           {
             "name": "Meat Burger",
-            "price": "12,000 IQD",
+            "price": "10,000 IQD",
             "img": "img/اطعمة/سناك/3.webp",
             "desc": "Iraqi meat with lettuce, tomato, and fries"
           },
@@ -1896,8 +1901,13 @@
         "items": [
           {
             "name": "Classic Waffle",
-            "price": "10,000 IQD",
+            "price": "8,000 IQD",
             "img": "img/حلويات/وافل/1.webp"
+          },
+          {
+            "name": "Fruit Waffle",
+            "price": "10,000 IQD",
+            "img": "img/حلويات/وافل/2.webp"
           }
         ]
       },
@@ -1930,7 +1940,7 @@
         "items": [
           {
             "name": "Fruit Crepe",
-            "price": "15,000 IQD",
+            "price": "10,000 IQD",
             "img": "img/حلويات/كريب/1.webp"
           },
           {
@@ -1999,5 +2009,5 @@
       }
     ]
   },
-  "version": 1785590113572
+  "version": 1785926252350
 }
